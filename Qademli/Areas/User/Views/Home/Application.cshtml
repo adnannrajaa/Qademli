@@ -1,0 +1,802 @@
+﻿
+@{
+    ViewData["Title"] = "Application";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<style>
+    .error {
+        color: red;
+    }
+
+    #identificationdoc-error, #civilidfront-error, #civilidback-error,
+    #HighSchoolDegree-error,#MinistryofHigherEducationDoc-error,#FinancialSupport-error,
+    #Passport-error,#VisaPermit-error,#Recommendations-error,#I20Doc-error{
+        color: red;
+    }
+
+    .label {
+        font-weight: bold;
+    }
+</style>
+<link href="~/assets2/form/all-type-forms.css" rel="stylesheet" />
+<link href="~/assets2/css/style.css" rel="stylesheet" />
+<div id="home_banner" class="pos_rel" data-parallax="true" style="background-image: url('/assets/img/home-banner.jpg');">
+    <div class="filter"></div>
+    <div class="content-center">
+        <div class="container">
+            <div class="motto">
+
+                @*<h1 class="title">Qademli</h1>
+                    <h3 class="description">Welcome to Qademli</h3>*@
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<section id="services" class="container">
+    <div class="row">
+        <div class="col-12 ml-0 mr-0">
+            <!--University Area-->
+            <div class="uni_section sec_single mb-4">
+                <div class="row uni_heading_area mb-4">
+                    <div class="col-md-8">
+                        <h3 class="text-blue fw_600 my-0">Application Form</h3>
+                    </div>
+                    @*<div class="col-md-4 text-right">
+                            <a class="view_all_btn view_more_uni"><span class="more">View All</span><span class="less">View Less</span></a>
+                        </div>*@
+                </div>
+
+                <!-- Single pro tab review Start-->
+
+                <div class="nav-wrapper" style="margin-bottom:30px">
+                    <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true">Personal Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false">Eduction Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false">Family Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-4-tab" data-toggle="tab" href="#tabs-icons-text-4" role="tab" aria-controls="tabs-icons-text-4" aria-selected="false">Visa Info</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="tab-content" id="myTabContent">
+
+                            @* Personal Info Tab Start *@
+                            <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                                <form class="dropzone dropzone-custom needsclick add-professors" id="savePersonalInfo">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <label id="personalInfoUserID" hidden></label>
+                                            <div class="form-group">
+                                                <label class="label">Title</label>
+                                                <input name="title" id="title" type="text" class="form-control" placeholder="Title">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Address</label>
+
+                                                <input name="address" id="address" type="text" class="form-control" placeholder="Address">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">US Address</label>
+                                                <input name="usaaddress" id="usaaddress" type="text" class="form-control" placeholder="USA Address">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Mobile Number</label>
+
+                                                <input name="mobileno" id="mobileno" type="text" class="form-control" placeholder="Mobile no. (xxxx-xxxxxxx)">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Date of Birth</label>
+
+                                                <input name="dob" id="dob" type="text" data-language='en' class="form-control" placeholder="Date of Birth">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="label">Istagram</label>
+
+                                                <input name="instagram" id="instagram" type="text" class="form-control" placeholder="Instagram">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Twitter</label>
+
+                                                <input name="twitter" id="twitter" type="text" class="form-control" placeholder="Twitter">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Facebook</label>
+
+                                                <input name="facebook" id="facebook" type="text" class="form-control" placeholder="Facebook">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Identification Document No</label>
+                                                <input name="identificationdocno" id="identificationdocno" type="text" class="form-control" placeholder="Identification Doc No">
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Identification Document (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" id="identificationdoc1" accept=".jpg" onchange="document.getElementById('identificationdoc').value = this.value;">
+                                                        </div>
+                                                        <input name="identificationdoc" id="identificationdoc" type="text" class="form-control" placeholder="Identification Doc">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Civil Id Front (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" id="civilidfront1" accept=".jpg" onchange="document.getElementById('civilidfront').value = this.value;">
+                                                        </div>
+                                                        <input type="text" name="civilidfront" id="civilidfront" placeholder="Civil id Front">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+
+
+
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Civil Id Back (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" id="civilidback1" accept=".jpg" onchange="document.getElementById('civilidback').value = this.value;">
+                                                        </div>
+                                                        <input type="text" name="civilidback" id="civilidback" placeholder="Civil id Back">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="label">Select Gender</label>
+
+                                                <select name="gender" id="gender" class="form-control">
+                                                    <option value="none" selected="" disabled="">Select Gender</option>
+                                                    <option value="0">Male</option>
+                                                    <option value="1">Female</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Select Nationality</label>
+
+                                                <select name="nationality" id="nationality" class="form-control">
+                                                    <option value="none" selected="" disabled="">Select Nationality</option>
+                                                    <option value="0">Indian</option>
+                                                    <option value="1">Pakistani</option>
+                                                    <option value="2">American</option>
+                                                    <option value="3">Chinaies</option>
+                                                    <option value="4">Dubai</option>
+                                                    <option value="5">Nepali</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Select First Language</label>
+
+                                                <select name="language" id="language" class="form-control">
+                                                    <option value="none" selected="" disabled="">Select First Language</option>
+                                                    <option value="0">English</option>
+                                                    <option value="1">Urdu</option>
+                                                    <option value="2">Arbic</option>
+
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Select Marital Status</label>
+
+                                                <select name="maritalstatus" id="maritalstatus" class="form-control">
+                                                    <option value="none" selected="" disabled="">Select Marital Status</option>
+                                                    <option value="0">Married</option>
+                                                    <option value="1">Unmarried</option>
+
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Select Town</label>
+
+                                                <select name="town" id="town" class="form-control">
+                                                    <option value="none" selected="" disabled="">Select town</option>
+                                                    <option value="0">India</option>
+                                                    <option value="1">Pakistan</option>
+                                                    <option value="2">Amerika</option>
+                                                    <option value="3">China</option>
+                                                    <option value="4">Dubai</option>
+                                                    <option value="5">Nepal</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Select State</label>
+
+                                                <select name="state" id="state" class="form-control">
+                                                    <option value="none" selected="" disabled="">Select state</option>
+                                                    <option value="0">Gujarat</option>
+                                                    <option value="1">Maharastra</option>
+                                                    <option value="2">Rajastan</option>
+                                                    <option value="3">Maharastra</option>
+                                                    <option value="4">Rajastan</option>
+                                                    <option value="5">Gujarat</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Postal Code</label>
+
+                                                <input name="postalcode" id="postalcode" type="number" class="form-control" placeholder="Postal code">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Telephone Number</label>
+
+                                                <input name="telephonenumber" id="telephonenumber" type="text" class="form-control" placeholder="Telephone Number">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Occupation Sector</label>
+
+                                                <input name="occupationsector" id="occupationsector" type="text" class="form-control" placeholder="Occupation Sector">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Occupation Level</label>
+
+                                                <input name="occupationlevel" id="occupationlevel" type="text" class="form-control" placeholder="Occupation Level">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="payment-adress">
+                                                <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            @* Eduction Info Tab Start *@
+                            <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+                                <form class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                                            <div class="form-group">
+                                                <label class="label">ILETS or TOEFL Marks</label>
+
+                                                <input name="ILETSorTOEFL" id="ILETSorTOEFL" type="number" class="form-control" placeholder="ILETS or TOEFL Marks">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Unit Passed</label>
+
+                                                <input name="UnitsPassed" id="UnitsPassed" type="number" class="form-control" placeholder="Units Passed">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Last Degree</label>
+
+                                                <input name="LastDegree" id="LastDegree" type="text" class="form-control" placeholder="Last Degree">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="label">School Name</label>
+
+                                                <input name="SchoolName" id="SchoolName" type="text" class="form-control" placeholder="School Name">
+                                            </div>
+
+
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">High School Degree (.jpg)</label>
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" accept=".jpg" id="HighSchoolDegree1" onchange="document.getElementById('HighSchoolDegree').value = this.value;">
+                                                        </div>
+                                                        <input name="HighSchoolDegree" id="HighSchoolDegree" type="text" class="form-control" placeholder="High School Degree">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Ministry of Higher Education Doc (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" accept=".jpg" id="MinistryofHigherEducationDoc1" onchange="document.getElementById('MinistryofHigherEducationDoc').value = this.value;">
+                                                        </div>
+                                                        <input name="MinistryofHigherEducationDoc" id="MinistryofHigherEducationDoc" type="text" class="form-control" placeholder="Ministry of Higher Education Doc">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Financial Support (.jpg)</label>
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" accept=".jpg" id="FinancialSupport1" onchange="document.getElementById('FinancialSupport').value = this.value;">
+                                                        </div>
+                                                        <input name="FinancialSupport" id="FinancialSupport" type="text" class="form-control" placeholder="Financial Support">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="payment-adress">
+                                                <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+
+                            @* Family Info Tab Start *@
+                            <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+                                <form class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Parent Passport (.jpg)</label>
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" accept=".jpg" id="ParentPassport1" onchange="document.getElementById('ParentPassport').value = this.value;">
+                                                        </div>
+                                                        <input name="ParentPassport" id="ParentPassport" type="text" class="form-control" placeholder="Parent Passport">
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Parent Mobile No</label>
+                                                <input name="ParentMobileNo" id="ParentMobileNo" type="text" class="form-control" placeholder="Parent Mobile No (xxxx-xxxxxxx)">
+                                            </div>
+                                            <div class="form-group">
+
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Father Civil ID Front (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" id="FatherCivilIDFront1" onchange="document.getElementById('FatherCivilIDFront').value = this.value;">
+                                                        </div>
+                                                        <input name="FatherCivilIDFront" id="FatherCivilIDFront" type="text" class="form-control" placeholder="Father Civil ID Front">
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Father Civil ID Back (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" id="FatherCivilIDBack1" onchange="document.getElementById('FatherCivilIDBack').value = this.value;">
+                                                        </div>
+                                                        <input name="FatherCivilIDBack" id="FatherCivilIDBack" type="text" class="form-control" placeholder="Father Civil ID Back">
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Monther Civil ID Front (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" id="MotherCivilIDFront1" onchange="document.getElementById('MotherCivilIDFront').value = this.value;">
+                                                        </div>
+                                                        <input name="MotherCivilIDFront" id="MotherCivilIDFront" type="text" class="form-control" placeholder="Mother Civil ID Front">
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Mother Civil ID Back (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" id="MotherCivilIDBack1" onchange="document.getElementById('MotherCivilIDBack').value = this.value;">
+                                                        </div>
+                                                        <input name="MotherCivilIDBack" id="MotherCivilIDBack" type="text" class="form-control" placeholder="Mother Civil ID Back">
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Spouse Civil ID Front (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" id="SpouseCivilIDFront1" onchange="document.getElementById('SpouseCivilIDFront').value = this.value;">
+                                                        </div>
+                                                        <input name="SpouseCivilIDFront" id="SpouseCivilIDFront" type="text" class="form-control" placeholder="Spouse Civil ID Front">
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Spouse Civil ID Back (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" id="SpouseCivilIDBack1" onchange="document.getElementById('SpouseCivilIDBack').value = this.value;">
+                                                        </div>
+                                                        <input name="SpouseCivilIDBack" id="SpouseCivilIDBack" type="text" class="form-control" placeholder="Spouse Civil ID Back">
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Spouse Passport (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" id="SpousePassport1" onchange="document.getElementById('SpousePassport').value = this.value;">
+                                                        </div>
+                                                        <input name="SpousePassport" id="SpousePassport" type="text" class="form-control" placeholder="Spouse Passport">
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Friend In US</label>
+                                                <select name="FriendInUS" id="FriendInUS" class="form-control">
+                                                    <option value="none" selected="" disabled="">Friend In US</option>
+                                                    <option value=true>Yes</option>
+                                                    <option value=false>No</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Friend Address</label>
+
+                                                <input name="FriendAddress" id="FriendAddress" type="text" class="form-control" placeholder="Friend Address">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Friend Mobile No</label>
+
+                                                <input name="FriendMobileNo" id="FriendMobileNo" type="text" class="form-control" placeholder="Friend Mobile No (xxxx-xxxxxxx)">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Family Friends In US</label>
+
+                                                <select name="FamilyMemberInUS" id="FamilyMemberInUS" class="form-control">
+                                                    <option value="none" selected="" disabled="">Family Member In US</option>
+                                                    <option value=true>Yes</option>
+                                                    <option value=false>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                                            <div class="form-group">
+                                                <label class="label">Family Member First Name</label>
+
+                                                <input name="FamilyMemberFirstName" id="FamilyMemberFirstName" type="text" class="form-control" placeholder="Family Member First Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Family Member Last Name</label>
+
+                                                <input name="FamilyMemberLastName" id="FamilyMemberLastName" type="text" class="form-control" placeholder="Family Member Last Name">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="label">Family Member Relation</label>
+
+                                                <input name="FamilyMemberRelation" id="FamilyMemberRelation" type="text" class="form-control" placeholder="Family Member Relation">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Family Member US Citizen</label>
+
+                                                <select name="FamilyMemberUSCitizen" id="FamilyMemberUSCitizen" class="form-control">
+                                                    <option value="none" selected="" disabled="">Family Member US Citizen</option>
+                                                    <option value=true>Yes</option>
+                                                    <option value=false>No</option>
+
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Family Member Immigrant</label>
+
+                                                <select name="FamilyMemberImmigrant" id="FamilyMemberImmigrant" class="form-control">
+                                                    <option value="none" selected="" disabled="">Family Member Immigrant</option>
+                                                    <option value=true>Yes</option>
+                                                    <option value=false>No</option>
+
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Family Member Role</label>
+
+                                                <input name="FamilyMemberRole" id="FamilyMemberRole" type="text" class="form-control" placeholder="Family Member Role">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">College/University</label>
+
+                                                <input name="CollegeUniversity" id="CollegeUniversity" type="text" class="form-control" placeholder="College University">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Major</label>
+
+                                                <input name="Major" id="Major" type="text" class="form-control" placeholder="Major">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Organization Name</label>
+
+                                                <input name="OrganizationName" id="OrganizationName" type="text" class="form-control" placeholder="Organization Name">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Monthly Salary</label>
+
+                                                <input name="MonthlySalary" id="MonthlySalary" type="number" class="form-control" placeholder="Monthly Salary">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Currency</label>
+
+                                                <input name="Currency" id="Currency" type="text" class="form-control" placeholder="Currency">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Position</label>
+
+                                                <input name="Position" id="Position" type="text" class="form-control" placeholder="Position">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Companion Passport (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" accept=".jpg" id="CompanionPassport1" onchange="document.getElementById('CompanionPassport').value = this.value;">
+                                                        </div>
+                                                        <input name="CompanionPassport" id="CompanionPassport" type="text" class="form-control" placeholder="Companion Passport">
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Companion I201 (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" accept=".jpg" id="CompanionI201" onchange="document.getElementById('CompanionI20').value = this.value;">
+                                                        </div>
+                                                        <input name="CompanionI20" id="CompanionI20" type="text" class="form-control" placeholder="Companion I20">
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="payment-adress">
+                                                <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            @* Visa Info Tab Start *@
+                            <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
+                                <form class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="label"> Last Visit To US</label>
+                                                <input name="LastVisitToUS" id="LastVisitToUS" type="text" class="form-control" placeholder="Last Visit To US">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Days Spent In US</label>
+
+                                                <input name="DaysSpentInUS" id="DaysSpentInUS" type="number" class="form-control" placeholder="Days Spent In US">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Countries Visted</label>
+
+                                                <input name="CountriesVisted" id="CountriesVisted" type="text" class="form-control" placeholder="Countries Visted">
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Passport (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" accept=".jpg" id="Passport1" onchange="document.getElementById('Passport').value = this.value;">
+                                                        </div>
+                                                        <input name="Passport" id="Passport" type="text" class="form-control" placeholder="Passport Image">
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Visa Permit (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" accept=".jpg" id="VisaPermit1" onchange="document.getElementById('VisaPermit').value = this.value;">
+                                                        </div>
+                                                        <input name="VisaPermit" id="VisaPermit" type="text" class="form-control" placeholder="Visa Permit Image">
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">Recommendations (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file" accept=".jpg" id="Recommendations1" onchange="document.getElementById('Recommendations').value = this.value;">
+                                                        </div>
+                                                        <input name="Recommendations" id="Recommendations" type="text" class="form-control" placeholder="Recommendations Attachment">
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="file-upload-inner file-upload-inner-right ts-forms">
+                                                    <label class="label" style="font-weight:bold">I20 Document (.jpg)</label>
+
+                                                    <div class="input append-small-btn">
+                                                        <div class="file-button">
+                                                            Browse
+                                                            <input type="file"  accept=".jpg" id="I20Doc1" onchange="document.getElementById('I20Doc').value = this.value;">
+                                                        </div>
+                                                        <input name="I20Doc" id="I20Doc" type="text" class="form-control" placeholder="I20 Document">
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="label">Is Employee</label>
+                                                <select name="Employee" id="Employee" class="form-control">
+                                                    <option value="none" selected="" disabled="">Employee</option>
+                                                    <option value=true>Yes</option>
+                                                    <option value=false>No</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Organization Name</label>
+                                                <input name="OrganizationName" id="OrganizationName" type="text" class="form-control" placeholder="Organization Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Date From</label>
+                                                <input name="DateFrom" id="DateFrom" type="text" class="form-control" placeholder="Date From">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Date To</label>
+
+                                                <input name="DateTo" id="DateTo" type="text" class="form-control" placeholder="Date To">
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label class="label">Travel Date</label>
+
+                                                <input name="TravelDate" id="TravelDate" type="text" class="form-control" placeholder="Travel Date">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Visa Permit Rejected</label>
+
+                                                <select name="VisaPermitRejected" id="VisaPermitRejected" class="form-control">
+                                                    <option value="none" selected="" disabled="">Visa Permit Rejected</option>
+                                                    <option value=true>Yes</option>
+                                                    <option value=false>No</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label">Reason Of Rejection</label>
+
+                                                <input name="ReasonOfRejection" id="ReasonOfRejection" type="text" class="form-control" placeholder="Reason Of Rejection">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="payment-adress">
+                                                <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/js/Application/PersonalInfo.js?v=@DateTime.Now.Millisecond"></script>
+    <script src="~/js/Application/EductionInfo.js?v=@DateTime.Now.Millisecond"></script>
+    <script src="~/js/Application/FamilyInfo.js?v=@DateTime.Now.Millisecond"></script>
+    <script src="~/js/Application/VisaInfo.js?v=@DateTime.Now.Millisecond"></script>
+
+}

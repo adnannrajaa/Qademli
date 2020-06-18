@@ -1,0 +1,225 @@
+﻿var Id = parseJwt(localStorage.getItem("token"))["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+
+$(() => {
+    LoadFamilyInfo(Id)
+
+})
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+};
+$.validator.addMethod("invalidContact", (value) => {
+    let contact = value
+    var regexPattern = new RegExp(/^\d{4}[- ]?\d{7}$/);    // regular expression pattern
+    let isValid = regexPattern.test(contact);
+    if (!isValid) {
+        return false;
+    }
+    return true;
+});
+
+
+    $('#tabs-icons-text-3 form').validate({
+        rules: {
+            ParentPassport: "required",
+            ParentMobileNo: {
+                required: true,
+                invalidContact : true
+            },
+            FatherCivilIDFront: {
+                required: true
+            },
+            FatherCivilIDBack: "required",
+            MotherCivilIDFront: "required",
+            MotherCivilIDBack: "required",
+            SpouseCivilIDFront: "required",
+
+            SpouseCivilIDBack: "required",
+            SpousePassport: "required",
+            FriendInUS:"required",
+            FamilyMemberInUS: "required",
+            FamilyMemberUSCitizen: "required",
+            FamilyMemberImmigrant: "required",
+            FamilyMemberRole: "required",
+
+            CollegeUniversity: "required",
+            Major: "required",
+            OrganizationName: "required",
+            MonthlySalary: "required",
+            Currency: "required",
+            Position: "required",
+            CompanionPassport: "required",
+
+            CompanionI20: "required",
+            FriendMobileNo: {
+                invalidContact : true
+            },
+
+        },
+        messages: {
+            ParentPassport: "Parent Passport is required",
+            ParentMobileNo: {
+                required: "Parent mobile no is required",
+                invalidContact : "Please enter valid mobile mobile no"
+            },
+            FatherCivilIDFront: {
+                required: "Father Civil ID Front is required"
+            },
+            FatherCivilIDBack: "Father Civil ID Back is required",
+            MotherCivilIDFront: "Mother Civil ID Front is required",
+            MotherCivilIDBack: "Mother Civil ID Back is required",
+            SpouseCivilIDFront: "Spouse Civil ID Front is required",
+
+            SpouseCivilIDBack: "Spouse Civil ID Back is required",
+            SpousePassport: "Spouse Passport is required",
+            FriendInUS: "Do you have any friend in Us",
+            FamilyMemberInUS: "Do you have any Family member in Us",
+            FamilyMemberUSCitizen: "Are your family member is US citizen",
+            FamilyMemberImmigrant: "Are your family member is immigrant",
+            FamilyMemberRole: "Family Member Role is required",
+
+            CollegeUniversity: "College University is required",
+            Major: "Major is required",
+            OrganizationName: "Organization Name is required",
+            MonthlySalary: "Monthly Salary is required",
+            Currency: "Currency is required",
+            Position: "Position is required",
+            FriendMobileNo: {
+                invalidContact : "Please enter valid mobile number"
+            },
+            CompanionPassport: "Companion Passport is required",
+
+            CompanionI20: "Companion I20 is required",
+        },
+        submitHandler: function (form) {
+            var form = new FormData();
+            form.append("UserId", Id);
+            form.append("ParentPassport", $('#ParentPassport1')[0].files[0]);
+            form.append("ParentMobileNo", $("#ParentMobileNo").val());
+            form.append("FatherCivilIDFront", $('#FatherCivilIDFront1')[0].files[0]);
+            form.append("FatherCivilIDBack", $('#FatherCivilIDBack1')[0].files[0]);
+            form.append("MotherCivilIDFront", $("#MotherCivilIDFront1")[0].files[0]);
+            form.append("MotherCivilIDBack", $("#MotherCivilIDBack1")[0].files[0]);
+            form.append("SpouseCivilIDFront", $("#SpouseCivilIDFront1")[0].files[0]);
+
+            form.append("SpouseCivilIDBack", $('#SpouseCivilIDBack1')[0].files[0]);
+            form.append("SpousePassport", $("#SpousePassport1")[0].files[0]);
+            form.append("FriendInUS", $('#FriendInUS').val());
+            form.append("FriendAddress", $("#FriendAddress").val());
+            form.append("FriendMobileNo", $("#FriendMobileNo").val());
+            form.append("FamilyMemberInUS", $("#FamilyMemberInUS").val());
+            form.append("FamilyMemberFirstName", $("#FamilyMemberFirstName").val());
+
+            form.append("FamilyMemberLastName", $("#FamilyMemberLastName").val());
+            form.append("FamilyMemberRelation", $("#FamilyMemberRelation").val());
+            form.append("FamilyMemberUSCitizen", $("#FamilyMemberUSCitizen").val());
+            form.append("FamilyMemberImmigrant", $("#FamilyMemberImmigrant").val());
+            form.append("FamilyMemberRole", $("#FamilyMemberRole").val());
+            form.append("CollegeUniversity", $("#CollegeUniversity").val());
+            form.append("Major", $("#Major").val());
+
+            form.append("OrganizationName", $("#OrganizationName").val());
+            form.append("MonthlySalary", $("#MonthlySalary").val());
+            form.append("Currency", $("#Currency").val());
+            form.append("Position", $("#Position").val());
+            form.append("CompanionPassport", $('#CompanionPassport1')[0].files[0]);
+            form.append("CompanionI20", $('#CompanionI201')[0].files[0]);
+
+
+            var settings = {
+                "url": "/api/UserFamilyDetail",
+                "method": "POST",
+                "timeout": 0,
+                "processData": false,
+                "mimeType": "multipart/form-data",
+                "contentType": false,
+                "data": form,
+                "headers": {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                }
+            };
+
+            $.ajax(settings).done(function (data, statusText, xhr) {
+                if (xhr.status === 200) {
+                    $.notify("Family Information Added Successfully", "success");
+                } else if (xhr.status === 204) {
+                    $.notify("Family Information Updated Successfully", "success");
+
+                } else {
+                    $.notify("Your Request Return " + xhr.status, "error")
+                }
+            });
+
+        }
+    });
+
+let LoadFamilyInfo = (id) => {
+    var settings = {
+        "url": "/api/UserFamilyDetail/" + id,
+        "method": "GET",
+        "timeout": 0,
+        "headers": {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
+    };
+
+    $.ajax(settings).done(function (response) {
+        LoadFamilyInfoIntoTextBox(response)
+    });
+}
+let LoadFamilyInfoIntoTextBox = (data) => {
+    $('#ParentPassport').val(data.ParentPassport)
+    $("#ParentMobileNo").val(data.ParentMobileNo) 
+    $('#FatherCivilIDFront').val(data.FatherCivilIDFront) 
+    $('#FatherCivilIDBack').val(data.FatherCivilIDBack)
+    $("#MotherCivilIDFront").val(data.MotherCivilIDFront) 
+    $("#MotherCivilIDBack").val(data.MotherCivilIDBack) 
+    $("#SpouseCivilIDFront").val(data.SpouseCivilIDFront)
+
+    $('#SpouseCivilIDBack').val(data.SpouseCivilIDBack)
+    $("#SpousePassport").val(data.SpousePassport)
+    if (data.FriendInUS == true)
+        $('#FriendInUS').val("true")
+    else
+        $('#FriendInUS').val("false")
+
+    $("#FriendAddress").val(data.FriendAddress) 
+    $("#FriendMobileNo").val(data.FriendMobileNo) 
+
+    if (data.FamilyMemberInUS==true)
+        $("#FamilyMemberInUS").val("true")
+    else
+        $("#FamilyMemberInUS").val("false")
+
+    $("#FamilyMemberFirstName").val(data.FamilyMemberFirstName) 
+
+    $("#FamilyMemberLastName").val(data.FamilyMemberLastName) 
+    $("#FamilyMemberRelation").val(data.FamilyMemberRelation) 
+
+    if (data.FamilyMemberUSCitizen == true)
+        $("#FamilyMemberUSCitizen").val("true")
+    else
+        $("#FamilyMemberUSCitizen").val("false")
+
+    if (data.FamilyMemberImmigrant==true)
+        $("#FamilyMemberImmigrant").val("true")
+    else
+        $("#FamilyMemberImmigrant").val("false")
+
+
+    $("#FamilyMemberRole").val(data.FamilyMemberRole) 
+    $("#CollegeUniversity").val(data.CollegeUniversity) 
+    $("#Major").val(data.Major) 
+
+    $("#OrganizationName").val(data.OrganizationName)
+    $("#MonthlySalary").val(data.MonthlySalary)
+    $("#Currency").val(data.Currency)
+    $("#Position").val(data.Position)
+    $('#CompanionPassport').val(data.CompanionPassport)
+    $('#CompanionI20').val(data.CompanionI20)
+}

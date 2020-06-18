@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewData["Title"] = "AdminAccount";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+    <div class="row mb-3">
+        
+    </div>
+    <section id="services" class="container">
+        <div class="data_wrap bg_white mg-t-30">
+            <div class="row">
+                <div class="col-12 ml-0 mr-0">
+
+
+                    <div class="row">
+                        <div class="col-md-6 mx-auto">
+                            <div class="card card-register">
+                                <div class="form_heading_area text-center">
+
+                                    <h3 class="fw_600 text-uppercase text-blue text-center mt-0 mb-3">Update Account</h3>
+                                </div>
+                                <form class="register-form" id="myForm">
+                                    <label id="userid" hidden></label>
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <input type="text" name="firstName" id="firstName" class="form-control" placeholder="First Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Middle Name</label>
+                                        <input type="text" name="middleName" id="middleName" class="form-control" placeholder="Middle Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Last Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email Address</label>
+                                        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Update Password</label>
+                                        <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Confirm Password</label>
+                                        <input type="password" name="confirmPassword" id="confirmpassword" class="form-control" placeholder="Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-block btn-primary btn-round btn_submit" id="btnRegister" type="submit">Update</button>
+                                    </div>
+                                    <div class="spinner-border text-primary mt-2" role="status" id="loginSpinner" style="display:none;">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            </div>
+    </section>
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
+    <script src="~/js/UserAccountUpdate.js?v=@DateTime.Now.Millisecond"></script>
+
+}
+

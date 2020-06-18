@@ -1,0 +1,679 @@
+﻿@{
+    ViewData["Title"] = "Application Detail";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@*<div class="row mb-3">
+
+    </div>
+    <section id="services" class="container">
+        <div class="data_wrap bg_white">
+            <label hidden id="UserID">@ViewData["UserID"]</label>
+            <h1>Hello</h1>
+
+            <div class="row">
+                <div class="col-12 ml-0 mr-0">
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </section>*@
+
+
+
+@*<link href="~/assets2/form/all-type-forms.css" rel="stylesheet" />
+    <link href="~/assets2/css/style.css" rel="stylesheet" />*@
+<style>
+    label {
+        font-weight: bold;
+    }
+</style>
+<section id="services" class="container">
+    <div class="row">
+        <div class="col-12 ml-0 mr-0">
+            <!--University Area-->
+            <div class="uni_section sec_single mb-4">
+                <div class="row uni_heading_area mb-4">
+                    <div class="col-md-8">
+                        <h3 class="text-blue fw_600 my-0">Application Detail</h3>
+                    </div>
+                    @*<div class="col-md-4 text-right">
+            <a class="view_all_btn view_more_uni"><span class="more">View All</span><span class="less">View Less</span></a>
+        </div>*@
+                </div>
+
+                <!-- Single pro tab review Start-->
+
+                <div class="nav-wrapper" style="margin-bottom:30px">
+                    <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true">Personal Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false">Eduction Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false">Family Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-4-tab" data-toggle="tab" href="#tabs-icons-text-4" role="tab" aria-controls="tabs-icons-text-4" aria-selected="false">Visa Info</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="tab-content" id="myTabContent">
+                            <label id="UserApplicationDetailID" hidden>@ViewBag.UserID</label>
+
+                            @* Personal Info Tab Start *@
+                            <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label id="personalInfoUserID" hidden></label>
+                                        <div class="form-group">
+                                            <label>Title </label><br />
+                                            <label name="title" id="title" type="text" class="label" placeholder="Title"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Address</label><br />
+
+                                            <label name="address" id="address" type="text" class="label" placeholder="Address"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>US Address</label><br />
+                                            <label name="usaaddress" id="usaaddress" type="text" class="label" placeholder="USA Address"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Mobile Number</label><br />
+
+                                            <label name="mobileno" id="mobileno" type="text" class="label" placeholder="Mobile no. (xxxx-xxxxxxx)"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Date of Birth </label><br />
+
+                                            <label name="dob" id="dob" type="text" data-language='en' class="label" placeholder="Date of Birth"></label>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Istagram  </label>
+
+                                            <br /> <label name="instagram" id="instagram" type="text" class="label" placeholder="Instagram"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Twitter</label>
+
+                                            <br /> <label name="twitter" id="twitter" type="text" class="label" placeholder="Twitter"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Facebook</label>
+
+                                            <br /> <label name="facebook" id="facebook" type="text" class="label" placeholder="Facebook"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Identification Document No</label>
+                                            <br /> <label name="identificationdocno" id="identificationdocno" type="text" class="label" placeholder="Identification Doc No"></label>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label>Identification Document (.jpg)</label>
+                                            <br /> <a href="#" target="_blank" name="identificationdoc" id="identificationdoc" type="text" class="label" placeholder="Identification Doc"></a>
+
+                                        </div>
+                                        <div class="form-group">
+
+
+                                            <label>Civil Id Front (.jpg)</label>
+                                            <br />
+                                            <a href="#" target="_blank" type="text" name="civilidfront" id="civilidfront" placeholder="Civil id Front"></a>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+
+
+
+                                        <div class="form-group">
+
+                                            <label>Civil Id Back (.jpg)</label>
+                                            <br />
+                                            <a href="#" target="_blank" type="text" name="civilidback" id="civilidback" placeholder="Civil id Back">
+                                            </a>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Gender</label>
+
+                                            <select name="gender" id="gender" class="form-control" disabled>
+                                                <option value="none" selected="" disabled="">Gender</option>
+                                                <option value="0">Male</option>
+                                                <option value="1">Female</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Nationality</label>
+
+                                            <select name="nationality" id="nationality" class="form-control" disabled>
+                                                <option value="none" selected="" disabled="">Nationality</option>
+                                                <option value="0">Indian</option>
+                                                <option value="1">Pakistani</option>
+                                                <option value="2">American</option>
+                                                <option value="3">Chinaies</option>
+                                                <option value="4">Dubai</option>
+                                                <option value="5">Nepali</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>First Language</label>
+
+                                            <select name="language" id="language" class="form-control" disabled>
+                                                <option value="none" selected="" disabled="">First Language</option>
+                                                <option value="0">English</option>
+                                                <option value="1">Urdu</option>
+                                                <option value="2">Arbic</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Marital Status</label>
+
+                                            <select name="maritalstatus" id="maritalstatus" class="form-control" disabled>
+                                                <option value="none" selected="" disabled="">Marital Status</option>
+                                                <option value="0">Married</option>
+                                                <option value="1">Unmarried</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Town</label>
+
+                                            <select name="town" id="town" class="form-control" disabled>
+                                                <option value="none" selected="" disabled="">town</option>
+                                                <option value="0">India</option>
+                                                <option value="1">Pakistan</option>
+                                                <option value="2">Amerika</option>
+                                                <option value="3">China</option>
+                                                <option value="4">Dubai</option>
+                                                <option value="5">Nepal</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>State</label>
+
+                                            <select name="state" id="state" class="form-control" disabled>
+                                                <option value="none" selected="" disabled="">state</option>
+                                                <option value="0">Gujarat</option>
+                                                <option value="1">Maharastra</option>
+                                                <option value="2">Rajastan</option>
+                                                <option value="3">Maharastra</option>
+                                                <option value="4">Rajastan</option>
+                                                <option value="5">Gujarat</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Postal Code</label>
+
+                                            <br /> <label name="postalcode" id="postalcode" type="number" class="label" placeholder="Postal code">
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Telephone Number</label>
+
+                                            <br /> <label name="telephonenumber" id="telephonenumber" type="text" class="label" placeholder="Telephone Number">
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Occupation Sector</label>
+
+                                            <br /> <label name="occupationsector" id="occupationsector" type="text" class="label" placeholder="Occupation Sector">
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Occupation Level</label>
+
+                                            <br /> <label name="occupationlevel" id="occupationlevel" type="text" class="label" placeholder="Occupation Level">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            @* Eduction Info Tab Start *@
+                            <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+                                <form class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                                            <div class="form-group">
+                                                <label>ILETS or TOEFL Marks</label>
+
+                                                <br /> <label name="ILETSorTOEFL" id="ILETSorTOEFL" type="number" class="label" placeholder="ILETS or TOEFL Marks">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Unit Passed</label>
+
+                                                <br /> <label name="UnitsPassed" id="UnitsPassed" type="number" class="label" placeholder="Units Passed">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Last Degree</label>
+
+                                                <br /> <label name="LastDegree" id="LastDegree" type="text" class="label" placeholder="Last Degree">
+                                                </label>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>School Name</label>
+
+                                                <br /> <label name="SchoolName" id="SchoolName" type="text" class="label" placeholder="School Name">
+                                                </label>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+
+                                                <label>High School Degree (.jpg)</label>
+
+                                                <br /> <a href="#" target="_blank" name="HighSchoolDegree" id="HighSchoolDegree" type="text" class="label" placeholder="High School Degree">
+
+                                                </a>
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label>Ministry of Higher Education Doc (.jpg)</label>
+
+                                                <br /> <a href="#" target="_blank" name="MinistryofHigherEducationDoc" id="MinistryofHigherEducationDoc" type="text" class="label" placeholder="Ministry of Higher Education Doc">
+
+                                                </a>
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label>Financial Support (.jpg)</label>
+
+                                                <br /> <a href="#" target="_blank" name="FinancialSupport" id="FinancialSupport" type="text" class="label" placeholder="Financial Support">
+
+                                                </a>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                            @* Family Info Tab Start *@
+                            <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+                                <form class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+
+                                                <label>Parent Passport (.jpg)</label>
+
+                                                <br /> <a href="#" target="_blank" name="ParentPassport" id="ParentPassport" type="text" class="label" placeholder="Parent Passport">
+
+                                                </a>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label>Parent Mobile No</label>
+                                                <br /> <label name="ParentMobileNo" id="ParentMobileNo" type="text" class="label" placeholder="Parent Mobile No (xxxx-xxxxxxx)">
+
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+
+
+                                                <label>Father Civil ID Front (.jpg)</label>
+
+
+                                                <br /> <a href="#" target="_blank" name="FatherCivilIDFront" id="FatherCivilIDFront" type="text" class="label" placeholder="Father Civil ID Front">
+
+                                                </a>
+
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label>Father Civil ID Back (.jpg)</label>
+
+
+                                                <br /> <a href="#" target="_blank" name="FatherCivilIDBack" id="FatherCivilIDBack" type="text" class="label" placeholder="Father Civil ID Back">
+
+                                                </a>
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label>Monther Civil ID Front (.jpg)</label>
+
+                                                <br /> <a href="#" target="_blank" name="MotherCivilIDFront" id="MotherCivilIDFront" type="text" class="label" placeholder="Mother Civil ID Front">
+
+                                                </a>
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label>Mother Civil ID Back (.jpg)</label>
+
+
+                                                <br /> <a href="#" target="_blank" name="MotherCivilIDBack" id="MotherCivilIDBack" type="text" class="label" placeholder="Mother Civil ID Back">
+
+                                                </a>
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label>Spouse Civil ID Front (.jpg)</label>
+
+
+                                                <br /> <a href="#" target="_blank" name="SpouseCivilIDFront" id="SpouseCivilIDFront" type="text" class="label" placeholder="Spouse Civil ID Front">
+                                                </a>
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label>Spouse Civil ID Back (.jpg)</label>
+
+
+                                                <br /> <a href="#" target="_blank" name="SpouseCivilIDBack" id="SpouseCivilIDBack" type="text" class="label" placeholder="Spouse Civil ID Back">
+                                                </a>
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label>Spouse Passport (.jpg)</label>
+
+
+                                                <br /> <a href="#" target="_blank" name="SpousePassport" id="SpousePassport" type="text" class="label" placeholder="Spouse Passport">
+                                                </a>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Friend In US</label>
+                                                <select name="FriendInUS" id="FriendInUS" class="form-control" disabled>
+                                                    <option value="none" selected="" disabled="">Friend In US</option>
+                                                    <option value=true>Yes</option>
+                                                    <option value=false>No</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Friend Address</label>
+
+                                                <br /> <label name="FriendAddress" id="FriendAddress" type="text" class="label" placeholder="Friend Address">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Friend Mobile No</label>
+
+                                                <br /> <label name="FriendMobileNo" id="FriendMobileNo" type="text" class="label" placeholder="Friend Mobile No (xxxx-xxxxxxx)">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Family Friends In US</label>
+
+                                                <select name="FamilyMemberInUS" id="FamilyMemberInUS" class="form-control" disabled>
+                                                    <option value="none" selected="" disabled="">Family Member In US</option>
+                                                    <option value=true>Yes</option>
+                                                    <option value=false>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                                            <div class="form-group">
+                                                <label>Family Member First Name</label>
+
+                                                <br /> <label name="FamilyMemberFirstName" id="FamilyMemberFirstName" type="text" class="label" placeholder="Family Member First Name">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Family Member Last Name</label>
+
+                                                <br /> <label name="FamilyMemberLastName" id="FamilyMemberLastName" type="text" class="label" placeholder="Family Member Last Name">
+                                                </label>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Family Member Relation</label>
+
+                                                <br /> <label name="FamilyMemberRelation" id="FamilyMemberRelation" type="text" class="label" placeholder="Family Member Relation">
+
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Family Member US Citizen</label>
+
+                                                <select name="FamilyMemberUSCitizen" id="FamilyMemberUSCitizen" class="form-control" disabled>
+                                                    <option value="none" selected="" disabled="">Family Member US Citizen</option>
+                                                    <option value=true>Yes</option>
+                                                    <option value=false>No</option>
+
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Family Member Immigrant</label>
+
+                                                <select name="FamilyMemberImmigrant" id="FamilyMemberImmigrant" class="form-control" disabled>
+                                                    <option value="none" selected="" disabled="">Family Member Immigrant</option>
+                                                    <option value=true>Yes</option>
+                                                    <option value=false>No</option>
+
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Family Member Role</label>
+
+                                                <br /> <label name="FamilyMemberRole" id="FamilyMemberRole" type="text" class="label" placeholder="Family Member Role">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>College/University</label>
+
+                                                <br /> <label name="CollegeUniversity" id="CollegeUniversity" type="text" class="label" placeholder="College University">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Major</label>
+
+                                                <br /> <label name="Major" id="Major" type="text" class="label" placeholder="Major">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Organization Name</label>
+
+                                                <br /> <label name="OrganizationName" id="OrganizationName" type="text" class="label" placeholder="Organization Name">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Monthly Salary</label>
+
+                                                <br /> <label name="MonthlySalary" id="MonthlySalary" type="number" class="label" placeholder="Monthly Salary">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Currency</label>
+
+                                                <br /> <label name="Currency" id="Currency" type="text" class="label" placeholder="Currency">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Position</label>
+
+                                                <br /> <label name="Position" id="Position" type="text" class="label" placeholder="Position">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label>Companion Passport (.jpg)</label>
+
+
+                                                <br /> <a href="#" target="_blank" name="CompanionPassport" id="CompanionPassport" type="text" class="label" placeholder="Companion Passport">
+
+
+
+                                                </a>
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label>Companion I201 (.jpg)</label>
+
+
+                                                <br /> <a href="#" target="_blank" name="CompanionI20" id="CompanionI20" type="text" class="label" placeholder="Companion I20">
+
+
+                                                </a>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            @* Visa Info Tab Start *@
+                            <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
+                                <form class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label> Last Visit To US</label>
+                                                <br /> <label name="LastVisitToUS" id="LastVisitToUS" type="text" class="label" placeholder="Last Visit To US">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Days Spent In US</label>
+
+                                                <br /> <label name="DaysSpentInUS" id="DaysSpentInUS" type="number" class="label" placeholder="Days Spent In US">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Countries Visted</label>
+
+                                                <br /> <label name="CountriesVisted" id="CountriesVisted" type="text" class="label" placeholder="Countries Visted">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label>Passport (.jpg)</label>
+
+                                                <br /> <a href="#" target="_blank" name="Passport" id="Passport" type="text" class="label" placeholder="Passport Image">
+                                                </a>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label>Visa Permit (.jpg)</label>
+
+
+                                                <br /> <a href="#" target="_blank" name="VisaPermit" id="VisaPermit" type="text" class="label" placeholder="Visa Permit Image">
+                                                </a>
+
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label>Recommendations (.jpg)</label>
+
+
+                                                <br /> <a href="#" target="_blank" name="Recommendations" id="Recommendations" type="text" class="label" placeholder="Recommendations Attachment">
+
+                                                </a>
+                                            </div>
+
+                                            <div class="form-group">
+
+                                                <label>I20 Document (.jpg)</label>
+
+
+                                                <br /> <a href="#" target="_blank" name="I20Doc" id="I20Doc" type="text" class="label" placeholder="I20 Document">
+
+
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <label>Employee</label>
+                                                <select name="Employee" id="Employee" class="form-control" disabled>
+                                                    <option value="none" selected="" disabled="">Employee</option>
+                                                    <option value=true>Yes</option>
+                                                    <option value=false>No</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Organization Name</label>
+                                                <br /> <label name="OrganizationName" id="OrganizationName" type="text" class="label" placeholder="Organization Name">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Date From</label>
+                                                <br /> <label name="DateFrom" id="DateFrom" type="text" class="label" placeholder="Date From">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Date To</label>
+
+                                                <br /> <label name="DateTo" id="DateTo" type="text" class="label" placeholder="Date To">
+                                                </label>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label>Travel Date</label>
+
+                                                <br /> <label name="TravelDate" id="TravelDate" type="text" class="label" placeholder="Travel Date">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Visa Permit Rejected</label>
+
+                                                <select disabled name="VisaPermitRejected" id="VisaPermitRejected" class="form-control">
+                                                    <option value="none" selected="" disabled="">Visa Permit Rejected</option>
+                                                    <option value=true>Yes</option>
+                                                    <option value=false>No</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Reason Of Rejection</label>
+
+                                                <br /> <label name="ReasonOfRejection" id="ReasonOfRejection" type="text" class="label" placeholder="Reason Of Rejection">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script src="~/js/Application/ApplicationDetail.js?v=@DateTime.Now.Millisecond"></script>
+
+}
