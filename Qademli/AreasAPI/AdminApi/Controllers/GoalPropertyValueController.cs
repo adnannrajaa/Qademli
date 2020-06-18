@@ -64,7 +64,7 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
         [HttpPost]
         public ActionResult PostGoalPropertyValue([FromForm]GoalPropertyUpsert obj)
         {
-            var isAlreadyExist = _context.GoalPropertyValue.Where(s => (s.GoalPropertyID == obj.GoalPropertyID && s.GoalId == obj.GoalID)).FirstOrDefault();
+            var isAlreadyExist = _context.GoalPropertyValue.Where(s => s.GoalPropertyID == obj.GoalPropertyID && s.GoalId == obj.GoalID).FirstOrDefault();
             if (isAlreadyExist != null)
             {
                 return NoContent();
