@@ -102,12 +102,23 @@ namespace Qademli.Models.ViewModel
     {
         [Required]
         public int UserID { get; set; }
+
         public IFormFile HighSchoolDegree { get; set; }
+        [Required]
+
         public int ILETSorTOEFL { get; set; }
+
         public IFormFile MinistryofHigherEducationDoc { get; set; }
+
         public IFormFile FinancialSupport { get; set; }
+        [Required]
+
         public int UnitsPassed { get; set; }
+        [Required]
+
         public string LastDegree { get; set; }
+        [Required]
+
         public string SchoolName { get; set; }
     }
 }

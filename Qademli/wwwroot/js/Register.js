@@ -11,7 +11,7 @@
         confirmPassword: { equalTo: "#password" }
     },
     messages: {
-        firstName : "First Name is required",
+        firstName: "First Name is required",
         inputEmail: {
             required: "Email is required",
             email: "Enter valid email address"
@@ -54,9 +54,12 @@
                 $.notify("Your Account Created Successfully", "success");
                 $('#loginSpinner').hide();
                 $('#btnRegister').prop('disabled', false);
+                window.setTimeout(function () {
+                    window.location.replace("/Account/Login/Login");
+                }, 2000);
             } else if (xhr.status == 204) {
                 $.notify("Email Already Exist", "warn");
-                
+
                 $('#loginSpinner').hide();
                 $('#btnRegister').prop('disabled', false);
             } else {

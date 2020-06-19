@@ -93,7 +93,7 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
             _context.GoalPropertyValue.Remove(goalPropertyValue);
             await _context.SaveChangesAsync();
 
-            return goalPropertyValue;
+            return Ok();
         }
 
         private bool GoalPropertyValueExists(int id)

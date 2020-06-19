@@ -152,7 +152,7 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
 
 
         // DELETE: api/Goal/5
-        [HttpDelete("DeleteGoal/{id}")]
+        [HttpDelete("{id}")]
         public ActionResult DeleteGoal(int id)
         {
             var goal = _context.Goal.Find(id);

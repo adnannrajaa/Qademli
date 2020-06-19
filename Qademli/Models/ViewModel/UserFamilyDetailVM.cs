@@ -257,32 +257,66 @@ namespace Qademli.Models.ViewModel
     {
         [Required]
         public int UserID { get; set; }
+
         public IFormFile ParentPassport { get; set; }
+        [Required]
+
         public string ParentMobileNo { get; set; }
+
         public IFormFile FatherCivilIDFront { get; set; }
+
         public IFormFile FatherCivilIDBack { get; set; }
+
         public IFormFile MotherCivilIDFront { get; set; }
+
         public IFormFile MotherCivilIDBack { get; set; }
+
         public IFormFile SpouseCivilIDFront { get; set; }
+
         public IFormFile SpouseCivilIDBack { get; set; }
+
         public IFormFile SpousePassport { get; set; }
+        [Required]
+
         public bool FriendInUS { get; set; }
         public string FriendAddress { get; set; }
         public string FriendMobileNo { get; set; }
+        [Required]
+
         public bool FamilyMemberInUS { get; set; }
         public string FamilyMemberFirstName { get; set; }
         public string FamilyMemberLastName { get; set; }
         public string FamilyMemberRelation { get; set; }
+        [Required]
+
         public bool FamilyMemberUSCitizen { get; set; }
+        [Required]
+
         public bool FamilyMemberImmigrant { get; set; }
+        [Required]
+
         public string FamilyMemberRole { get; set; }
+        [Required]
+
         public string CollegeUniversity { get; set; }
+        [Required]
+
         public string Major { get; set; }
+        [Required]
+
         public string OrganizationName { get; set; }
+        [Required]
+
         public int MonthlySalary { get; set; }
+        [Required]
+
         public string Currency { get; set; }
+        [Required]
+
         public string Position { get; set; }
+
         public IFormFile CompanionPassport { get; set; }
+
         public IFormFile CompanionI20 { get; set; }
     }
 }

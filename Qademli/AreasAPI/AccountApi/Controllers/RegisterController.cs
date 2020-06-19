@@ -22,24 +22,32 @@ namespace Qademli.AreasAPI.AccountApi.Controllers
         [HttpPost]
         public ActionResult PostUser([FromForm]Register creds)
         {
-            var checkUser = _context.User.Any(x => x.Email == creds.Email);
-            if (checkUser)
+            if (ModelState.IsValid)
             {
-                return NoContent();
-            }
-            User user = new User { 
-                FirstName = creds.FirstName,
-                MiddleName = creds.MiddleName,
-                LastName = creds.LastName,
-                Email=creds.Email,
-                Password= creds.Password,
-                Role = SD.User
-            };
-            
-            _context.User.Add(user);
-            _context.SaveChanges();
+                var checkUser = _context.User.Any(x => x.Email == creds.Email);
+                if (checkUser)
+                {
+                    return NoContent();
+                }
+                User user = new User
+                {
+                    FirstName = creds.FirstName,
+                    MiddleName = creds.MiddleName,
+                    LastName = creds.LastName,
+                    Email = creds.Email,
+                    Password = creds.Password,
+                    Role = SD.User
+                };
 
-            return Ok();
+                _context.User.Add(user);
+                _context.SaveChanges();
+
+                return Ok();
+            }
+            else
+            {
+                return ValidationProblem();
+            }
         }
 
     }

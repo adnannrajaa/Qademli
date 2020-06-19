@@ -98,7 +98,7 @@ let LoadUniversityDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, Topic
                             <div class="row logo_section">
                                 <div class="col-md-12">
                                     <a href="/User/Home/Universities" class="back_btn pos_abs text-blue"><i class="fas fa-chevron-left clr_inhert"></i> Back</a>
-                                    <img src=${imageSrc} style="max-width: 256px;max-height: 253px;" id="detail-Image" alt="uni logo" class="uni_loggo mx-auto mb-4">
+                                    <img src="${imageSrc}" style="max-width: 256px;max-height: 253px;" id="detail-Image" alt="uni logo" class="uni_loggo mx-auto mb-4">
                                     <h4 class="uni_name fw_600 m-0" id="detail-name">${name}</h4>
                             <p class="location" id="detail-location"></p>
                                    
@@ -145,7 +145,7 @@ let SubmitApplication = (UserId, Currency, Fee, GoalId, TopicId) => {
 
             $.ajax(settings).done(function (data, statusText, xhr) {
                 if (xhr.status === 200) {
-                    $.notify("Application Submitted Successfully","success")
+                    $.notify("Application Submitted Successfully", "success")
                 } else {
                     $.notify("Your Request Return " + xhr.status, "Error");
                 }
@@ -155,10 +155,10 @@ let SubmitApplication = (UserId, Currency, Fee, GoalId, TopicId) => {
             $.notify("Your application is already submitted.", "info");
 
         }
-    }else {
-    $.notify("Please complete your application form to procced.", "error");
+    } else {
+        $.notify("Please complete your application form to procced.", "error");
 
-}
+    }
 }
 
 function parseJwt(token) {
@@ -192,7 +192,7 @@ let LoadUniversityProp = (GoalId) => {
         "headers": {
             "Authorization": "Bearer " + localStorage.getItem("token")
         },
-        error: function (jqXHR, textStatus, errorThrown) {  $.notify("Your Request Return " + xhr.status, "Error"); }
+        error: function (jqXHR, textStatus, errorThrown) { $.notify("Your Request Return " + xhr.status, "Error"); }
     };
 
     $.ajax(settings).done(function (data, statusText, xhr) {
@@ -214,7 +214,7 @@ let LoadUniversityProp = (GoalId) => {
 
 
         } else {
-             $.notify("Your Request Return " + xhr.status, "Error");
+            $.notify("Your Request Return " + xhr.status, "Error");
         }
     });
 }

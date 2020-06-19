@@ -70,25 +70,35 @@ namespace Qademli.AreasAPI.UserApi.Controllers
         [HttpPost]
         public ActionResult PostUserEducationDetail([FromForm]UserEducationDetailUpsert obj)
         {
-            var userExist = _context.UserEducationDetail.FirstOrDefault(s => s.UserID == obj.UserID);
-            if (userExist == null)
+            if (ModelState.IsValid)
             {
-                UserEducationDetail userEducationDetail = viewModel.Add(obj);
-                _context.UserEducationDetail.Add(userEducationDetail);
-                _context.SaveChanges();
 
-                return Ok();
+
+                var userExist = _context.UserEducationDetail.FirstOrDefault(s => s.UserID == obj.UserID);
+                if (userExist == null)
+                {
+                    UserEducationDetail userEducationDetail = viewModel.Add(obj);
+                    _context.UserEducationDetail.Add(userEducationDetail);
+                    _context.SaveChanges();
+
+                    return Ok();
+                }
+                else
+                {
+                    UserEducationDetail userEducationDetail = _context.UserEducationDetail.FirstOrDefault(x => x.UserID == obj.UserID);
+                    userEducationDetail = viewModel.Update(userEducationDetail, obj);
+
+                    _context.Entry(userEducationDetail).State = EntityState.Modified;
+                    _context.SaveChanges();
+
+                    return NoContent();
+                }
             }
             else
             {
-                UserEducationDetail userEducationDetail = _context.UserEducationDetail.FirstOrDefault(x => x.UserID == obj.UserID);
-                userEducationDetail = viewModel.Update(userEducationDetail, obj);
-
-                _context.Entry(userEducationDetail).State = EntityState.Modified;
-                _context.SaveChanges();
-
-                return NoContent();
+                return ValidationProblem();
             }
+
         }
 
         // DELETE: api/UserEducationDetail/5

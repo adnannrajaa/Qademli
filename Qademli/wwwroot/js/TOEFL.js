@@ -48,7 +48,7 @@ let ViewAllTOEFL = () => {
         "url": "/api/Goal/GetGoalListByTopicID?id=4",
         "method": "GET",
         "timeout": 0,
-        
+
         error: function (jqXHR, textStatus, errorThrown) {//  $.notify("Your Request Return " + xhr.status, "Error"); 
         }
     };
@@ -99,7 +99,7 @@ let LoadTOEFLDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) =
                             <div class="row logo_section">
                                 <div class="col-md-12">
                                     <a href="/User/Home/TOEFL" class="back_btn pos_abs text-blue"><i class="fas fa-chevron-left clr_inhert"></i> Back</a>
-                                    <img src=${imageSrc} style="max-width: 256px;max-height: 253px;" id="detail-Image" alt="uni logo" class="uni_loggo mx-auto mb-4">
+                                    <img src="${imageSrc}" style="max-width: 256px;max-height: 253px;" id="detail-Image" alt="uni logo" class="uni_loggo mx-auto mb-4">
                                     <h4 class="uni_name fw_600 m-0" id="detail-name">${name}</h4>
                             <p class="location" id="detail-location"></p>
                                    
@@ -195,7 +195,7 @@ let LoadTOEFLProp = (GoalId) => {
         "headers": {
             "Authorization": "Bearer " + localStorage.getItem("token")
         },
-        error: function (jqXHR, textStatus, errorThrown) {  $.notify("Your Request Return " + xhr.status, "Error"); }
+        error: function (jqXHR, textStatus, errorThrown) { $.notify("Your Request Return " + xhr.status, "Error"); }
     };
 
     $.ajax(settings).done(function (data, statusText, xhr) {
@@ -217,7 +217,7 @@ let LoadTOEFLProp = (GoalId) => {
 
 
         } else {
-             $.notify("Your Request Return " + xhr.status, "Error");
+            $.notify("Your Request Return " + xhr.status, "Error");
         }
     });
 }

@@ -135,27 +135,66 @@ namespace Qademli.Models.ViewModel
     {
         [Required]
         public int UserID { get; set; }
+        [Required]
+
         public string MaritalStatus { get; set; }
+
         public IFormFile CivilIDFront { get; set; }
+
         public IFormFile CivilIDBack { get; set; }
+        [Required]
+
         public string Address { get; set; }
+        [Required]
+
         public string MobileNumber { get; set; }
+        [Required]
+
         public string Instagram { get; set; }
+        [Required]
+
         public string Twitter { get; set; }
+        [Required]
+
         public string Facebook { get; set; }
+        [Required]
+
         public string USAddress { get; set; }
+        [Required]
+
         public string Title { get; set; }
+        [Required]
+
         public string Gender { get; set; }
+        [Required]
+
         public string FirstLanguage { get; set; }
+        [Required]
+
         public string Nationality { get; set; }
+        [Required]
+
         public DateTime DOB { get; set; }
+
         public IFormFile IdentificationDoc { get; set; }
+        [Required]
+
         public string IdentificationDocNo { get; set; }
+        [Required]
+
         public string TownCity { get; set; }
+        [Required]
+
         public string StateCountry { get; set; }
+        [Required]
+
         public int ZipPostalCode { get; set; }
         public string TelephoneNumber { get; set; }
+        [Required]
+
         public string OccupationSector { get; set; }
+        [Required]
+
         public string OccupationLevel { get; set; }
     }
 }

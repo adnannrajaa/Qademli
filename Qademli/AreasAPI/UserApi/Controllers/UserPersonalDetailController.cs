@@ -91,26 +91,29 @@ namespace Qademli.AreasAPI.UserApi.Controllers
         [HttpPost]
         public ActionResult PostUserPersonalDetail([FromForm]UserPersonalDetailUpsert obj)
         {
-            
 
-            var userExist = _context.UserPersonalDetail.FirstOrDefault(s=>s.UserID == obj.UserID);
-            if(userExist == null)
+            if (ModelState.IsValid)
             {
-                UserPersonalDetail userPersonalDetail = viewModel.Add(obj);
-                _context.UserPersonalDetail.Add(userPersonalDetail);
-                _context.SaveChanges();
+                var userExist = _context.UserPersonalDetail.FirstOrDefault(s => s.UserID == obj.UserID);
+                if (userExist == null)
+                {
+                    UserPersonalDetail userPersonalDetail = viewModel.Add(obj);
+                    _context.UserPersonalDetail.Add(userPersonalDetail);
+                    _context.SaveChanges();
 
-                return Ok();
-            }
-            else
-            {
-                UserPersonalDetail userPersonalDetail = _context.UserPersonalDetail.FirstOrDefault(x => x.UserID == obj.UserID);
-                userPersonalDetail = viewModel.Update(userPersonalDetail, obj);
-                _context.Entry(userPersonalDetail).State = EntityState.Modified;
-                _context.SaveChanges();
+                    return Ok();
+                }
+                else
+                {
+                    UserPersonalDetail userPersonalDetail = _context.UserPersonalDetail.FirstOrDefault(x => x.UserID == obj.UserID);
+                    userPersonalDetail = viewModel.Update(userPersonalDetail, obj);
+                    _context.Entry(userPersonalDetail).State = EntityState.Modified;
+                    _context.SaveChanges();
 
-                return NoContent();
+                    return NoContent();
+                }
             }
+            else { return ValidationProblem(); }
 
 
         }

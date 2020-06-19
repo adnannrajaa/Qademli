@@ -1,5 +1,5 @@
 ﻿$(() => {
-    LoadData(localStorage.getItem("token"));
+    LoadData();
     LoadStatus();
     $("#ApplicationLi").attr("class", "active");
 
@@ -23,21 +23,11 @@ var LoadStatus = () => {
     });
 }
 
-var LoadData = (token) => {
-    var settings = {
-        "url": "/api/Application",
-        "method": "GET",
-        "timeout": 0,
-        "headers": {
-            "Authorization": "Bearer " + token
-        },
-        error: function (jqXHR, textStatus, errorThrown) {  $.notify("Your Request Return " + xhr.status, "Error"); }
-    };
-
-    $.ajax(settings).done(function (data, statusText, xhr) {
+var LoadData = () => {
+    let xhr = SendAjaxRequestForGet("/api/Application")
         if (xhr.status === 200) {
-            console.log(data);
             $('#tBody').empty();
+            let data = xhr.responseJSON;
             if (data.length > 0) {
                 $.each(data, function (index, item) {
                     var str = `<tr>
@@ -60,9 +50,8 @@ var LoadData = (token) => {
 
             }
         } else {
-             $.notify("Your Request Return " + xhr.status, "Error");
+             $.notify("Your Request Return " + xhr, "Error");
         }
-    });
 }
 
 let updateModal = (ID, GoalID, StatusID, TopicID, UserID, Comment, Fee, Currency) => {
@@ -88,30 +77,15 @@ $(() => {
             var form = new FormData();
             form.append("Comment", $('#comment').val());
             form.append("StatusID", $('#status').val());
+            let xhr = SendAjaxRequestWithFormData("/api/Application/" + $('#appid').val(),"PUT",form)
 
-            var settings = {
-                "url": "/api/Application/" + $('#appid').val(),
-                "method": "PUT",
-                "timeout": 0,
-                "processData": false,
-                "mimeType": "multipart/form-data",
-                "contentType": false,
-                "data": form,
-                "headers": {
-                    "Authorization": "Bearer " + localStorage.getItem("token")
-                }
-            };
-
-            $.ajax(settings).done(function (data, statusText, xhr) {
-                if (xhr.status === 204) {
-                    LoadData(localStorage.getItem("token"));
+            if (xhr.status === 204) {
+                $.notify("Application updated successfully", "success");
+                    LoadData();
                     $('#myModal').modal('hide');
-                    // console.log(data);
                 } else {
-                     $.notify("Your Request Return " + xhr.status, "Error");
+                     $.notify("Your Request Return " + xhr, "error");
                 }
-            });
-
         }
     });
 })

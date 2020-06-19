@@ -4,6 +4,7 @@ using Qademli.Models.DatabaseModel;
 using Qademli.Utility;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -71,10 +72,18 @@ namespace Qademli.Models.ViewModel
     }
 
     public class GoalUpsert {
+        [Required]
         public int TopicID { get; set; }
+        [Required]
+
         public string Name { get; set; }
+
         public IFormFile Image { get; set; }
+        [Required]
+
         public float Fee { get; set; }
+        [Required]
+
         public string Currency { get; set; }
     }
 

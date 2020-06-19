@@ -25,31 +25,18 @@ var LoadProperty = (id, propertyid) => {
 
 
 var LoadData = () => {
-    var settings = {
-        "url": "/api/ViewGoalProperty/" + $('#goalid').data('goalid'),
-        "method": "GET",
-        "timeout": 0,
-        "headers": {
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        },
-        error: function (jqXHR, textStatus, errorThrown) {  $.notify("Your Request Return " + xhr.status, "Error"); }
-    };
-
-    $.ajax(settings).done(function (data, statusText, xhr) {
-        if (xhr.status === 200) {
-            var result = data.Data;
-            if (result.length > 0) {
-                loadResultData(result)
-            } else {
-                clearTable();
-            }
-
-            
-            
+    let xhr = SendAjaxRequestForGet("/api/ViewGoalProperty/" + $('#goalid').data('goalid'))
+    if (xhr.status === 200) {
+        console.log(xhr)
+        var result = xhr.responseJSON.Data;
+        if (result.length > 0) {
+            loadResultData(result)
         } else {
-             $.notify("Your Request Return " + xhr.status, "Error");
+            clearTable();
         }
-    });
+    } else {
+        $.notify("Your Request Return " + xhr, "error");
+    }
 }
 
 let clearTable = () => {
@@ -115,28 +102,15 @@ var deleteModal = (id, name) => {
 }
 
 var deleteUser = (id) => {
-    var settings = {
-        "url": "/api/GoalPropertyValue/" + id,
-        "method": "DELETE",
-        "timeout": 0,
-        error: function (jqXHR, textStatus, errorThrown) {  $.notify("Your Request Return " + xhr.status, "error"); },
-        "headers": {
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        }
-    };
+    let xhr = SendAjaxRequestForDelete("/api/GoalPropertyValue/" + id)
+    if (xhr.status === 200) {
+        LoadData();
+        $('#myModal3').modal('hide');
+        $.notify("Goal Property Value deleted Successfully", "success");
 
-    $.ajax(settings).done(function (data, statusText, xhr) {
-        if (xhr.status === 404) {
-//            window.location.replace('/Screen/Login');
-            $.notify("Your Request Return " + xhr.status, "Error");
-            // console.log(data);
-        } else {
-            LoadData();
-            $('#myModal3').modal('hide');
-            $.notify("Goal Property Value deleted Successfully", "success");
-
-        }
-    });
+    } else {
+        $.notify("Your Request Return " + xhr.status, "Error");
+    }
 }
 
 
@@ -156,22 +130,7 @@ $(() => {
             form.append("GoalPropertyID", $('#property').val());
             form.append("GoalID", $('#goalid').data('goalid'));
             form.append("Name", $('#value').val());
-
-            var settings = {
-                "url": "/api/GoalPropertyValue",
-                "method": "POST",
-                "timeout": 0,
-                "processData": false,
-                "mimeType": "multipart/form-data",
-                "contentType": false,
-                "data": form,
-                "headers": {
-                    "Authorization": "Bearer " + localStorage.getItem("token")
-                }
-            };
-
-            $.ajax(settings).done(function (data, statusText, xhr) {
-                console.log(xhr.status)
+            let xhr = SendAjaxRequestWithFormData("/api/GoalPropertyValue","POST",form)
                 if (xhr.status === 200) {
                     $("#myModal form").trigger("reset");
                     LoadData();
@@ -186,10 +145,8 @@ $(() => {
 
                 }
                 else {
-                     $.notify("Your Request Return " + xhr.status, "error");
+                     $.notify("Your Request Return " + xhr, "error");
                 }
-            });
-
         }
     });
 
@@ -211,31 +168,15 @@ $(() => {
             form.append("ID", $('#propertyid').val());
             form.append("GoalDetailID", $('#propertyid').data('goaldetailid'));
             form.append("GoalPropValueId", $('#propertyid').data('GoalPropValueId'))
-
-            var settings = {
-                "url": "/api/GoalPropertyValue/" + $('#propertyid').val(),
-                "method": "PUT",
-                "timeout": 0,
-                "processData": false,
-                "mimeType": "multipart/form-data",
-                "contentType": false,
-                "data": form,
-                "headers": {
-                    "Authorization": "Bearer " + localStorage.getItem("token")
-                }
-            };
-
-            $.ajax(settings).done(function (data, statusText, xhr) {
+            let xhr = SendAjaxRequestWithFormData("/api/GoalPropertyValue/" + $('#propertyid').val(), "PUT", form)
                 if (xhr.status === 204) {
-                    LoadData(localStorage.getItem("token"));
+                    LoadData();
                     $('#myModal2').modal('hide');
                     $.notify("Goal Property Value Updated Successfully", "success");
 
                 } else {
-                     $.notify("Your Request Return " + xhr.status, "Error");
+                     $.notify("Your Request Return " + xhr, "Error");
                 }
-            });
-
         }
     });
    

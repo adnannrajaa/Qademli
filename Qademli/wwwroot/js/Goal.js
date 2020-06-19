@@ -1,11 +1,11 @@
 ﻿$(() => {
-    LoadData(localStorage.getItem("token")); 
+    LoadData();
     LoadTopic("topic1", "");
     $("#GoalLi").attr("class", "active");
 
 });
 
-var LoadTopic = (id,topicid) => {
+var LoadTopic = (id, topicid) => {
     $.ajax({
         type: "GET",
         url: "/api/Topic",
@@ -21,25 +21,17 @@ var LoadTopic = (id,topicid) => {
             $("#" + id).html(s);
             $("#" + id).val(topicid);
         }
-    });  
+    });
 }
 
-var LoadData = (token) => {
-    var settings = {
-        "url": "/api/Goal/GetGoalWithTopic",
-        "method": "GET",
-        "timeout": 0,
-        "headers": {
-            "Authorization": "Bearer " + token
-        },
-    };
-
-    $.ajax(settings).done(function (data, statusText, xhr) {
-        if (xhr.status === 200) {
-            $('#tBody').empty();
-            if (data.length > 0) {
-                $.each(data, function (index, item) {
-                    var str = `<tr>
+var LoadData = () => {
+    let xhr = SendAjaxRequestForGet("/api/Goal/GetGoalWithTopic")
+    if (xhr.status === 200) {
+        $('#tBody').empty();
+        let data = xhr.responseJSON;
+        if (data.length > 0) {
+            $.each(data, function (index, item) {
+                var str = `<tr>
                                 <td class="align-middle text-center">${index + 1}</td>
                                 <td class="align-middle text-center">${item.Name}</td>
                                 <td class="align-middle text-center"><img src="${item.Image}" width="75" height="75"/></td>
@@ -51,14 +43,13 @@ var LoadData = (token) => {
                                     <a class="btn btn-info" href="/Admin/Dashboard/ViewGoalProperty?goalId=${item.ID}&goal=${item.Name}">Properties</a>
                                 </td>
                             </tr>`;
-                    $('#tBody').append(str);
-                });
+                $('#tBody').append(str);
+            });
 
-            }
-        } else {
-            $.notify("Your Request Return " + xhr.status, "Error")
         }
-    });
+    } else {
+        $.notify("Your Request Return " + xhr.status, "Error")
+    }
 }
 
 var openModal = () => {
@@ -105,7 +96,7 @@ var editModal = (id, name, topicid, fee, currency, image) => {
                 `;
     $('#editGoalForm').html(str);
     LoadTopic("topic2", topicid);
-    
+
 }
 
 var deleteModal = (id, name) => {
@@ -115,152 +106,109 @@ var deleteModal = (id, name) => {
 }
 
 var deleteUser = (id) => {
-    var settings = {
-        "url": "/api/Goal/DeleteGoal/" + id,
-        "method": "DELETE",
-        "timeout": 0,
-        "headers": {
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        }
-    };
+    let xhr = SendAjaxRequestForDelete("/api/Goal/" + id)
+    if (xhr.status === 200) {
+        LoadData();
+        $('#myModal3').modal('hide');
+        $.notify("Goal Deleted Successfully", "success")
+    }
+    else if (xhr.status === 404) {
+        LoadData();
+        $('#myModal3').modal('hide');
+        $.notify("Goal Id not found. Unable to delete " + xhr.status, "error");
 
-    $.ajax(settings).done(function (data, statusText, xhr) {
-        if (xhr.status === 200) {
-            LoadData(localStorage.getItem("token"));
-            $('#myModal3').modal('hide');
-            $.notify("Goal Deleted Successfully", "success")
-        }
-        else if (xhr.status === 404) {
-            LoadData(localStorage.getItem("token"));
-            $('#myModal3').modal('hide');
-            $.notify("Goal Id not found. Unable to delete " + xhr.status, "error");
-
-        } else {
-            LoadData(localStorage.getItem("token"));
-            $('#myModal3').modal('hide');
-            $.notify("Your Request Return " + xhr.status, "error");
-        }
-    });
+    } else {
+        LoadData();
+        $('#myModal3').modal('hide');
+        $.notify("Your Request Return " + xhr, "error");
+    }
 }
 
-    //Add Goal
-    $('#myModal form').validate({
-        rules: {
-            topic1: "required",
-            name1: "required",
-            image1: {
-                required: true
-            },
-            fee1: "required",
-            currency1: "required",
+//Add Goal
+$('#myModal form').validate({
+    rules: {
+        topic1: "required",
+        name1: "required",
+        image: {
+            required: true
         },
-        messages: {
-            topic1: "Choose Topic",
-            name1: "Name is required",
-            image1:{
-                required: "Image is Required"
-            },
-            fee1: "Fee is required",
-            currency1: "Currency is required",
+        fee1: "required",
+        currency1: "required",
+    },
+    messages: {
+        topic1: "Choose Topic",
+        name1: "Name is required",
+        image: {
+            required: "Image is Required"
         },
-        submitHandler: function (form) {
-            $("#btnAddGoal").attr("disabled", true);
-            var form = new FormData();
-            form.append("TopicID", $('#topic1').val());
-            form.append("Name", $('#name1').val());
-            form.append("Image", $('input[type=file]')[0].files[0]);
-            form.append("Fee", $('#fee1').val());
-            form.append("Currency", $('#currency1').val());
+        fee1: "Fee is required",
+        currency1: "Currency is required",
+    },
+    submitHandler: function (form) {
+        $("#btnAddGoal").attr("disabled", true);
+        var form = new FormData();
+        form.append("TopicID", $('#topic1').val());
+        form.append("Name", $('#name1').val());
+        form.append("Image", $('input[type=file]')[0].files[0]);
+        form.append("Fee", $('#fee1').val());
+        form.append("Currency", $('#currency1').val());
 
-            var settings = {
-                "url": "/api/Goal",
-                "method": "POST",
-                "timeout": 0,
-                "async": false,
-                "processData": false,
-                "mimeType": "multipart/form-data",
-                "contentType": false,
-                "data": form,
-                "headers": {
-                    "Authorization": "Bearer " + localStorage.getItem("token")
-                }
-            };
-
-            $.ajax(settings).done(function (data, statusText, xhr) {
-                if (xhr.status === 200) {
-                    LoadData(localStorage.getItem("token"));
-                    $('#myModal').modal('hide');
-                    $.notify("Goal Added Successfully", "success")
-                    $("#myModal form").trigger("reset");
-                    $("#btnAddGoal").removeAttr("disabled");
-
-
-
-                } else {
-                    LoadData(localStorage.getItem("token"));
-                    $('#myModal').modal('hide');
-                    $("#myModal form").trigger("reset");
-                    $("#btnAddGoal").removeAttr("disabled");
-                    $.notify("Your Request Return " + xhr.status, "Error")
-                }
-            });
-
+        var xhr = SendAjaxRequestWithFormData("/api/Goal", "POST", form)
+        if (xhr.status === 200) {
+            LoadData();
+            $('#myModal').modal('hide');
+            $.notify("Goal Added Successfully", "success")
+            $("#myModal form").trigger("reset");
+            $("#btnAddGoal").removeAttr("disabled");
+        } else {
+            LoadData();
+            $('#myModal').modal('hide');
+            $("#myModal form").trigger("reset");
+            $("#btnAddGoal").removeAttr("disabled");
+            $.notify("Your Request Return " + xhr, "error")
         }
-    });
+    }
+});
 
-    //Edit User
-    $('#myModal2 form').validate({
-        rules: {
-            topic2: "required",
-            name2: "required",
-            image2:"required",
-            fee2: "required",
-            currency2: "required",
-        },
-        messages: {
-            topic2: "Choose Topic",
-            name2: "Name is required",
-            fee2: "Fee is required",
-            image2: "Image is required",
-            currency2: "Currency is required",
-        },
-        submitHandler: function (form) {
-            var form = new FormData();
-            form.append("TopicID", $('#topic2').val());
-            form.append("Name", $('#name2').val());
-            form.append("Image", $('#image2')[0].files[0]);
-            form.append("Fee", $('#fee2').val());
-            form.append("Currency", $('#currency2').val());
+//Edit Goal
+$('#myModal2 form').validate({
+    rules: {
+        topic2: "required",
+        name2: "required",
+        image3: "required",
+        fee2: "required",
+        currency2: "required",
+    },
+    messages: {
+        topic2: "Choose Topic",
+        name2: "Name is required",
+        fee2: "Fee is required",
+        image3: "Image is required",
+        currency2: "Currency is required",
+    },
+    submitHandler: function (form) {
+        var form = new FormData();
+        form.append("TopicID", $('#topic2').val());
+        form.append("Name", $('#name2').val());
+        form.append("Image", $('#image2')[0].files[0]);
+        form.append("Fee", $('#fee2').val());
+        form.append("Currency", $('#currency2').val());
 
-            var settings = {
-                "url": "/api/Goal/" + $('#goalid').val(),
-                "method": "PUT",
-                "timeout": 0,
-                "async": false,
-                "processData": false,
-                "mimeType": "multipart/form-data",
-                "contentType": false,
-                "data": form,
-                "headers": {
-                    "Authorization": "Bearer " + localStorage.getItem("token")
-                }
-            };
+        var xhr = SendAjaxRequestWithFormData("/api/Goal/" + $('#goalid').val(), "PUT", form)
+        console.log(xhr)
+        if (xhr.status === 200) {
+            LoadData();
+            $('#myModal2').modal('hide');
+            $.notify("Goal Updated Successfully", "success")
 
-            $.ajax(settings).done(function (data, statusText, xhr) {
-                console.log(xhr.status)
-                if (xhr.status === 200) {
-                    LoadData(localStorage.getItem("token"));
-                    $('#myModal2').modal('hide');
-                    $.notify("Goal Updated Successfully", "success")
-
-                } else if (xhr.status === 404) {
-                    LoadData(localStorage.getItem("token"));
-                    $('#myModal2').modal('hide');
-                    $.notify("Goal Id not found. Unable to update", "error")
-                } else {
-                     $.notify("Your Request Return " + xhr.status, "error");
-                }
-            });
-
+        } else if (xhr.status === 404) {
+            LoadData();
+            $('#myModal2').modal('hide');
+            $.notify("Goal Id not found. Unable to update", "error")
+        } else {
+            $.notify("Your Request Return " + xhr, "error");
         }
-    });
+
+
+    }
+});

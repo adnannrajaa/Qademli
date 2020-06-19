@@ -43,9 +43,9 @@ namespace Qademli.Models.ViewModel
             }
             
             userVisaDetail.UserID = obj.UserID;
-            userVisaDetail.DateFrom = obj.DateFrom;
+            userVisaDetail.DateFrom = Convert.ToDateTime(obj.DateFrom);
             userVisaDetail.LastVisitToUS = obj.LastVisitToUS;
-            userVisaDetail.DateTo = obj.DateTo;
+            userVisaDetail.DateTo = Convert.ToDateTime(obj.DateTo);
             userVisaDetail.TravelDate = obj.TravelDate;
             userVisaDetail.CountriesVisted = obj.CountriesVisted;
             userVisaDetail.DaysSpentInUS = obj.DaysSpentInUS;
@@ -62,8 +62,8 @@ namespace Qademli.Models.ViewModel
             userVisaDetail.ReasonOfRejection = obj.ReasonOfRejection;
             userVisaDetail.OrganizationName = obj.OrganizationName;
             userVisaDetail.LastVisitToUS = obj.LastVisitToUS;
-            userVisaDetail.DateFrom = obj.DateFrom;
-            userVisaDetail.DateTo = obj.DateTo;
+            userVisaDetail.DateFrom = Convert.ToDateTime(obj.DateFrom);
+            userVisaDetail.DateTo = Convert.ToDateTime(obj.DateTo);
             userVisaDetail.DaysSpentInUS = obj.DaysSpentInUS;
             userVisaDetail.CountriesVisted = obj.CountriesVisted;
             if (obj.Passport != null)
@@ -125,22 +125,32 @@ namespace Qademli.Models.ViewModel
             }
         }
     }
+
     public class UserVisaDetailUpsert
     {
         [Required]
         public int UserID { get; set; }
+
         public IFormFile Passport { get; set; }
+
         public IFormFile VisaPermit { get; set; }
+
         public IFormFile Recommendations { get; set; }
         public DateTime LastVisitToUS { get; set; }
+        [Required]
+
         public int DaysSpentInUS { get; set; }
+        [Required]
+
         public string CountriesVisted { get; set; }
         public IFormFile I20Doc { get; set; }
         public bool Employee { get; set; }
         public string OrganizationName { get; set; }
-        public DateTime DateTo { get; set; }
-        public DateTime DateFrom { get; set; }
+        public string DateTo { get; set; }
+        public string DateFrom { get; set; }
         public DateTime TravelDate { get; set; }
+        [Required]
+
         public bool VisaPermitRejected { get; set; }
         public string ReasonOfRejection { get; set; }
     }

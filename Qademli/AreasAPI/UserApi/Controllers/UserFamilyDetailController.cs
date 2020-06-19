@@ -79,24 +79,32 @@ namespace Qademli.AreasAPI.UserApi.Controllers
         [HttpPost]
         public ActionResult PostUserFamilyDetail([FromForm]UserFamilyDetailUpsert obj)
         {
-            var userExist = _context.UserFamilyDetail.FirstOrDefault(s => s.UserID == obj.UserID);
-            if (userExist == null)
+            if (ModelState.IsValid)
             {
-                UserFamilyDetail userFamilyDetail = viewModel.Add(obj);
-                _context.UserFamilyDetail.Add(userFamilyDetail);
-                 _context.SaveChanges();
-                return Ok();
+                var userExist = _context.UserFamilyDetail.FirstOrDefault(s => s.UserID == obj.UserID);
+                if (userExist == null)
+                {
+                    UserFamilyDetail userFamilyDetail = viewModel.Add(obj);
+                    _context.UserFamilyDetail.Add(userFamilyDetail);
+                    _context.SaveChanges();
+                    return Ok();
+
+                }
+                else
+                {
+                    UserFamilyDetail userFamilyDetail = _context.UserFamilyDetail.FirstOrDefault(x => x.UserID == obj.UserID);
+                    userFamilyDetail = viewModel.Update(userFamilyDetail, obj);
+
+                    _context.Entry(userFamilyDetail).State = EntityState.Modified;
+                    return NoContent();
+
+                }
 
             }
             else
             {
-                UserFamilyDetail userFamilyDetail =  _context.UserFamilyDetail.FirstOrDefault(x => x.UserID == obj.UserID);
-                userFamilyDetail = viewModel.Update(userFamilyDetail, obj);
-
-                _context.Entry(userFamilyDetail).State = EntityState.Modified;
-                return NoContent();
+                return ValidationProblem();
             }
-
 
         }
 
