@@ -24,6 +24,7 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
         }
 
         // GET: api/CallSchedules
+        [Authorize(SD.Admin)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CallSchedule>>> GetcallSchedule()
         {
@@ -39,13 +40,15 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
 
             return Ok(record);
         }
+
+        [Authorize(SD.Admin)]
         // GET: api/CallSchedules/CallStatus
         [HttpGet("CallStatus")]
         public async Task<ActionResult<IEnumerable<CallStatus>>> CallStatus()
         {
             return await _context.callStatus.ToListAsync();
         }
-
+        [Authorize(SD.Admin)]
         // GET: api/CallSchedules/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CallSchedule>> GetCallSchedule(int id)
@@ -63,6 +66,7 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
         // PUT: api/CallSchedules/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        [Authorize(SD.Admin)]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCallSchedule(int id, [FromForm]int Status)
         {

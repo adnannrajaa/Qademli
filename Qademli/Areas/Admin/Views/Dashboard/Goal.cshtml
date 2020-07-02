@@ -37,7 +37,7 @@
                                             <a asp-area="Admin" asp-controller="Services" asp-action="LanguageCenter">
 
                                                 <b>Language Center</b>
-                                                </a>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -50,7 +50,7 @@
                                             <a asp-area="Admin" asp-controller="Services" asp-action="VisaPermit">
 
                                                 <b> Visa Permit</b>
-                                                </a>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@
                                             <a asp-area="Admin" asp-controller="Services" asp-action="IELETTest">
 
                                                 <b>IELTS Test</b>
-                                                </a>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -80,3 +80,6 @@
     </div>
 
 </section>
+@section scripts {
+    <script src="~/js/Goal.js?v=@DateTime.Now.Millisecond"></script>
+}
