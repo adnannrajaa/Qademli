@@ -471,3 +471,5 @@ C:\Users\Adnan Raja\Documents\GitHub\Qademli\Qademli\obj\Debug\netcoreapp3.0\Qad
 C:\Users\Adnan Raja\Documents\GitHub\Qademli\Qademli\obj\Debug\netcoreapp3.0\Qademli.pdb
 C:\Users\Adnan Raja\Documents\GitHub\Qademli\Qademli\obj\Debug\netcoreapp3.0\Qademli.genruntimeconfig.cache
 C:\Users\Adnan Raja\Documents\GitHub\Qademli\Qademli\obj\Debug\netcoreapp3.0\Razor\Areas\Admin\Views\Dashboard\Calls.cshtml.g.cs
+C:\Users\Adnan Raja\Documents\GitHub\Qademli\Qademli\obj\Debug\netcoreapp3.0\Razor\Areas\Admin\Views\Dashboard\GoalPropertyHeading.cshtml.g.cs
+C:\Users\Adnan Raja\Documents\GitHub\Qademli\Qademli\obj\Debug\netcoreapp3.0\Qademli.csprojAssemblyReference.cache

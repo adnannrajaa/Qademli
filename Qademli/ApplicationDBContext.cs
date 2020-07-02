@@ -23,6 +23,9 @@ namespace Qademli
         public DbSet<CallSchedule> callSchedule { get; set; }
         public DbSet<CallStatus> callStatus { get; set; }
         public DbSet<ApplicationStatus> ApplicationStatus { get; set; }
+        public DbSet<GoalPropertyHeading> GoalPropertyHeading { get; set; }
+
+
 
 
 

@@ -63,6 +63,20 @@ namespace Qademli.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GoalPropertyHeading",
+                columns: table => new
+                {
+                    HeadingId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GoalPropId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GoalPropertyHeading", x => x.HeadingId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Topic",
                 columns: table => new
                 {
@@ -103,6 +117,7 @@ namespace Qademli.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GoalId = table.Column<int>(nullable: false),
                     GoalPropertyID = table.Column<int>(nullable: false),
+                    GoalHeadingID = table.Column<int>(nullable: true),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -430,6 +445,9 @@ namespace Qademli.Migrations
 
             migrationBuilder.DropTable(
                 name: "GoalDetail");
+
+            migrationBuilder.DropTable(
+                name: "GoalPropertyHeading");
 
             migrationBuilder.DropTable(
                 name: "GoalPropertyValue");

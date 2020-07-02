@@ -72,7 +72,6 @@ let ViewAllVisa = () => {
 }
 
 let LoadVisaDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) => {
-    LoadVisaProp(GoalId)
     $("#detail_item1").removeClass("d-none");
     $("#headingVisa").addClass("d-none");
     $("#VisaList").addClass("d-none");
@@ -105,6 +104,8 @@ let LoadVisaDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) =>
     } else {
         $("#btn-login").removeClass("d-none")
     }
+    LoadVisaProp(GoalId)
+
 }
 
 let SubmitApplication = (UserId, Currency, Fee, GoalId, TopicId) => {
@@ -150,21 +151,7 @@ let LoadVisaProp = (GoalId) => {
     let xhr = SendAjaxRequestForGet("/api/ViewGoalProperty/" + GoalId)
     if (xhr.status === 200) {
         var result = xhr.responseJSON;
-        if (result.length > 0) {
-            loadResultData(result)
-        } else {
-            var str = `<tr >
-                                <td </td>
-                                <td> </td>
-                                <td ></td>
-                               <td ></td>
-                                   
-                            </tr>`;
-            $('#tBody').append(str);
-        }
-
-
-
+        loadResultData(result.Data)
     } else {
         $.notify("Your Request Return " + xhr, "error");
     }
@@ -198,6 +185,7 @@ let renderRow = (row, index) => {
 
 
 `
+
     $("#LoadVisaProp").append(str);
 
 

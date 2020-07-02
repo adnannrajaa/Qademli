@@ -76,7 +76,6 @@ let ViewAllIELTS = () => {
 }
 
 let LoadIELTSDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) => {
-    LoadIELTSProp(GoalId)
     $("#detail_item1").removeClass("d-none");
     $("#headingIELTS").addClass("d-none");
     $("#IELTSList").addClass("d-none");
@@ -91,7 +90,7 @@ let LoadIELTSDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) =
                                    
                                 </div>
                             </div>
-                            <div class="row mx-auto w_1000 text-left mt-4" id="LoadIELTSProp">
+                            <div class="row mx-auto w_1000 text-left mt-4" id="IELTSProp">
                                
                             </div>
                             <div class="row mx-auto w_1000 text-left mt-4" id="btn_wrap">
@@ -109,6 +108,8 @@ let LoadIELTSDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) =
     } else {
         $("#btn-login").removeClass("d-none")
     }
+    LoadIELTSProp(GoalId)
+
 }
 
 let SubmitApplication = (UserId, Currency, Fee, GoalId, TopicId) => {
@@ -154,23 +155,9 @@ let LoadIELTSProp = (GoalId) => {
     let xhr = SendAjaxRequestForGet("/api/ViewGoalProperty/" + GoalId)
         if (xhr.status === 200) {
             var result = xhr.responseJSON;;
-            if (result.length > 0) {
-                loadResultData(result)
-            } else {
-                var str = `<tr >
-                                <td </td>
-                                <td> </td>
-                                <td ></td>
-                               <td ></td>
-                                   
-                            </tr>`;
-                $('#tBody').append(str);
-            }
-
-
-
+            loadResultData(result.Data)
         } else {
-            $.notify("Your Request Return " + xhr, "Error");
+            $.notify("Your Request Return " + xhr, "error");
         }
 }
 
@@ -202,7 +189,8 @@ let renderRow = (row, index) => {
 
 
 `
-    $("#LoadIELTSProp").append(str);
+
+    $("#IELTSProp").append(str);
 
 
 

@@ -52,6 +52,7 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
 
             var finddata = _context.GoalPropertyValue.Find(id);
             finddata.Name = obj.Name;
+            finddata.GoalHeadingID = obj.GoalHeadingID;
             await _context.SaveChangesAsync();
             
 
@@ -64,17 +65,17 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
         [HttpPost]
         public ActionResult PostGoalPropertyValue([FromForm]GoalPropertyUpsert obj)
         {
-            var isAlreadyExist = _context.GoalPropertyValue.Where(s => s.GoalPropertyID == obj.GoalPropertyID && s.GoalId == obj.GoalID).FirstOrDefault();
-            if (isAlreadyExist != null)
-            {
-                return NoContent();
-            }
+            //var isAlreadyExist = _context.GoalPropertyValue.Where(s => s.GoalPropertyID == obj.GoalPropertyID && s.GoalId == obj.GoalID).FirstOrDefault();
+            //if (isAlreadyExist != null)
+            //{
+            //    return NoContent();
+            //}
 
             GoalPropertyValue newObj = new GoalPropertyValue();
             newObj.GoalPropertyID = obj.GoalPropertyID;
+            newObj.GoalHeadingID = obj.GoalHeadingID;
             newObj.Name = obj.Name;
             newObj.GoalId = obj.GoalID;
-
             _context.GoalPropertyValue.Add(newObj);
             _context.SaveChanges();
             return Ok();
@@ -105,6 +106,8 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
     public class GoalPropertyUpsert {
         public int ID { get; set; }
         public int GoalPropertyID { get; set; }
+        public int? GoalHeadingID { get; set; }
+
         public int GoalID { get; set; }
         public string Name { get; set; }
         public int GoalDetailID { get; set; }

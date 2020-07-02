@@ -23,7 +23,16 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
         public JsonResult Get(int goalId)
         {
             JsonResult result = new JsonResult(new { });
-            var data = _context.GoalPropertyValue.Include("GoalProperty").Where(s => s.GoalId == goalId);
+            var data = _context.GoalPropertyValue.Include("GoalProperty").Join(_context.GoalPropertyHeading , g=>g.GoalHeadingID,h=>h.HeadingId,(g,h)=>new {g,h })
+                .Where(s => s.g.GoalId == goalId).Select(f=> new { 
+                f.g.ID,
+                f.g.Name,
+                f.g.GoalId,
+                f.g.GoalProperty,
+                f.g.GoalPropertyID,
+                HeadingName = f.h.Name,
+                HeadingId=f.h.HeadingId,
+                });
             result.Value = new { Data = data };
             return result;
         }

@@ -72,7 +72,6 @@ let ViewAllUnviersities = () => {
 }
 
 let LoadUniversityDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) => {
-    LoadUniversityProp(GoalId)
     $("#detail_item1").removeClass("d-none");
     $("#headingUni").addClass("d-none");
     $("#uniList").addClass("d-none");
@@ -105,6 +104,8 @@ let LoadUniversityDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, Topic
     } else {
         $("#btn-login").removeClass("d-none")
     }
+    LoadUniversityProp(GoalId)
+
 }
 
 let SubmitApplication = (UserId, Currency, Fee, GoalId, TopicId) => {
@@ -150,21 +151,7 @@ let LoadUniversityProp = (GoalId) => {
     let xhr = SendAjaxRequestForGet("/api/ViewGoalProperty/" + GoalId)
     if (xhr.status === 200) {
         var result = xhr.responseJSON;
-        if (result.length > 0) {
-            loadResultData(result)
-        } else {
-            var str = `<tr >
-                                <td </td>
-                                <td> </td>
-                                <td ></td>
-                               <td ></td>
-                                   
-                            </tr>`;
-            $('#tBody').append(str);
-        }
-
-
-
+        loadResultData(result.Data)
     } else {
         $.notify("Your Request Return " + xhr, "error");
     }
@@ -178,6 +165,7 @@ let loadResultData = (arg_data) => {
 }
 
 let renderRow = (row, index) => {
+
     const { GoalId, GoalPropertyID, ID, Name, GoalProperty } = row;
 
     var str = `
@@ -198,6 +186,7 @@ let renderRow = (row, index) => {
 
 
 `
+
     $("#LoadUniProp").append(str);
 
 

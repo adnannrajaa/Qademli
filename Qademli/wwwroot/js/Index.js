@@ -257,20 +257,7 @@ let LoadProp = (GoalId) => {
     let xhr = SendAjaxRequestForGet("/api/ViewGoalProperty/" + GoalId)
     if (xhr.status === 200) {
         var result = xhr.responseJSON;
-        if (result.length > 0) {
-            loadResultData(result)
-        } else {
-            var str = `<tr >
-                                <td </td>
-                                <td> </td>
-                                <td ></td>
-                               <td ></td>
-                                   
-                            </tr>`;
-            $('#tBody').append(str);
-        }
-
-
+            loadResultData(result.Data)
 
     } else {
         $.notify("Your Request Return " + xhr, "error");

@@ -54,6 +54,10 @@ namespace Qademli.Utility
             }
             context.SaveChanges();
 
+            var Headings = new GoalPropertyHeading{ Name = "No Heading" };
+            context.GoalPropertyHeading.Add(Headings);
+            context.SaveChanges();
+
             var applicationStatus = new ApplicationStatus[] {
                 new ApplicationStatus{ Name="Pending"},
                 new ApplicationStatus{ Name="Completed"},

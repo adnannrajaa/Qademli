@@ -10,7 +10,7 @@ using Qademli;
 namespace Qademli.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20200702143918_CreateDB")]
+    [Migration("20200702204528_CreateDB")]
     partial class CreateDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -185,12 +185,33 @@ namespace Qademli.Migrations
                     b.ToTable("GoalProperty");
                 });
 
+            modelBuilder.Entity("Qademli.Models.DatabaseModel.GoalPropertyHeading", b =>
+                {
+                    b.Property<int>("HeadingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("GoalPropId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("HeadingId");
+
+                    b.ToTable("GoalPropertyHeading");
+                });
+
             modelBuilder.Entity("Qademli.Models.DatabaseModel.GoalPropertyValue", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("GoalHeadingID")
+                        .HasColumnType("int");
 
                     b.Property<int>("GoalId")
                         .HasColumnType("int");

@@ -14,8 +14,10 @@ namespace Qademli.Models.DatabaseModel
         [ForeignKey("GoalID")]
         public int GoalId { get; set; }
         public int GoalPropertyID { get; set; }
+        public int? GoalHeadingID { get; set; }
         public string Name { get; set; }
         [ForeignKey("GoalPropertyID")]
         public GoalProperty GoalProperty { get; set; }
+
     }
 }

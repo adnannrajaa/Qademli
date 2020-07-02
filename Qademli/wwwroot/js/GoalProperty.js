@@ -23,7 +23,9 @@ var LoadData = () => {
                                 <td class="align-middle text-center">
                                     <button class="btn btn-primary" onclick="editModal('${item.ID}','${item.Name}')">Edit</button>
                                     <button class="btn btn-danger" onclick="deleteModal('${item.ID}','${item.Name}')">Delete</button>
-                                </td>
+                                    <a class="btn btn-info" href="/Admin/Dashboard/GoalPropertyHeading?GoalPropertyId=${item.ID}&GoalPropName=${item.Name}">Heading</a>
+                             
+</td>
                             </tr>`;
                     $('#tBody').append(str);
                 });

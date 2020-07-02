@@ -41,5 +41,11 @@ namespace Qademli.Areas.Admin.Controllers
             ViewBag.Goal = goal;
             return View();
         }
+        public IActionResult GoalPropertyHeading(int GoalPropertyId, string GoalPropName)
+        {
+            ViewBag.PropertyId = GoalPropertyId;
+            ViewBag.PropName = GoalPropName;
+            return View();
+        }
     }
 }
