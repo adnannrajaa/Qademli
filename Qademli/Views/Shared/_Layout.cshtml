@@ -19,7 +19,14 @@
     <link href="~/assets/css/responsive.css" rel="stylesheet" />
     <link href="~/assets/js/datePicker/datepicker.min.css" rel="stylesheet" />
     <link href="~/assets/demo/vertical-nav.css" rel="stylesheet" />
-
+    <style>
+        .datepicker {
+            z-index: 99999 !important;
+        }
+        #mobile-error, #callDate-error {
+            color: red;
+        }
+    </style>
 
 </head>
 
@@ -49,23 +56,18 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-danger">
                                 <a asp-area="User" asp-controller="Home" asp-action="Universities" class="dropdown-item">
-                                    Universities
+                                    Apply for universities
                                 </a>
                                 <a asp-area="User" asp-controller="Home" asp-action="LearningCenter" class="dropdown-item">
-                                    Learning Center
+                                    Apply for language center
                                 </a>
                                 <a asp-area="User" asp-controller="Home" asp-action="IELTS" class="dropdown-item">
-                                    IELTS
-                                </a>
-                                <a asp-area="User" asp-controller="Home" asp-action="TOEFL" class="dropdown-item">
-                                    TOEFL
+                                    Apply for IELTS
                                 </a>
                                 <a asp-area="User" asp-controller="Home" asp-action="Visa" class="dropdown-item">
-                                    Visa
+                                    Apply for visa permit
                                 </a>
-                                @*<a asp-area="User" asp-controller="Home" asp-action="Index" class="dropdown-item">
-                                        Visa
-                                    </a>*@
+
                             </div>
                         </li>
                         <li class="nav-item">
@@ -76,6 +78,11 @@
                         <li class="nav-item">
                             <a asp-area="User" asp-controller="Home" asp-action="ContactUs" class="nav-link">
                                 Contact Us
+                            </a>
+                        </li>
+                        <li class="nav-item" id="schACall">
+                            <a id="scheduleCall" style="cursor:pointer;" class="nav-link">
+                                Schedule a Call
                             </a>
                         </li>
                         <li class="dropdown nav-item ml-auto">
@@ -126,10 +133,9 @@
                                 <ul class="stacked-links">
                                     <li><a asp-area="User" asp-controller="Home" asp-action="Universities">Apply for University</a></li>
                                     @*<li><a >Transfer to University</a></li>*@
-                                    <li><a asp-area="User" asp-controller="Home" asp-action="LearningCenter">Apply for Learning Center</a></li>
-                                    <li><a asp-area="User" asp-controller="Home" asp-action="Visa">Apply for Visa</a></li>
+                                    <li><a asp-area="User" asp-controller="Home" asp-action="LearningCenter">Apply for language center</a></li>
+                                    <li><a asp-area="User" asp-controller="Home" asp-action="Visa">Apply for visa permit</a></li>
                                     <li><a asp-area="User" asp-controller="Home" asp-action="IELTS">Apply for IELTS Test</a></li>
-                                    <li><a asp-area="User" asp-controller="Home" asp-action="TOEFL">Apply for TOEFL Test</a></li>
 
                                 </ul>
                             </div>
@@ -161,7 +167,32 @@
         </div>
     </footer>
 
+    <div class="modal" tabindex="-1" role="dialog" id="scheduleACallModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="modalTitle">Schedule a Call</h5>
 
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <form id="scheduleACall">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Mobile</label>
+                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="xxxx-xxxxxxx" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Call Date</label>
+                            <input type="text" class="form-control" id="callDate" name="callDate" />
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="btnScheduleCall">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -186,21 +217,89 @@
 
     <script src="~/assets/js/custom.js"></script>
     <script src="~/assets/notify.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
     <script src="~/js/Utility/Utility.js"></script>
     <script src="~/js/Application/GetApplicationFormStatus.js"></script>
 
     <script>
         $(() => {
+            $.validator.addMethod("invalidContact", (value) => {
+                let contact = value
+                var regexPattern = new RegExp(/^\d{4}[- ]?\d{7}$/);    // regular expression pattern
+                let isValid = regexPattern.test(contact);
+                if (!isValid) {
+                    return false;
+                }
+                return true;
+            });
+
+            $('#callDate').datepicker({
+                language: 'en',
+                autoClose: true,
+                timepicker: true,
+                dateFormat: "M dd, yyyy ",
+                timeFormate: "hh:ii aa",
+                minDate: new Date(),
+
+
+            })
             let token = localStorage.getItem("token");
             if (token == 'null' || token == null) {
 
                 $("#viewAccount").css('display', 'none');
                 $("#updateAccount").css('display', 'none');
+                $("#schACall").css('display', 'none');
             }
             else {
                 $("#loginLogout").html("Logout")
             }
+            $("#scheduleCall").on("click", () => {
+                $("#scheduleACallModal").modal("show")
+            })
+
+            $('#scheduleACallModal form').validate({
+                rules: {
+                    mobile: {
+                        required: true,
+                        invalidContact:true
+                        },
+                    callDate: "required",
+                },
+                messages: {
+                    mobile: {
+                        required: "Mobile No is Required",
+                        invalidContact:"Please enter valid mobile no."
+                    },
+                    callDate: "Please select call date & time",
+                },
+                submitHandler: function (form) {
+                    $("#btnScheduleCall").attr("disabled", true);
+                    var form = new FormData();
+                    form.append("UserId", GetUserId());
+                    form.append("Mobile", $('#mobile').val());
+                    form.append("CallDate", $('#callDate').val());
+                    form.append("Status", 2);
+
+
+
+                    var xhr = SendAjaxRequestWithFormData("/api/CallSchedules", "POST", form)
+                    if (xhr.status === 200) {
+                        $('#scheduleACallModal').modal('hide');
+                        $.notify("Your call schedule successfully", "success")
+                        $("#scheduleACallModal form").trigger("reset");
+                        $("#btnScheduleCall").removeAttr("disabled");
+                    } else {
+                        $('#scheduleACallModal').modal('hide');
+                        $("#scheduleACallModal form").trigger("reset");
+                        $("#btnScheduleCall").removeAttr("disabled");
+                        $.notify("Your Request Return " + xhr, "error")
+                    }
+                }
+            });
         })
+
+
 
     </script>
 

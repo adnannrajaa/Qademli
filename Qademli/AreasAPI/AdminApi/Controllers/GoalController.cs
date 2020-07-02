@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Qademli;
+using Qademli.CustomAttributes;
 using Qademli.Models.DatabaseModel;
 using Qademli.Models.ViewModel;
 using Qademli.Utility;
 
 namespace Qademli.AreasAPI.AdminApi.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
 
@@ -105,7 +106,7 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
 
             return goal;
         }
-
+        [Authorize(SD.Admin)]
         // PUT: api/Goal/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGoal(int id, [FromForm]GoalUpsert obj)
@@ -133,7 +134,7 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
 
             return Ok();
         }
-
+        [Authorize(SD.Admin)]
         // POST: api/Goal
         [HttpPost]
         public async Task<ActionResult<Goal>> PostGoal([FromForm] GoalUpsert obj)
@@ -150,7 +151,7 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
                 return ValidationProblem();
         }
 
-
+        [Authorize(SD.Admin)]
         // DELETE: api/Goal/5
         [HttpDelete("{id}")]
         public ActionResult DeleteGoal(int id)

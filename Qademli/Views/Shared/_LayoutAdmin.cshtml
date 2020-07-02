@@ -29,7 +29,7 @@
         <div class="main-panel">
             <!--Sidebar-->
             <div id="sidebar_panel" class="sidebar bg_white" data-active-color="danger">
-                <a class="close_menu"><i class="fas fa-times"></i></a>
+             @*   <a class="close_menu"><i class="fas fa-times"></i></a>*@
                 <div class="site_logo">
                     <a href="./"><img src="~/assets2/img/logo.png" alt="logo"></a>
                 </div>
@@ -44,7 +44,13 @@
                         <li id="GoalLi">
                             <a asp-area="Admin" asp-controller="Dashboard" asp-action="Goal">
                                 <i class="fas fa-plus-square"></i>
-                                <span class="sidebar-normal">Goals</span>
+                                <span class="sidebar-normal">Services</span>
+                            </a>
+                        </li>
+                        <li id="CallLi">
+                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Calls">
+                                <i class="fas fa-phone-square-alt"></i>
+                                <span class="sidebar-normal">Calls</span>
                             </a>
                         </li>
                         <li id="GoalPropLi">
@@ -54,11 +60,11 @@
                             </a>
                         </li>
                         @*<li id="SettingLi">
-                                <a href="#">
-                                    <i class="fas fa-cog"></i>
-                                    <span class="sidebar-normal">Settings</span>
-                                </a>
-                            </li>*@
+            <a href="#">
+                <i class="fas fa-cog"></i>
+                <span class="sidebar-normal">Settings</span>
+            </a>
+        </li>*@
                     </ul>
                 </div>
             </div>

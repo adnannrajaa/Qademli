@@ -19,8 +19,8 @@ namespace Qademli.Utility
 
             var users = new User[]
             {
-                new User{ FirstName="Admin",Email="admin@qademli.com",Password="admin",Role="Admin"},
-                new User{FirstName="Raja",MiddleName="Adnan",LastName="Shan", Email="adnan@xyz.com",Password="123",Role="User"},
+                new User{ FirstName="Admin",Email="admin@qademli.com",Password="admin",Role=SD.Admin},
+                new User{FirstName="Raja",MiddleName="Adnan",LastName="Shan", Email="adnan@xyz.com",Password="123",Role=SD.User},
             };
             foreach (User u in users)
             {
@@ -32,14 +32,25 @@ namespace Qademli.Utility
             var topics = new Topic[]
             {
                 new Topic{ Name="University"},
-                new Topic{Name="Learning Center"},
+                new Topic{Name="Language Center"},
                 new Topic{Name="IELTS"},
-                new Topic{Name="TOEFL"},
-                new Topic{Name="Visa"},
+                new Topic{Name="Visa Permit"},
             };
             foreach (Topic t in topics)
             {
                 context.Topic.Add(t);
+            }
+            context.SaveChanges();
+
+            var callStatus = new CallStatus[]
+            {
+                new CallStatus{ Name=StaticCallStatus.Completed},
+                new CallStatus{Name=StaticCallStatus.Pending},
+                new CallStatus{Name=StaticCallStatus.NoReply},
+            };
+            foreach (CallStatus s in callStatus)
+            {
+                context.callStatus.Add(s);
             }
             context.SaveChanges();
 

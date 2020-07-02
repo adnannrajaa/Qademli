@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -15,11 +13,12 @@ namespace Qademli.AreasAPI.AccountApi.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ApplicationDBContext _db;
-        private IConfiguration _config;
-        public LoginController(ApplicationDBContext db, IConfiguration config)
+        private readonly IUserService _userService;
+
+        public LoginController(ApplicationDBContext db, IUserService userService)
         {
             _db = db;
-            _config = config;
+            _userService = userService;
         }
 
         [AllowAnonymous]
@@ -28,15 +27,11 @@ namespace Qademli.AreasAPI.AccountApi.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                var user = new LoginViewModel(_db).AuthenticateUser(login);
-
+                var user = _userService.Authenticate(login);
                 if (user != null)
                 {
-                    var tokenString = new JWTHandler(_config).GenerateJSONWebToken(user);
-                    HttpContext.Session.SetString("token", tokenString);
-
-                    return Ok(new { Token = tokenString, UserId = user.ID, UserName = user.FirstName + user.LastName });
+                    var token = user.Token;
+                    return Ok(new { Token = token});
                 }
                 return Forbid();
             }

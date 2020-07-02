@@ -41,11 +41,11 @@ let ViewAllIELTS = () => {
 
     if (xhr.status === 200) {
         let data = xhr.responseJSON;
-            if (data.length > 0) {
-                $('#viewAllIELTS').empty();
+        if (data.length > 0) {
+            $('#viewAllIELTS').empty();
 
-                $.each(data, function (index, item) {
-                    var str = `<div class="col-md-6 mb-4" onclick="LoadIELTSDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',2)">
+            $.each(data, function (index, item) {
+                var str = `<div class="col-md-6 mb-4" onclick="LoadIELTSDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',2)">
                                 <div class="single_item_details">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -63,14 +63,15 @@ let ViewAllIELTS = () => {
                                     </div>
                                 </div>
                             </div>`;
-                    $('#viewAllIELTS').append(str);
+                $('#viewAllIELTS').append(str);
 
-                });
+            });
 
-            }
-        } else {
-            // $.notify("Your Request Return " + xhr.status, "Error");
         }
+    } else {
+        // $.notify("Your Request Return " + xhr, "error");
+        console.log("Your Request Return " + xhr);
+    }
 
 }
 
@@ -84,7 +85,7 @@ let LoadIELTSDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) =
                             <div class="row logo_section">
                                 <div class="col-md-12">
                                     <a href="/User/Home/IELTS" class="back_btn pos_abs text-blue"><i class="fas fa-chevron-left clr_inhert"></i> Back</a>
-                                    <img src="${imageSrc}" style="max-width: 256px;max-height: 253px;" id="detail-Image" alt="uni logo" class="uni_loggo mx-auto mb-4">
+                                    <img src="${imageSrc}" style="width: 247px;height: 230px;" id="detail-Image" alt="uni logo" class="uni_loggo mx-auto mb-4">
                                     <h4 class="uni_name fw_600 m-0" id="detail-name">${name}</h4>
                             <p class="location" id="detail-location"></p>
                                    
@@ -95,13 +96,19 @@ let LoadIELTSDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) =
                             </div>
                             <div class="row mx-auto w_1000 text-left mt-4" id="btn_wrap">
                                 <div class="col-md-12">
-                                    <a onclick = "SubmitApplication(${UserId},'${Currency}',${Fee},${GoalId},${TopicId})" class="btn_user_action">Apply For ${name}</a>
-                                  
+                                    <a id="btn-applicationSubmit"  onclick="SubmitApplication(${UserId},'${Currency}',${Fee},${GoalId},${TopicId})" class="btn_user_action d-none">Apply For ${name}</a>
+                                  <a id="btn-login" href="/Account/Login/Login" class="btn_user_action d-none">Login</a>
+                                
                                 </div>
                             </div>
                         </div>`;
     $('#detail_item1').empty();
     $('#detail_item1').append(str);
+    if (IsUserLoggedIn()) {
+        $("#btn-applicationSubmit").removeClass("d-none")
+    } else {
+        $("#btn-login").removeClass("d-none")
+    }
 }
 
 let SubmitApplication = (UserId, Currency, Fee, GoalId, TopicId) => {

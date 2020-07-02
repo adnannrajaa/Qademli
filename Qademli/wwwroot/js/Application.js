@@ -1,4 +1,9 @@
-﻿$(() => {
+﻿let userRole = null;
+$(() => {
+    userRole = GetUserRole();
+    if (userRole != "Admin") {
+        window.location.replace("/Account/Login/Unauthorize")
+    }
     LoadData();
     LoadStatus();
     $("#ApplicationLi").attr("class", "active");
@@ -61,10 +66,7 @@ let updateModal = (ID, GoalID, StatusID, TopicID, UserID, Comment, Fee, Currency
     $('#appid').val(ID);
 }
 
-$(() => {
-
-    //Update Application
-    $('#myModal form').validate({
+$('#myModal form').validate({
         rules: {
             comment: "required",
             status: "required"
@@ -88,4 +90,3 @@ $(() => {
                 }
         }
     });
-})

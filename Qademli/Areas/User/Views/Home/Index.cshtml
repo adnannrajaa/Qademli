@@ -3,8 +3,16 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div id="home_banner" class="pos_rel" data-parallax="true" style="background-image: url('/assets/img/home-banner.jpg');">
+<style>
+    .filterStyle {
+        font-size: 19px;
+        /*        text-decoration: underline !important;*/
+        color: #001d57 !important;
+        cursor: pointer;
+    }
+</style>
+<link href="~/assets/css/bootstrap-sortable.css" rel="stylesheet" />
+<div id="home_banner" class="pos_rel img-container" data-parallax="true" style="background-image: url('/assets/img/home-banner.jpg');">
     <div class="filter"></div>
     <div class="content-center">
         <div class="container">
@@ -29,7 +37,14 @@
                             <h3 class="text-blue fw_600 my-0">Top Universities</h3>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a class="view_all_btn view_more_uni"><span class="more">View All</span><span class="less">View Less</span></a>
+                            <span id="UniversitySort" class="filterStyle sortable" style=" margin-right: 20px;display: none;">sort</span>
+                            <a class="view_all_btn view_more_uni">
+                                <span id="UniMore" class="more">View All</span>
+
+                                @*<span id="UniLess" class="less">View Less</span>*@
+                            </a>
+                            
+                                <span id="Universityfilter" class="filterStyle" style="display: none;">filter</span>
                         </div>
                     </div>
                     <div class="row main_row text-center mb-4" id="uniList">
@@ -66,7 +81,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="view_all_uni d-none row"  id="viewAllUni">
+                    <div class="view_all_uni d-none row" id="viewAllUni">
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <div class="single_item_details">
@@ -327,7 +342,7 @@
                                 </div>
                             </div>
                         </div>
-                      
+
                     </div>
 
                 </div>
@@ -335,10 +350,17 @@
                 <div class="language_section sec_single mb-4">
                     <div class="row  mb-4" id="LanguageCenterHeading">
                         <div class="col-md-8">
-                            <h3 class="text-blue fw_600 my-0">Top Learning Centers</h3>
+                            <h3 class="text-blue fw_600 my-0">Top Language Centers</h3>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a class="view_all_btn view_more_lang_centers"><span class="more">View All</span><span class="less">View Less</span></a>
+                            <span id="languageSort" class="filterStyle" style="margin-right:20px;display:none;">sort</span>
+
+                            <a class="view_all_btn view_more_lang_centers">
+                                <span id="languageMore" class="more">View All</span>
+                                @*  <span id="languageLess" class="less">View Less</span>*@
+                            </a>
+                            <span id="languageFilter" class="filterStyle" style="display:none;">filter</span>
+
                         </div>
                     </div>
                     <div class="row text-center mb-4" id="languageList">
@@ -531,111 +553,111 @@
                     </div>
                     <div class="single_uni_data text-center pos_rel d-none" id="detail_item2">
                         @*<div>
-                <div class="row logo_section">
-                    <div class="col-md-12">
-                        <a class="back_btn pos_abs text-blue"><i class="fas fa-chevron-left clr_inhert"></i> Back</a>
-                        <img src="/assets/img/Logo1.png" id="detail-Image" alt="uni logo" class="uni_loggo mx-auto mb-4">
-                        <h4 class="uni_name fw_600 m-0" id="detail-name">Saint Francis University</h4>
-                        <p class="location" id="detail-location">Location: Florida. Miami</p>
-                    </div>
-                </div>
-                <div class="row mx-auto w_1000 text-left mt-4">
-                    <div class="col-md-6">
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5 class="label my-0">Majors:</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <p class="major_subjetcs uni_data">
-                                    Engineering, Bussiness, Other Majors
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5 class="label my-0">Concentrations:</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <p class="major_subjetcs uni_data">
-                                    Electrical Engineering, Envoirnment Engineering, Mechinical Engineering, Bio Engineering, Finance, Merketing, computer Science, Real Estate, Chemistry, Logistics, biology, Political Sciences, Bussiness, Management, Advertising, Others
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5 class="label my-0">Required IELTS:</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <p class="major_subjetcs uni_data">6.5</p>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5 class="label my-0">Required TOEFL:</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <p class="major_subjetcs uni_data">80</p>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5 class="label my-0">Required SAT:</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <p class="major_subjetcs uni_data">Needed depends on major</p>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5 class="label my-0">Transfer:</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <p class="major_subjetcs uni_data">60 Credeits passeds 2.0 GPA</p>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5 class="label my-0">Aapplication Fee:</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <p class="major_subjetcs uni_data">30 USD</p>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5 class="label my-0">Airport:</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <p class="major_subjetcs uni_data">Miami International Airport...</p>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5 class="label my-0">Weather(Summer Average):</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <p class="major_subjetcs uni_data">28 C</p>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-5">
-                                <h5 class="label my-0">Weather(Winter Average):</h5>
-                            </div>
-                            <div class="col-md-7">
-                                <p class="major_subjetcs uni_data">18 C</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mx-auto w_1000 text-left mt-4" id="btn_wrap">
-                    <div class="col-md-12">
-                        <a href="#" class="btn_user_action">Apply as a Freshman</a>
-                        <a href="#" class="btn_user_action">Apply for Transfer</a>
-                    </div>
-                </div>
-            </div>*@
+                                <div class="row logo_section">
+                                    <div class="col-md-12">
+                                        <a class="back_btn pos_abs text-blue"><i class="fas fa-chevron-left clr_inhert"></i> Back</a>
+                                        <img src="/assets/img/Logo1.png" id="detail-Image" alt="uni logo" class="uni_loggo mx-auto mb-4">
+                                        <h4 class="uni_name fw_600 m-0" id="detail-name">Saint Francis University</h4>
+                                        <p class="location" id="detail-location">Location: Florida. Miami</p>
+                                    </div>
+                                </div>
+                                <div class="row mx-auto w_1000 text-left mt-4">
+                                    <div class="col-md-6">
+                                        <div class="row mb-2">
+                                            <div class="col-md-5">
+                                                <h5 class="label my-0">Majors:</h5>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <p class="major_subjetcs uni_data">
+                                                    Engineering, Bussiness, Other Majors
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-5">
+                                                <h5 class="label my-0">Concentrations:</h5>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <p class="major_subjetcs uni_data">
+                                                    Electrical Engineering, Envoirnment Engineering, Mechinical Engineering, Bio Engineering, Finance, Merketing, computer Science, Real Estate, Chemistry, Logistics, biology, Political Sciences, Bussiness, Management, Advertising, Others
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-2">
+                                            <div class="col-md-5">
+                                                <h5 class="label my-0">Required IELTS:</h5>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <p class="major_subjetcs uni_data">6.5</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-5">
+                                                <h5 class="label my-0">Required TOEFL:</h5>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <p class="major_subjetcs uni_data">80</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-5">
+                                                <h5 class="label my-0">Required SAT:</h5>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <p class="major_subjetcs uni_data">Needed depends on major</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-5">
+                                                <h5 class="label my-0">Transfer:</h5>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <p class="major_subjetcs uni_data">60 Credeits passeds 2.0 GPA</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-5">
+                                                <h5 class="label my-0">Aapplication Fee:</h5>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <p class="major_subjetcs uni_data">30 USD</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-5">
+                                                <h5 class="label my-0">Airport:</h5>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <p class="major_subjetcs uni_data">Miami International Airport...</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-5">
+                                                <h5 class="label my-0">Weather(Summer Average):</h5>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <p class="major_subjetcs uni_data">28 C</p>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-5">
+                                                <h5 class="label my-0">Weather(Winter Average):</h5>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <p class="major_subjetcs uni_data">18 C</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mx-auto w_1000 text-left mt-4" id="btn_wrap">
+                                    <div class="col-md-12">
+                                        <a href="#" class="btn_user_action">Apply as a Freshman</a>
+                                        <a href="#" class="btn_user_action">Apply for Transfer</a>
+                                    </div>
+                                </div>
+                            </div>*@
 
                     </div>
                 </div>
@@ -653,6 +675,6 @@
 
 
 @section Scripts{
-    
+    <script src="~/assets/js/bootstrap-sortable.js"></script>
     <script src="~/js/Index.js?v=@DateTime.Now.Millisecond"></script>
 }

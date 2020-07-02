@@ -1,37 +1,17 @@
-﻿$(() => {
-
+﻿let UserId = null;
+$(() => {
+    UserId = GetUserId();
     LoadLearningCentres()
 
     ViewAllLanguageCenter()
 
 });
-function parseJwt(token) {
-    if (token == null || token == 'null') {
 
-        return false;
-    }
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    return JSON.parse(jsonPayload);
-};
 
 let LoadLearningCentres = () => {
-    var UserId = parseJwt(localStorage.getItem("token"))["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
-
-    var settings = {
-        "url": "/api/Goal/GetGoalListByTopicID?id=1",
-        "method": "GET",
-        "timeout": 0,
-        error: function (jqXHR, textStatus, errorThrown) {//  $.notify("Your Request Return " + xhr.status, "Error"); 
-        }
-    };
-
-    $.ajax(settings).done(function (data, statusText, xhr) {
-        if (xhr.status === 200) {
+    let xhr = SendAjaxRequestForGet("/api/Goal/GetGoalListByTopicID?id=1")
+    if (xhr.status === 200) {
+        let data = xhr.responseJSON;
             if (data.length > 0) {
                 $('#languageList').empty();
 
@@ -52,23 +32,14 @@ let LoadLearningCentres = () => {
 
             }
         } else {
-            // $.notify("Your Request Return " + xhr.status, "Error");
+            $.notify("Your Request Return " + xhr, "error");
         }
-    });
 }
 
 let ViewAllLanguageCenter = () => {
-    var settings = {
-        "url": "/api/Goal/GetGoalListByTopicID?id=1",
-        "method": "GET",
-        "timeout": 0,
-        error: function (jqXHR, textStatus, errorThrown) {//  $.notify("Your Request Return " + xhr.status, "Error"); 
-        }
-    };
-    var UserId = parseJwt(localStorage.getItem("token"))["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
-
-    $.ajax(settings).done(function (data, statusText, xhr) {
-        if (xhr.status === 200) {
+    let xhr = SendAjaxRequestForGet("/api/Goal/GetGoalListByTopicID?id=1")
+    if (xhr.status === 200) {
+        let data = xhr.responseJSON;
             if (data.length > 0) {
                 $('#viewAllLanguageCenter').empty();
 
@@ -97,10 +68,8 @@ let ViewAllLanguageCenter = () => {
 
             }
         } else {
-            // $.notify("Your Request Return " + xhr.status, "Error");
+             $.notify("Your Request Return " + xhr, "error");
         }
-    });
-
 }
 
 let LoadLanguageCenterDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) => {
@@ -112,7 +81,7 @@ let LoadLanguageCenterDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, T
                             <div class="row logo_section">
                                 <div class="col-md-12">
                                     <a href="/User/Home/LearningCenter" class="back_btn pos_abs text-blue"><i class="fas fa-chevron-left clr_inhert"></i> Back</a>
-                                    <img src="${imageSrc}" style="max-width: 256px;max-height: 253px;" id="detail-Image" alt="uni logo" class="uni_loggo mx-auto mb-4">
+                                    <img src="${imageSrc}" style="width: 247px;height: 230px;" id="detail-Image" alt="uni logo" class="uni_loggo mx-auto mb-4">
                                     <h4 class="uni_name fw_600 m-0" id="detail-name">${name}</h4>
                                     <p class="location" id="detail-location"></p>
                                 </div>
@@ -123,13 +92,19 @@ let LoadLanguageCenterDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, T
                            
                             <div class="row mx-auto w_1000 text-left mt-4" id="btn_wrap">
                                 <div class="col-md-12">
-                                    <a onclick = "SubmitApplication(${UserId},'${Currency}',${Fee},${GoalId},${TopicId})" class="btn_user_action">Apply For ${name}</a>
-                                  
+                                    <a id="btn-applicationSubmit"  onclick="SubmitApplication(${UserId},'${Currency}',${Fee},${GoalId},${TopicId})" class="btn_user_action d-none">Apply For ${name}</a>
+                                  <a id="btn-login" href="/Account/Login/Login" class="btn_user_action d-none">Login</a>
+                                
                                 </div>
                             </div>
                         </div>`;
     $('#detail_item2').empty();
     $('#detail_item2').append(str);
+    if (IsUserLoggedIn()) {
+        $("#btn-applicationSubmit").removeClass("d-none")
+    } else {
+        $("#btn-login").removeClass("d-none")
+    }
     LoadProp(GoalId)
 }
 let bit = true;
@@ -157,26 +132,12 @@ let SubmitApplication = (UserId, Currency, Fee, GoalId, TopicId) => {
                 Date: new Date()
 
             }
-            console.log(UserId, Currency, Fee, GoalId, TopicId)
-            var settings = {
-                "url": "/api/Applications",
-                "method": "POST",
-                "timeout": 0,
-
-                "contentType": "application/json",
-                "data": JSON.stringify(obj),
-                "headers": {
-                    "Authorization": "Bearer " + localStorage.getItem("token")
-                }
-            };
-
-            $.ajax(settings).done(function (data, statusText, xhr) {
-                if (xhr.status === 200) {
-                    $.notify("Application Submitted Successfully", "success")
-                } else {
-                    $.notify("Your Request Return " + xhr.status, "Error");
-                }
-            });
+            let xhr = SendAjaxRequestWithObject("/api/Applications", "POST", JSON.stringify(obj))
+            if (xhr.status === 200) {
+                $.notify("Application Submitted Successfully", "success")
+            } else {
+                $.notify("Your Request Return " + xhr, "error");
+            }
         } else {
             $.notify("Your application is already submitted.", "info");
 
@@ -188,38 +149,27 @@ let SubmitApplication = (UserId, Currency, Fee, GoalId, TopicId) => {
 }
 
 let LoadProp = (GoalId) => {
-    var settings = {
-        "url": "/api/ViewGoalProperty/" + GoalId,
-        "method": "GET",
-        "timeout": 0,
-        "headers": {
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        },
-        error: function (jqXHR, textStatus, errorThrown) { $.notify("Your Request Return " + xhr.status, "Error"); }
-    };
-
-    $.ajax(settings).done(function (data, statusText, xhr) {
-        if (xhr.status === 200) {
-            var result = data.Data;
-            if (result.length > 0) {
-                loadResultData(result)
-            } else {
-                var str = `<tr >
+    let xhr = SendAjaxRequestForGet("/api/ViewGoalProperty/" + GoalId)
+    if (xhr.status === 200) {
+        var result = xhr.responseJSON;;
+        if (result.length > 0) {
+            loadResultData(result)
+        } else {
+            var str = `<tr >
                                 <td </td>
                                 <td> </td>
                                 <td ></td>
                                <td ></td>
                                    
                             </tr>`;
-                $('#tBody').append(str);
-            }
-
-
-
-        } else {
-            $.notify("Your Request Return " + xhr.status, "Error");
+            $('#tBody').append(str);
         }
-    });
+
+
+
+    } else {
+        $.notify("Your Request Return " + xhr, "error");
+    }
 }
 
 let loadResultData = (arg_data) => {

@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewData["Title"] = "Universities";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="row mb-3">
+    <div class="col-md-4 mt-auto mb-auto">
+        <h3>Universities</h3>
+    </div>
+    <div class="d-flex justify-content-end col-md-8">
+        <button class="btn btn-primary" onclick="openModal()">Add University</button>
+    </div>
+</div>
+
+<div class="data_wrap bg_white">
+    <div class="table-responsive">
+        <table class="table data_tbl">
+            <thead>
+                <tr>
+                    <th scope="col" class="align-middle text-center">#</th>
+                    <th scope="col" class="align-middle text-center">Name</th>
+                    <th scope="col" class="align-middle text-center">Image</th>
+                    @* <th scope="col" class="align-middle text-center">Topic</th>*@
+                    <th scope="col" class="align-middle text-center">Fee</th>
+                    <th scope="col" class="align-middle text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="tBody">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="modalTitle">Add University</h5>
+
+            </div>
+            <div class="modal-body" id="modalBody">
+                <form id="saveGoalForm">
+                    <div class="form-group" hidden>
+                        <label for="exampleInputEmail1">Topic</label>
+                        <select class="form-control" id="topic1" name="topic1"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" class="form-control" id="name1" name="name1" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Image</label>
+                        <div class="file-upload-inner file-upload-inner-right ts-forms">
+                            <div class="input append-small-btn">
+                                <div class="file-button">
+                                    <input type="file" id="image1" accept=".jpg" onchange="document.getElementById('image').value = this.value;">
+                                </div>
+                                <input name="image" id="image" type="text" class="form-control">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Fee</label>
+                        <input type="number" class="form-control" id="fee1" name="fee1">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Currency</label>
+                        <input type="text" class="form-control" id="currency1" name="currency1">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="btnAddGoal">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="myModal2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="modalTitle">Update University</h5>
+
+            </div>
+            <div class="modal-body" id="modalBody2">
+                <form id="editGoalForm">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="myModal3">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 id="modalTitle3"></h5>
+
+            </div>
+            <div class="modal-body" id="modalBody3">
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/js/Services/University.js?v=@DateTime.Now.Millisecond"></script>
+}

@@ -1,4 +1,9 @@
-﻿$(() => {
+﻿let userRole = null;
+$(() => {
+    userRole = GetUserRole();
+    if (userRole != "Admin") {
+        window.location.replace("/Account/Login/Unauthorize")
+    }
     LoadData();
     LoadTopic("topic1", "");
     $("#GoalLi").attr("class", "active");
@@ -27,9 +32,10 @@ var LoadTopic = (id, topicid) => {
 var LoadData = () => {
     let xhr = SendAjaxRequestForGet("/api/Goal/GetGoalWithTopic")
     if (xhr.status === 200) {
-        $('#tBody').empty();
         let data = xhr.responseJSON;
         if (data.length > 0) {
+            $('#tBody').empty();
+
             $.each(data, function (index, item) {
                 var str = `<tr>
                                 <td class="align-middle text-center">${index + 1}</td>
@@ -48,7 +54,7 @@ var LoadData = () => {
 
         }
     } else {
-        $.notify("Your Request Return " + xhr.status, "Error")
+        $.notify("Your Request Return " + xhr, "error")
     }
 }
 

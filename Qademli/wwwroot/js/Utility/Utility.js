@@ -22,8 +22,15 @@ SendAjaxRequestForGet = (ApiUrl) => {
 
     $.ajax(ajaxConfig)
     if (Success != null) {
+        if (Success == "Unauthorized") {
+            
+           return window.location.replace("/Account/Login/Unauthorize")
+        }
         return Success;
     } else {
+        if (Error == "Unauthorized") {
+            return window.location.replace("/Account/Login/Unauthorize")
+        }
         return Error;
     }
 
@@ -57,8 +64,16 @@ SendAjaxRequestWithObject = (ApiUrl, RequestType, Object) => {
 
     $.ajax(ajaxConfig)
     if (Success != null) {
+        if (Success == "Unauthorized") {
+
+            return window.location.replace("/Account/Login/Unauthorize")
+        }
         return Success;
     } else {
+        if (Error == "Unauthorized") {
+
+            return window.location.replace("/Account/Login/Unauthorize")
+        }
         return Error;
     }
 
@@ -94,8 +109,16 @@ SendAjaxRequestWithFormData = (ApiUrl, RequestType, Object) => {
 
     $.ajax(ajaxConfig)
     if (Success != null) {
+        if (Success == "Unauthorized") {
+
+            return window.location.replace("/Account/Login/Unauthorize")
+        }
         return Success;
     } else {
+        if (Error == "Unauthorized") {
+
+            return window.location.replace("/Account/Login/Unauthorize")
+        }
         return Error;
     }
 
@@ -128,8 +151,16 @@ SendAjaxRequestForDelete = (ApiUrl) => {
 
     $.ajax(ajaxConfig)
     if (Success != null) {
+        if (Success == "Unauthorized") {
+
+            return window.location.replace("/Account/Login/Unauthorize")
+        }
         return Success;
     } else {
+        if (Error == "Unauthorized") {
+
+            return window.location.replace("/Account/Login/Unauthorize")
+        }
         return Error;
     }
 
@@ -139,10 +170,31 @@ SendAjaxRequestForDelete = (ApiUrl) => {
 
 let GetUserId = () => {
     let UserId = null;
-    UserId = parseJwt(localStorage.getItem("token"))["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+    UserId = parseJwt(localStorage.getItem("token"));
+    if (UserId != null) {
+        return UserId.unique_name;
+    }
     return UserId;
 }
 
+let GetUserRole = () => {
+    let UserRole = null;
+    UserRole = parseJwt(localStorage.getItem("token"));
+    if (UserRole != null) {
+        return UserRole.role;
+    }
+    return UserRole;
+}
+
+let IsUserLoggedIn = () => {
+    let UserStatus = false;
+    let loggedInUserId = null;
+    loggedInUserId = parseJwt(localStorage.getItem("token"));
+    if (loggedInUserId != false) {
+        UserStatus = true;
+    }
+    return UserStatus;
+}
 
 function parseJwt(token) {
     if (token == null || token == 'null') {

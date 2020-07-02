@@ -56,7 +56,6 @@ namespace Qademli.Areas.User.Controllers
         {
             return View();
         }
-        [CustomAuthorize(SD.User)]
 
         public IActionResult Application()
         {

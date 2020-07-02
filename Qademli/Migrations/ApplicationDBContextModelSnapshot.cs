@@ -78,6 +78,45 @@ namespace Qademli.Migrations
                     b.ToTable("ApplicationStatus");
                 });
 
+            modelBuilder.Entity("Qademli.Models.DatabaseModel.CallSchedule", b =>
+                {
+                    b.Property<int>("CallId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CallDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Mobile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CallId");
+
+                    b.ToTable("callSchedule");
+                });
+
+            modelBuilder.Entity("Qademli.Models.DatabaseModel.CallStatus", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("callStatus");
+                });
+
             modelBuilder.Entity("Qademli.Models.DatabaseModel.Goal", b =>
                 {
                     b.Property<int>("ID")
@@ -205,6 +244,9 @@ namespace Qademli.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Token")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isVerified")

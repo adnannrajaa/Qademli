@@ -21,6 +21,35 @@ namespace Qademli.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "callSchedule",
+                columns: table => new
+                {
+                    CallId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(nullable: false),
+                    Mobile = table.Column<string>(nullable: true),
+                    CallDate = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_callSchedule", x => x.CallId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "callStatus",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_callStatus", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GoalProperty",
                 columns: table => new
                 {
@@ -392,6 +421,12 @@ namespace Qademli.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Application");
+
+            migrationBuilder.DropTable(
+                name: "callSchedule");
+
+            migrationBuilder.DropTable(
+                name: "callStatus");
 
             migrationBuilder.DropTable(
                 name: "GoalDetail");
