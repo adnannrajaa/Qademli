@@ -1,4 +1,8 @@
 ﻿let UserId = null;
+let sortByNameStatus = "none";
+let filterData = [];
+let tempHeading = null;
+let propHeading = null;
 $(() => {
 
     LoadIELTS();
@@ -41,11 +45,21 @@ let ViewAllIELTS = () => {
 
     if (xhr.status === 200) {
         let data = xhr.responseJSON;
-        if (data.length > 0) {
-            $('#viewAllIELTS').empty();
+        filterData = data;
+        loadIELTSData(data);
 
-            $.each(data, function (index, item) {
-                var str = `<div class="col-md-6 mb-4" onclick="LoadIELTSDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',2)">
+    } else {
+        // $.notify("Your Request Return " + xhr, "error");
+        console.log("Your Request Return " + xhr);
+    }
+
+}
+let loadIELTSData = (data) => {
+    if (data.length > 0) {
+        $('#viewAllIELTS').empty();
+
+        $.each(data, function (index, item) {
+            var str = `<div class="col-md-6 mb-4" onclick="LoadIELTSDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',2)">
                                 <div class="single_item_details">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -63,18 +77,35 @@ let ViewAllIELTS = () => {
                                     </div>
                                 </div>
                             </div>`;
-                $('#viewAllIELTS').append(str);
+            $('#viewAllIELTS').append(str);
 
-            });
+        });
 
-        }
-    } else {
-        // $.notify("Your Request Return " + xhr, "error");
-        console.log("Your Request Return " + xhr);
     }
-
 }
 
+let sortByName = () => {
+    switch (sortByNameStatus) {
+        case "none":
+            sortByNameStatus = "asc"
+            break
+        case "asc":
+            sortByNameStatus = "desc"
+            break
+        case "desc":
+            sortByNameStatus = "asc"
+            break
+    }
+    sortData("Name", sortByNameStatus)
+}
+let sortData = (column, type) => {
+    filterData.sort((a, b) => {
+        if (type == "asc") {
+            return a[column] < b[column] ? 1 : -1
+        } else return a[column] > b[column] ? 1 : -1
+    })
+    loadIELTSData(filterData)
+}
 let LoadIELTSDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) => {
     $("#detail_item1").removeClass("d-none");
     $("#headingIELTS").addClass("d-none");
@@ -169,10 +200,13 @@ let loadResultData = (arg_data) => {
 }
 
 let renderRow = (row, index) => {
-    const { GoalId, GoalPropertyID, ID, Name, GoalProperty } = row;
+    const { GoalId, GoalPropertyID, ID, Name, GoalProperty, HeadingName, HeadingId } = row;
 
-    var str = `
-<div class="col-md-6 ">
+    let newHeading = HeadingName
+
+    if (HeadingName == "No Heading") {
+        var str = `
+                        <div class="col-md-6 ">
                            <div class="row mb-2" >
 
                                 <div class="col-md-5">
@@ -189,10 +223,96 @@ let renderRow = (row, index) => {
 
 
 `
+        $("#IELTSProp").append(str);
+    } else {
+        if (!equalStrings(propHeading, GoalProperty.Name)) {
+            propHeading = GoalProperty.Name
+            if (equalStrings(tempHeading, HeadingName) == false) {
+                tempHeading = HeadingName
+                var str = `
+                        <div class="col-md-6 ">
+                           <div class="row mb-2" >
 
-    $("#IELTSProp").append(str);
+                                <div class="col-md-5">
+                                    <h5 class="label my-0">${GoalProperty.Name}:</h5>
+                                </div>
+                                <div class="col-md-7" >
+                                    <h5 class="label my-0">${HeadingName}</h5>
+                                     <p class="major_subjetcs uni_data">${Name}</p> 
+                                <div id="headingValue2"></div>
+
+                                   
+                                </div>
+</div> <div class="row mb-2" >
+<div class="col-md-5">
+                                </div>
+                                <div class="col-md-7" >
+                                <div id="propHeadingName"></div>
+                                <div id="headingValue"></div>
+                                </div>
+</div>
+
+                            
+                            
+                        </div></div>
+
+
+   
+`
+                $("#IELTSProp").append(str);
+            } else {
+                let str = `  <p class="major_subjetcs uni_data">
+                    ${Name}
+            </p>`
+                $("#headingValue2").append(str)
+
+            }
+        } else {
+
+            if (equalStrings(tempHeading, HeadingName) == false) {
+                let head = ` <h5 class="label my-0">${HeadingName}</h5>`
+
+                $("#propHeadingName").append(head);
+                let str = `  <p class="major_subjetcs uni_data">
+                    ${Name}
+            </p>`
+                $("#headingValue").append(str)
+            } else {
+                let str = `  <p class="major_subjetcs uni_data">
+                    ${Name}
+            </p>`
+                if (equalStrings(tempHeading, HeadingName)) {
+                    $("#headingValue2").append(str)
+                } else {
+                    $("#headingValue").append(str)
+                }
+
+            }
+
+        }
+
+    }
+
+
 
 
 
 
 }
+
+let equalStrings = (tempHeading, HeadingName) => {
+    let status = false;
+    if (tempHeading != null) {
+        if (tempHeading.length === HeadingName.length) {
+            status = true;
+        }
+    }
+   
+    return status;
+}
+$("#lIELTSMore").on("click", () => {
+    $("#headingIELTS h3").text("IELTS Tests")
+    $("#IELTSSort").css("display", "inline");
+    $("#IELTSfilter").css("display", "inline");
+})
+

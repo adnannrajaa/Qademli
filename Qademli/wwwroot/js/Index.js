@@ -1,4 +1,10 @@
 ﻿let UserId = null;
+let sortByNameStatus = "none";
+let sortByLanguageNameStatus = "none";
+
+let filterData = [];
+let filterData2 = [];
+
 $(() => {
     UserId = GetUserId();
     LoadUniversities();
@@ -10,6 +16,53 @@ $(() => {
     ViewAllLanguageCenter()
 
 });
+
+
+let sortByName = () => {
+    switch (sortByNameStatus) {
+        case "none":
+            sortByNameStatus = "asc"
+            break
+        case "asc":
+            sortByNameStatus = "desc"
+            break
+        case "desc":
+            sortByNameStatus = "asc"
+            break
+    }
+    sortData("Name", sortByNameStatus)
+}
+let sortData = (column, type) => {
+    filterData.sort((a, b) => {
+        if (type == "asc") {
+            return a[column] < b[column] ? 1 : -1
+        } else return a[column] > b[column] ? 1 : -1
+    })
+    loadUniData(filterData)
+}
+
+let sortByLanguageName = () => {
+    switch (sortByLanguageNameStatus) {
+        case "none":
+            sortByLanguageNameStatus = "asc"
+            break
+        case "asc":
+            sortByLanguageNameStatus = "desc"
+            break
+        case "desc":
+            sortByLanguageNameStatus = "asc"
+            break
+    }
+    sortData2("Name", sortByLanguageNameStatus)
+}
+let sortData2 = (column, type) => {
+    filterData2.sort((a, b) => {
+        if (type == "asc") {
+            return a[column] < b[column] ? 1 : -1
+        } else return a[column] > b[column] ? 1 : -1
+    })
+    loadLanguageData(filterData2)
+}
 
 let LoadUniversities = () => {
     let xhr = SendAjaxRequestForGet("/api/Goal/GetGoalListByTopicID?id=2")
@@ -43,11 +96,19 @@ let ViewAllUnviersities = () => {
     let xhr = SendAjaxRequestForGet("/api/Goal/GetGoalListByTopicID?id=2")
     if (xhr.status === 200) {
         let data = xhr.responseJSON;
-            if (data.length > 0) {
-                $('#viewAllUni').empty();
+        filterData = data;
+        loadUniData(data)
+        } else {
+             $.notify("Your Request Return " + xhr, "error");
+        }
+}
 
-                $.each(data, function (index, item) {
-                    var str = `<div class="col-md-6 mb-4" onclick="LoadUniversityDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',2)">
+let loadUniData = (data) => {
+    if (data.length > 0) {
+        $('#viewAllUni').empty();
+
+        $.each(data, function (index, item) {
+            var str = `<div class="col-md-6 mb-4" onclick="LoadUniversityDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',2)">
                                 <div class="single_item_details">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -66,15 +127,12 @@ let ViewAllUnviersities = () => {
                                     </div>
                                 </div>
                             </div>`;
-                    $('#viewAllUni').append(str);
+            $('#viewAllUni').append(str);
 
 
-                });
+        });
 
-            }
-        } else {
-             $.notify("Your Request Return " + xhr, "error");
-        }
+    }
 }
 
 let LoadUniversityDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) => {
@@ -175,11 +233,21 @@ let ViewAllLanguageCenter = () => {
     let xhr = SendAjaxRequestForGet("/api/Goal/GetGoalListByTopicID?id=1")
     if (xhr.status === 200) {
         let data = xhr.responseJSON;
-            if (data.length > 0) {
-                $('#viewAllLanguageCenter').empty();
+        filterData2 = data;
+        loadLanguageData(data);
 
-                $.each(data, function (index, item) {
-                    var str = `<div class="col-md-6 mb-4" onclick="LoadLanguageCenterDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',1)">
+        } else {
+            $.notify("Your Request Return " + xhr, "error");
+        }
+
+}
+
+let loadLanguageData = (data) => {
+    if (data.length > 0) {
+        $('#viewAllLanguageCenter').empty();
+
+        $.each(data, function (index, item) {
+            var str = `<div class="col-md-6 mb-4" onclick="LoadLanguageCenterDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',1)">
                                 <div class="single_item_details">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -197,15 +265,11 @@ let ViewAllLanguageCenter = () => {
                                     </div>
                                 </div>
                             </div>`;
-                    $('#viewAllLanguageCenter').append(str);
+            $('#viewAllLanguageCenter').append(str);
 
-                });
+        });
 
-            }
-        } else {
-            $.notify("Your Request Return " + xhr, "error");
-        }
-
+    }
 }
 
 let LoadLanguageCenterDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) => {
@@ -270,12 +334,17 @@ let loadResultData = (arg_data) => {
     })
 
 }
+let tempHeading = null;
+let propHeading = null;
 
 let renderRow = (row, index) => {
-    const { GoalId, GoalPropertyID, ID, Name, GoalProperty } = row;
+    const { GoalId, GoalPropertyID, ID, Name, GoalProperty, HeadingName, HeadingId } = row;
 
-    var str = `
-<div class="col-md-6 ">
+    let newHeading = HeadingName
+    
+    if (HeadingName == "No Heading") {
+        var str = `
+                        <div class="col-md-6 ">
                            <div class="row mb-2" >
 
                                 <div class="col-md-5">
@@ -292,11 +361,91 @@ let renderRow = (row, index) => {
 
 
 `
-    $("#LoadUniProp").append(str);
+        $("#LoadUniProp").append(str);
+    } else {
+        if (!equalStrings(propHeading, GoalProperty.Name)) {
+            propHeading = GoalProperty.Name
+            if (equalStrings(tempHeading, HeadingName) == false) {
+                tempHeading = HeadingName
+                var str = `
+                        <div class="col-md-6 ">
+                           <div class="row mb-2" >
+
+                                <div class="col-md-5">
+                                    <h5 class="label my-0">${GoalProperty.Name}:</h5>
+                                </div>
+                                <div class="col-md-7" >
+                                    <h5 class="label my-0">${HeadingName}</h5>
+                                     <p class="major_subjetcs uni_data">${Name}</p> 
+                                <div id="headingValue2"></div>
+
+                                   
+                                </div>
+</div> <div class="row mb-2" >
+<div class="col-md-5">
+                                </div>
+                                <div class="col-md-7" >
+                                <div id="propHeadingName"></div>
+                                <div id="headingValue"></div>
+                                </div>
+</div>
+
+                            
+                            
+                        </div></div>
+
+
+   
+`
+                $("#LoadUniProp").append(str);
+            } else {
+                let str = `  <p class="major_subjetcs uni_data">
+                    ${Name}
+            </p>`
+                $("#headingValue2").append(str)
+
+            }
+        } else {
+
+            if (equalStrings(tempHeading, HeadingName) == false) {
+                let head =            ` <h5 class="label my-0">${HeadingName}</h5>`
+                    
+                $("#propHeadingName").append(head);
+                let str = `  <p class="major_subjetcs uni_data">
+                    ${Name}
+            </p>`
+                $("#headingValue").append(str)
+            } else {
+                let str = `  <p class="major_subjetcs uni_data">
+                    ${Name}
+            </p>`
+                if (equalStrings(tempHeading, HeadingName)) {
+                    $("#headingValue2").append(str)
+                }else {
+                    $("#headingValue").append(str)
+                }
+
+            }
+
+        }
+
+    }
 
 
 
 
+
+
+}
+
+let equalStrings = (tempHeading, HeadingName) => {
+    let status = false;
+    if (tempHeading != null) {
+        if (tempHeading.length === HeadingName.length) {
+            status = true;
+        }
+    }
+    return status;
 }
 
 $("#languageMore").on("click", () => {

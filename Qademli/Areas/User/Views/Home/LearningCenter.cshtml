@@ -3,7 +3,14 @@
     ViewData["Title"] = "Language Center";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+    <style>
+        .filterStyle {
+            font-size: 19px;
+            /*        text-decoration: underline !important;*/
+            color: #001d57 !important;
+            cursor: pointer;
+        }
+    </style>
 <div id="home_banner" class="pos_rel" data-parallax="true" style="background-image: url('/assets/img/home-banner.jpg');">
     <div class="filter"></div>
     <div class="content-center">
@@ -30,7 +37,14 @@
                             <h3 class="text-blue fw_600 my-0">Top Language Centers</h3>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a class="view_all_btn view_more_lang_centers"><span class="more">View All</span><span class="less">View Less</span></a>
+                            <span id="LanguageSort" onclick="sortByName()" class="filterStyle sortable" style=" margin-right: 20px;display: none;">sort</span>
+                            <a class="view_all_btn view_more_lang_centers">
+                                <span id="LanguageMore" class="more">View All</span>
+
+                                @*<span id="UniLess" class="less">View Less</span>*@
+                            </a>
+
+                            <span id="Languagefilter" class="filterStyle" style="display: none;">filter</span>
                         </div>
                     </div>
                     <div class="row text-center mb-4" id="languageList">
