@@ -316,3 +316,15 @@ $("#LanguageMore").on("click", () => {
     $("#LanguageSort").css("display", "inline");
     $("#Languagefilter").css("display", "inline");
 })
+
+$("#Languagefilter").on("click", () => {
+    $("#searchLang").removeAttr("hidden")
+})
+$("#searchLang").on("keyup", () => {
+    applyLangFilter($("#searchLang").val())
+})
+let applyLangFilter = (input) => {
+    let result = filterData.filter(x => (input == '' || x.Name.toLowerCase().includes(input.toLowerCase()))
+    )
+    loadLanguageCenterData(result)
+}

@@ -316,3 +316,15 @@ $("#lIELTSMore").on("click", () => {
     $("#IELTSfilter").css("display", "inline");
 })
 
+
+$("#IELTSfilter").on("click", () => {
+    $("#searchIELTS").removeAttr("hidden")
+})
+$("#searchIELTS").on("keyup", () => {
+    applyFilter($("#searchIELTS").val())
+})
+let applyFilter = (input) => {
+    let result = filterData.filter(x => (input == '' || x.Name.toLowerCase().includes(input.toLowerCase()))
+    )
+    loadIELTSData(result)
+}

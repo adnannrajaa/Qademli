@@ -317,3 +317,15 @@ $("#UniLess").on("click", () => {
 
     $("#UniversitySort").css("display", "none");
 })
+
+$("#Universityfilter").on("click", () => {
+    $("#searchUni").removeAttr("hidden")
+})
+$("#searchUni").on("keyup", () => {
+    applyFilter($("#searchUni").val())
+})
+let applyFilter = (input) => {
+    let result = filterData.filter(x => (input == '' || x.Name.toLowerCase().includes(input.toLowerCase()))
+    )
+    loadUniData(result)
+}

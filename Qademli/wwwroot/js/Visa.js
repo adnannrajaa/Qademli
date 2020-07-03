@@ -310,3 +310,15 @@ $("#VisaMore").on("click", () => {
     $("#VisaSort").css("display", "inline");
     $("#Visafilter").css("display", "inline");
 })
+
+$("#Visafilter").on("click", () => {
+    $("#searchVisa").removeAttr("hidden")
+})
+$("#searchVisa").on("keyup", () => {
+    applyFilter($("#searchVisa").val())
+})
+let applyFilter = (input) => {
+    let result = filterData.filter(x => (input == '' || x.Name.toLowerCase().includes(input.toLowerCase()))
+    )
+    loadVisaData(result)
+}

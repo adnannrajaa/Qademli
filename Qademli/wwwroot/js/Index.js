@@ -97,14 +97,16 @@ let ViewAllUnviersities = () => {
     if (xhr.status === 200) {
         let data = xhr.responseJSON;
         filterData = data;
-        loadUniData(data)
+        if (data.length > 0) {
+            loadUniData(data)
+        }
         } else {
              $.notify("Your Request Return " + xhr, "error");
         }
 }
 
 let loadUniData = (data) => {
-    if (data.length > 0) {
+
         $('#viewAllUni').empty();
 
         $.each(data, function (index, item) {
@@ -132,7 +134,6 @@ let loadUniData = (data) => {
 
         });
 
-    }
 }
 
 let LoadUniversityDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) => {
@@ -470,3 +471,27 @@ $("#UniLess").on("click", () => {
 
     $("#UniversitySort").css("display", "none");
 })
+
+$("#Universityfilter").on("click", () => {
+    $("#searchUni").removeAttr("hidden")
+})
+$("#searchUni").on("keyup", () => {
+    applyFilter($("#searchUni").val())
+})
+let applyFilter = (input) => {
+    let result = filterData.filter(x => (input == '' || x.Name.toLowerCase().includes(input.toLowerCase()))
+    )
+    loadUniData(result)
+}
+
+$("#languageFilter").on("click", () => {
+    $("#searchLang").removeAttr("hidden")
+})
+$("#searchLang").on("keyup", () => {
+    applyLangFilter($("#searchLang").val())
+})
+let applyLangFilter = (input) => {
+    let result = filterData2.filter(x => (input == '' || x.Name.toLowerCase().includes(input.toLowerCase()))
+    )
+    loadLanguageData(result)
+}
