@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Adnan Raja\\Documents\\GitHub\\Qademli\\Qademli\\Qademli.csproj": {}
+    "C:\\Users\\Faheem Akbar\\Desktop\\qademli-git\\Qademli\\Qademli.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Adnan Raja\\Documents\\GitHub\\Qademli\\Qademli\\Qademli.csproj": {
+    "C:\\Users\\Faheem Akbar\\Desktop\\qademli-git\\Qademli\\Qademli.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Adnan Raja\\Documents\\GitHub\\Qademli\\Qademli\\Qademli.csproj",
+        "projectUniqueName": "C:\\Users\\Faheem Akbar\\Desktop\\qademli-git\\Qademli\\Qademli.csproj",
         "projectName": "Qademli",
-        "projectPath": "C:\\Users\\Adnan Raja\\Documents\\GitHub\\Qademli\\Qademli\\Qademli.csproj",
-        "packagesPath": "C:\\Users\\Adnan Raja\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Adnan Raja\\Documents\\GitHub\\Qademli\\Qademli\\obj\\",
+        "projectPath": "C:\\Users\\Faheem Akbar\\Desktop\\qademli-git\\Qademli\\Qademli.csproj",
+        "packagesPath": "C:\\Users\\Faheem Akbar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Faheem Akbar\\Desktop\\qademli-git\\Qademli\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\Adnan Raja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Faheem Akbar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
