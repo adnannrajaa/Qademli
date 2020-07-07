@@ -55,6 +55,17 @@ let LoadUniversities = () => {
                     }
                 });
 
+        }
+            else {
+                $('#uniList').empty();
+                let str = `
+                <div class="col-4  "></div>
+ <div class="col-4 mb-4">
+<h4>No University Found</h4>
+</div>
+ <div class="col-4"></div>
+`
+                $('#uniList').append(str);
             }
         } else {
              $.notify("Your Request Return " + xhr, "error");
@@ -97,6 +108,18 @@ let loadUniData = (data) => {
             $('#viewAllUni').append(str);
 
         });
+
+    }
+    else {
+        $('#viewAllUni').empty();
+        let str = `
+                <div class="col-4 "></div>
+ <div class="col-4 mb-5">
+<h4>No University Found</h4>
+</div>
+ <div class="col-4"></div>
+`
+        $('#viewAllUni').append(str);
 
     }
 }

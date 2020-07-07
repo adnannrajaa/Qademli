@@ -37,11 +37,11 @@ let LoadVisa = () => {
     let xhr = SendAjaxRequestForGet("/api/Goal/GetGoalListByTopicID?id=4")
     if (xhr.status === 200) {
         let data = xhr.responseJSON;
-            if (data.length > 0) {
-                $('#VisaList').empty();
+        if (data.length > 0) {
+            $('#VisaList').empty();
 
-                $.each(data, function (index, item) {
-                    var str = `<div class="col-md-3" onclick="LoadVisaDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',2)">
+            $.each(data, function (index, item) {
+                var str = `<div class="col-md-3" onclick="LoadVisaDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',2)">
                             <div class="single_item">
                                 <a class="text-blue">
                                     <img src="${item.Image}" alt="uni-logo" class="uni_logo" style="width: 218px;height: 197px;">
@@ -49,14 +49,25 @@ let LoadVisa = () => {
                                 </a>
                             </div>
                         </div>`;
-                    $('#VisaList').append(str);
-                    if (index === 3) {
-                        return false; // breaks
-                    }
-                });
+                $('#VisaList').append(str);
+                if (index === 3) {
+                    return false; // breaks
+                }
+            });
 
-            }
-        } else {
+        }
+        else {
+            $('#VisaList').empty();
+            let str = `
+                <div class="col-4 "></div>
+ <div class="col-4 mb-4">
+<h4>No Visa Permit Found</h4>
+</div>
+ <div class="col-4"></div>
+`
+            $('#VisaList').append(str);
+        }
+    }else {
              $.notify("Your Request Return " + xhr, "Error");
         }
 }
@@ -98,6 +109,17 @@ let loadVisaData = (data) => {
 
         });
 
+    }
+    else {
+        $('#viewAllVisa').empty();
+        let str = `
+                <div class="col-4 "></div>
+ <div class="col-4 mb-5">
+<h4>No Visa Permit Found</h4>
+</div>
+ <div class="col-4"></div>
+`
+        $('#viewAllVisa').append(str);
     }
 }
 

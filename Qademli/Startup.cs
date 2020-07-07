@@ -94,6 +94,7 @@ namespace Qademli
              .AllowAnyMethod()
              .AllowAnyHeader());
 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

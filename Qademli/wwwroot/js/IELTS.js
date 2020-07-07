@@ -33,6 +33,18 @@ let LoadIELTS = () => {
                     }
                 });
 
+        }
+            else {
+                $('#IELTSList').empty();
+                let str = `
+                <div class="col-4 "></div>
+ <div class="col-4 mb-4">
+<h4>No IELTS Test Found</h4>
+</div>
+ <div class="col-4"></div>
+`
+                $('#IELTSList').append(str);
+
             }
         } else {
              $.notify("Your Request Return " + xhr, "error");
@@ -80,6 +92,18 @@ let loadIELTSData = (data) => {
             $('#viewAllIELTS').append(str);
 
         });
+
+    }
+    else {
+        $('#viewAllIELTS').empty();
+        let str = `
+                <div class="col-4 "></div>
+ <div class="col-4 mb-5">
+<h4>No IELTS Test Found</h4>
+</div>
+ <div class="col-4"></div>
+`
+        $('#viewAllIELTS').append(str);
 
     }
 }

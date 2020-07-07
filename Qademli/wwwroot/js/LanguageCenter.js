@@ -38,11 +38,11 @@ let LoadLearningCentres = () => {
     let xhr = SendAjaxRequestForGet("/api/Goal/GetGoalListByTopicID?id=1")
     if (xhr.status === 200) {
         let data = xhr.responseJSON;
-            if (data.length > 0) {
-                $('#languageList').empty();
+        if (data.length > 0) {
+            $('#languageList').empty();
 
-                $.each(data, function (index, item) {
-                    var str = `<div class="col-md-3" onclick="LoadLanguageCenterDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',1)">
+            $.each(data, function (index, item) {
+                var str = `<div class="col-md-3" onclick="LoadLanguageCenterDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',1)">
                             <div class="single_item">
                                 <a class="text-blue">
                                     <img src="${item.Image}" alt="uni-logo" class="uni_logo" style="width: 218px;height: 197px;">
@@ -50,13 +50,26 @@ let LoadLearningCentres = () => {
                                 </a>
                             </div>
                         </div>`;
-                    $('#languageList').append(str);
-                    if (index === 3) {
-                        return false; // breaks
-                    }
-                });
+                $('#languageList').append(str);
+                if (index === 3) {
+                    return false; // breaks
+                }
+            });
 
-            }
+        }
+        else {
+            $('#languageList').empty();
+
+            let str = `
+                <div class="col-4 "></div>
+ <div class="col-4 mb-5">
+<h4>No Language Center Found</h4>
+</div>
+ <div class="col-4"></div>
+`
+            $('#languageList').append(str)
+
+        }
         } else {
             $.notify("Your Request Return " + xhr, "error");
         }
@@ -100,6 +113,18 @@ let loadLanguageCenterData = (data) => {
 
         });
 
+    }
+    else {
+        $('#viewAllLanguageCenter').empty();
+
+        let str = `
+                <div class="col-4 "></div>
+ <div class="col-4 mb-5">
+<h4>No Language Center Found</h4>
+</div>
+ <div class="col-4"></div>
+`
+        $('#viewAllLanguageCenter').append(str)
     }
 }
 

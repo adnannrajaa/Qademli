@@ -68,11 +68,11 @@ let LoadUniversities = () => {
     let xhr = SendAjaxRequestForGet("/api/Goal/GetGoalListByTopicID?id=2")
     if (xhr.status === 200) {
         let data = xhr.responseJSON;
-            if (data.length > 0) {
-                $('#uniList').empty();
+        if (data.length > 0) {
+            $('#uniList').empty();
 
-                $.each(data, function (index, item) {
-                    var str = `<div class="col-md-3" onclick="LoadUniversityDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',2)">
+            $.each(data, function (index, item) {
+                var str = `<div class="col-md-3" onclick="LoadUniversityDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',2)">
                             <div class="single_item">
                                 <a class="text-blue">
                                     <img src="${item.Image}" alt="uni-logo" class="uni_logo" style="width: 218px;height: 197px;">
@@ -80,16 +80,26 @@ let LoadUniversities = () => {
                                 </a>
                             </div>
                         </div>`;
-                    $('#uniList').append(str);
-                    if (index === 3) {
-                        return false; // breaks
-                    }
-                });
+                $('#uniList').append(str);
+                if (index === 3) {
+                    return false; // breaks
+                }
+            });
 
-            }
         } else {
-             $.notify("Your Request Return " + xhr, "error");
+            $('#uniList').empty();
+            let str = `
+                <div class="col-4  "></div>
+ <div class="col-4 mb-4">
+<h4>No University Found</h4>
+</div>
+ <div class="col-4"></div>
+`
+            $('#uniList').append(str);
         }
+    } else {
+        $.notify("Your Request Return " + xhr, "error");
+    }
 }
 
 let ViewAllUnviersities = () => {
@@ -99,10 +109,21 @@ let ViewAllUnviersities = () => {
         filterData = data;
         if (data.length > 0) {
             loadUniData(data)
-        }
         } else {
-             $.notify("Your Request Return " + xhr, "error");
+            $('#viewAllUni').empty();
+            let str = `
+                <div class="col-4 "></div>
+ <div class="col-4 mb-5">
+<h4>No University Found</h4>
+</div>
+ <div class="col-4"></div>
+`
+            $('#viewAllUni').append(str);
+
         }
+    } else {
+        $.notify("Your Request Return " + xhr, "error");
+    }
 }
 
 let loadUniData = (data) => {
@@ -206,11 +227,11 @@ let LoadLearningCentres = () => {
     let xhr = SendAjaxRequestForGet("/api/Goal/GetGoalListByTopicID?id=1")
     if (xhr.status === 200) {
         let data = xhr.responseJSON;
-            if (data.length > 0) {
-                $('#languageList').empty();
+        if (data.length > 0) {
+            $('#languageList').empty();
 
-                $.each(data, function (index, item) {
-                    var str = `<div class="col-md-3" onclick="LoadLanguageCenterDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',1)">
+            $.each(data, function (index, item) {
+                var str = `<div class="col-md-3" onclick="LoadLanguageCenterDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',1)">
                             <div class="single_item">
                                 <a class="text-blue">
                                     <img src="${item.Image}" alt="uni-logo" class="uni_logo" style="width: 218px;height: 197px;">
@@ -218,16 +239,29 @@ let LoadLearningCentres = () => {
                                 </a>
                             </div>
                         </div>`;
-                    $('#languageList').append(str);
-                    if (index === 3) {
-                        return false; // breaks
-                    }
-                });
+                $('#languageList').append(str);
+                if (index === 3) {
+                    return false; // breaks
+                }
+            });
 
-            }
-        } else {
-             $.notify("Your Request Return " + xhr, "error");
         }
+        else {
+            $('#languageList').empty();
+
+            let str = `
+                <div class="col-4 "></div>
+ <div class="col-4 mb-5">
+<h4>No Language Center Found</h4>
+</div>
+ <div class="col-4"></div>
+`
+            $('#languageList').append(str)
+
+        }
+    } else {
+        $.notify("Your Request Return " + xhr, "error");
+    }
 }
 
 let ViewAllLanguageCenter = () => {
@@ -237,9 +271,10 @@ let ViewAllLanguageCenter = () => {
         filterData2 = data;
         loadLanguageData(data);
 
-        } else {
-            $.notify("Your Request Return " + xhr, "error");
-        }
+    } else {
+       
+        $.notify("Your Request Return " + xhr, "error");
+    }
 
 }
 
@@ -270,6 +305,18 @@ let loadLanguageData = (data) => {
 
         });
 
+    }
+    else {
+        $('#viewAllLanguageCenter').empty();
+
+        let str = `
+                <div class="col-4 "></div>
+ <div class="col-4 mb-5">
+<h4>No Language Center Found</h4>
+</div>
+ <div class="col-4"></div>
+`
+        $('#viewAllLanguageCenter').append(str)
     }
 }
 
