@@ -1,29 +1,47 @@
-﻿$(() => {
-
+﻿let UserId = null;
+let sortByNameStatus = "none";
+let filterData = [];
+let tempHeading = null;
+let propHeading = null;
+$(() => {
+    UserId = GetUserId();
     LoadVisa();
 
     ViewAllVisa()
 
 });
+let sortByName = () => {
+    switch (sortByNameStatus) {
+        case "none":
+            sortByNameStatus = "asc"
+            break
+        case "asc":
+            sortByNameStatus = "desc"
+            break
+        case "desc":
+            sortByNameStatus = "asc"
+            break
+    }
+    sortData("Name", sortByNameStatus)
+}
+let sortData = (column, type) => {
+    filterData.sort((a, b) => {
+        if (type == "asc") {
+            return a[column] < b[column] ? 1 : -1
+        } else return a[column] > b[column] ? 1 : -1
+    })
+    loadVisaData(filterData)
+}
 
 let LoadVisa = () => {
-    var settings = {
-        "url": "/api/Goal/GetGoalListByTopicID?id=5",
-        "method": "GET",
-        "timeout": 0,
-       
-        error: function (jqXHR, textStatus, errorThrown) {//  $.notify("Your Request Return " + xhr.status, "Error"); 
-        }
-    };
-    var UserId = parseJwt(localStorage.getItem("token"))["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+    let xhr = SendAjaxRequestForGet("/api/Goal/GetGoalListByTopicID?id=4")
+    if (xhr.status === 200) {
+        let data = xhr.responseJSON;
+        if (data.length > 0) {
+            $('#VisaList').empty();
 
-    $.ajax(settings).done(function (data, statusText, xhr) {
-        if (xhr.status === 200) {
-            if (data.length > 0) {
-                $('#VisaList').empty();
-
-                $.each(data, function (index, item) {
-                    var str = `<div class="col-md-3" onclick="LoadVisaDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',2)">
+            $.each(data, function (index, item) {
+                var str = `<div class="col-md-3" onclick="LoadVisaDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',2)">
                             <div class="single_item">
                                 <a class="text-blue">
                                     <img src="${item.Image}" alt="uni-logo" class="uni_logo" style="width: 218px;height: 197px;">
@@ -31,37 +49,45 @@ let LoadVisa = () => {
                                 </a>
                             </div>
                         </div>`;
-                    $('#VisaList').append(str);
-                    if (index === 3) {
-                        return false; // breaks
-                    }
-                });
+                $('#VisaList').append(str);
+                if (index === 3) {
+                    return false; // breaks
+                }
+            });
 
-            }
-        } else {
-            // $.notify("Your Request Return " + xhr.status, "Error");
         }
-    });
+        else {
+            $('#VisaList').empty();
+            let str = `
+                <div class="col-4 "></div>
+ <div class="col-4 mb-4">
+<h4>No Visa Permit Found</h4>
+</div>
+ <div class="col-4"></div>
+`
+            $('#VisaList').append(str);
+        }
+    }else {
+             $.notify("Your Request Return " + xhr, "Error");
+        }
 }
 
 let ViewAllVisa = () => {
-    var settings = {
-        "url": "/api/Goal/GetGoalListByTopicID?id=5",
-        "method": "GET",
-        "timeout": 0,
-      
-        error: function (jqXHR, textStatus, errorThrown) {//  $.notify("Your Request Return " + xhr.status, "Error"); 
+    let xhr = SendAjaxRequestForGet("/api/Goal/GetGoalListByTopicID?id=4")
+    if (xhr.status === 200) {
+        let data = xhr.responseJSON;
+        filterData = data;
+        loadVisaData(data);
+        } else {
+             $.notify("Your Request Return " + xhr, "error");
         }
-    };
-    var UserId = parseJwt(localStorage.getItem("token"))["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+}
+let loadVisaData = (data) => {
+    if (data.length > 0) {
+        $('#viewAllVisa').empty();
 
-    $.ajax(settings).done(function (data, statusText, xhr) {
-        if (xhr.status === 200) {
-            if (data.length > 0) {
-                $('#viewAllVisa').empty();
-
-                $.each(data, function (index, item) {
-                    var str = `<div class="col-md-6 mb-4" onclick="LoadVisaDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',2)">
+        $.each(data, function (index, item) {
+            var str = `<div class="col-md-6 mb-4" onclick="LoadVisaDetail('${UserId}','${item.Currency}','${item.Fee}',${item.ID},'${item.Image}','${item.Name}',2)">
                                 <div class="single_item_details">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -79,19 +105,25 @@ let ViewAllVisa = () => {
                                     </div>
                                 </div>
                             </div>`;
-                    $('#viewAllVisa').append(str);
+            $('#viewAllVisa').append(str);
 
-                });
+        });
 
-            }
-        } else {
-            // $.notify("Your Request Return " + xhr.status, "Error");
-        }
-    });
+    }
+    else {
+        $('#viewAllVisa').empty();
+        let str = `
+                <div class="col-4 "></div>
+ <div class="col-4 mb-5">
+<h4>No Visa Permit Found</h4>
+</div>
+ <div class="col-4"></div>
+`
+        $('#viewAllVisa').append(str);
+    }
 }
 
 let LoadVisaDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) => {
-    LoadVisaProp(GoalId)
     $("#detail_item1").removeClass("d-none");
     $("#headingVisa").addClass("d-none");
     $("#VisaList").addClass("d-none");
@@ -100,7 +132,7 @@ let LoadVisaDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) =>
                             <div class="row logo_section">
                                 <div class="col-md-12">
                                     <a href="/User/Home/Visa" class="back_btn pos_abs text-blue"><i class="fas fa-chevron-left clr_inhert"></i> Back</a>
-                                    <img src=${imageSrc} style="max-width: 256px;max-height: 253px;" id="detail-Image" alt="uni logo" class="uni_loggo mx-auto mb-4">
+                                    <img src="${imageSrc}" style="width: 247px;height: 230px;" id="detail-Image" alt="uni logo" class="uni_loggo mx-auto mb-4">
                                     <h4 class="uni_name fw_600 m-0" id="detail-name">${name}</h4>
                             <p class="location" id="detail-location"></p>
                                    
@@ -111,13 +143,21 @@ let LoadVisaDetail = (UserId, Currency, Fee, GoalId, imageSrc, name, TopicId) =>
                             </div>
                             <div class="row mx-auto w_1000 text-left mt-4" id="btn_wrap">
                                 <div class="col-md-12">
-                                    <a onclick = "SubmitApplication(${UserId},'${Currency}',${Fee},${GoalId},${TopicId})" class="btn_user_action">Apply For ${name}</a>
-                                  
+                                   <a id="btn-applicationSubmit"  onclick="SubmitApplication(${UserId},'${Currency}',${Fee},${GoalId},${TopicId})" class="btn_user_action d-none">Apply For ${name}</a>
+                                  <a id="btn-login" href="/Account/Login/Login" class="btn_user_action d-none">Login</a>
+                                
                                 </div>
                             </div>
                         </div>`;
     $('#detail_item1').empty();
     $('#detail_item1').append(str);
+    if (IsUserLoggedIn()) {
+        $("#btn-applicationSubmit").removeClass("d-none")
+    } else {
+        $("#btn-login").removeClass("d-none")
+    }
+    LoadVisaProp(GoalId)
+
 }
 
 let SubmitApplication = (UserId, Currency, Fee, GoalId, TopicId) => {
@@ -134,25 +174,12 @@ let SubmitApplication = (UserId, Currency, Fee, GoalId, TopicId) => {
                 Date: new Date()
 
             }
-            var settings = {
-                "url": "/api/Applications",
-                "method": "POST",
-                "timeout": 0,
-
-                "contentType": "application/json",
-                "data": JSON.stringify(obj),
-                "headers": {
-                    "Authorization": "Bearer " + localStorage.getItem("token")
-                }
-            };
-
-            $.ajax(settings).done(function (data, statusText, xhr) {
-                if (xhr.status === 200) {
-                    $.notify("Application Submitted Successfully","success")
-                } else {
-                    $.notify("Your Request Return " + xhr.status, "Error");
-                }
-            });
+            let xhr = SendAjaxRequestWithObject("/api/Applications", "POST", JSON.stringify(obj))
+            if (xhr.status === 200) {
+                $.notify("Application Submitted Successfully", "success")
+            } else {
+                $.notify("Your Request Return " + xhr, "error");
+            }
         } else {
             $.notify("Your application is already submitted.", "info");
 
@@ -162,20 +189,6 @@ let SubmitApplication = (UserId, Currency, Fee, GoalId, TopicId) => {
 
     }
 }
-
-function parseJwt(token) {
-    if (token == null || token == 'null') {
-
-        return false;
-    }
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    return JSON.parse(jsonPayload);
-};
 
 
 $("#backButton").on("click", () => {
@@ -187,38 +200,13 @@ $("#backButton").on("click", () => {
 
 
 let LoadVisaProp = (GoalId) => {
-    var settings = {
-        "url": "/api/ViewGoalProperty/" + GoalId,
-        "method": "GET",
-        "timeout": 0,
-        "headers": {
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        },
-        error: function (jqXHR, textStatus, errorThrown) {  $.notify("Your Request Return " + xhr.status, "Error"); }
-    };
-
-    $.ajax(settings).done(function (data, statusText, xhr) {
-        if (xhr.status === 200) {
-            var result = data.Data;
-            if (result.length > 0) {
-                loadResultData(result)
-            } else {
-                var str = `<tr >
-                                <td </td>
-                                <td> </td>
-                                <td ></td>
-                               <td ></td>
-                                   
-                            </tr>`;
-                $('#tBody').append(str);
-            }
-
-
-
-        } else {
-             $.notify("Your Request Return " + xhr.status, "Error");
-        }
-    });
+    let xhr = SendAjaxRequestForGet("/api/ViewGoalProperty/" + GoalId)
+    if (xhr.status === 200) {
+        var result = xhr.responseJSON;
+        loadResultData(result.Data)
+    } else {
+        $.notify("Your Request Return " + xhr, "error");
+    }
 }
 
 let loadResultData = (arg_data) => {
@@ -228,11 +216,15 @@ let loadResultData = (arg_data) => {
 
 }
 
-let renderRow = (row, index) => {
-    const { GoalId, GoalPropertyID, ID, Name, GoalProperty } = row;
 
-    var str = `
-<div class="col-md-6 ">
+let renderRow = (row, index) => {
+    const { GoalId, GoalPropertyID, ID, Name, GoalProperty, HeadingName, HeadingId } = row;
+
+    let newHeading = HeadingName
+
+    if (HeadingName == "No Heading") {
+        var str = `
+                        <div class="col-md-6 ">
                            <div class="row mb-2" >
 
                                 <div class="col-md-5">
@@ -249,9 +241,106 @@ let renderRow = (row, index) => {
 
 
 `
-    $("#LoadVisaProp").append(str);
+        $("#LoadVisaProp").append(str);
+    } else {
+        if (!equalStrings(propHeading, GoalProperty.Name)) {
+            propHeading = GoalProperty.Name
+            if (equalStrings(tempHeading, HeadingName) == false) {
+                tempHeading = HeadingName
+                var str = `
+                        <div class="col-md-6 ">
+                           <div class="row mb-2" >
+
+                                <div class="col-md-5">
+                                    <h5 class="label my-0">${GoalProperty.Name}:</h5>
+                                </div>
+                                <div class="col-md-7" >
+                                    <h5 class="label my-0">${HeadingName}</h5>
+                                     <p class="major_subjetcs uni_data">${Name}</p> 
+                                <div id="headingValue2"></div>
+
+                                   
+                                </div>
+</div> <div class="row mb-2" >
+<div class="col-md-5">
+                                </div>
+                                <div class="col-md-7" >
+                                <div id="propHeadingName"></div>
+                                <div id="headingValue"></div>
+                                </div>
+</div>
+
+                            
+                            
+                        </div></div>
+
+
+   
+`
+                $("#LoadVisaProp").append(str);
+            } else {
+                let str = `  <p class="major_subjetcs uni_data">
+                    ${Name}
+            </p>`
+                $("#headingValue2").append(str)
+
+            }
+        } else {
+
+            if (equalStrings(tempHeading, HeadingName) == false) {
+                let head = ` <h5 class="label my-0">${HeadingName}</h5>`
+
+                $("#propHeadingName").append(head);
+                let str = `  <p class="major_subjetcs uni_data">
+                    ${Name}
+            </p>`
+                $("#headingValue").append(str)
+            } else {
+                let str = `  <p class="major_subjetcs uni_data">
+                    ${Name}
+            </p>`
+                if (equalStrings(tempHeading, HeadingName)) {
+                    $("#headingValue2").append(str)
+                } else {
+                    $("#headingValue").append(str)
+                }
+
+            }
+
+        }
+
+    }
 
 
 
 
+
+
+}
+
+let equalStrings = (tempHeading, HeadingName) => {
+    let status = false;
+    if (tempHeading != null) {
+        if (tempHeading.length === HeadingName.length) {
+            status = true;
+        }
+    }
+    return status;
+}
+$("#VisaMore").on("click", () => {
+    $("#headingVisa h3").text("Visa Permit")
+    $("#VisaSort").css("display", "inline");
+    $("#Visafilter").css("display", "inline");
+})
+
+$("#Visafilter").on("click", () => {
+    $("#searchVisa").removeAttr("hidden")
+})
+$("#searchVisa").on("keyup", () => {
+    applyFilter($("#searchVisa").val())
+})
+let applyFilter = (input) => {
+    let result = filterData.filter(x => (input == '' || x.Name.toLowerCase().includes(input.toLowerCase()))
+    )
+    loadVisaData(result)
 }

@@ -1,4 +1,9 @@
-﻿$(() => {
+﻿let userRole = null;
+$(() => {
+    userRole = GetUserRole();
+    if (userRole != "Admin") {
+        window.location.replace("/Account/Login/Unauthorize")
+    }
     LoadData();
     LoadProperty("property", "");
     $("#GoalLi").attr("class", "active");
@@ -23,33 +28,48 @@ var LoadProperty = (id, propertyid) => {
     });
 }
 
+$("#property").on("change", () => {
+    loadHeadings($("#property").val(), "heading","HeadingDDL","")
+})
 
-var LoadData = () => {
-    var settings = {
-        "url": "/api/ViewGoalProperty/" + $('#goalid').data('goalid'),
-        "method": "GET",
-        "timeout": 0,
+let loadHeadings = (GoalPropId,id,ddl,value) => {
+    $.ajax({
+        type: "GET",
+        url: "/api/GoalPropertyHeadings/" + GoalPropId,
+        data: "{}",
         "headers": {
             "Authorization": "Bearer " + localStorage.getItem("token")
         },
-        error: function (jqXHR, textStatus, errorThrown) {  $.notify("Your Request Return " + xhr.status, "Error"); }
-    };
-
-    $.ajax(settings).done(function (data, statusText, xhr) {
-        if (xhr.status === 200) {
-            var result = data.Data;
-            if (result.length > 0) {
-                loadResultData(result)
+        success: function (data) {
+            if (data.length > 0) {
+                var s = '<option value="">Select Heading</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].HeadingId + '">' + data[i].Name + '</option>';
+                }
+                $("#" + id).html(s);
+                $("#" + id).val(value);
+                $("#"+ddl).removeAttr("hidden");
             } else {
-                clearTable();
+                $("#" + id).html('');
+                $("#" + ddl).attr("hidden",true);
             }
-
             
-            
-        } else {
-             $.notify("Your Request Return " + xhr.status, "Error");
         }
     });
+}
+
+var LoadData = () => {
+    let xhr = SendAjaxRequestForGet("/api/ViewGoalProperty/" + $('#goalid').data('goalid'))
+    if (xhr.status === 200) {
+        var result = xhr.responseJSON.Data;
+        if (result.length > 0) {
+            loadResultData(result)
+        } else {
+            clearTable();
+        }
+    } else {
+        $.notify("Your Request Return " + xhr, "error");
+    }
 }
 
 let clearTable = () => {
@@ -64,16 +84,19 @@ let loadResultData = (arg_data) => {
 }
 
 let renderRow = (row, index) => {
-    const { GoalId, GoalPropertyID, ID, Name, GoalProperty } = row;
+    const { GoalId, GoalPropertyID, ID, Name, GoalProperty, HeadingName, HeadingId } = row;
   
     var str = `<tr>
                                 <td class="align-middle text-center">${index + 1}</td>
                                 <td class="align-middle text-center">${GoalProperty.Name}</td>
+                                <td class="align-middle text-center">${HeadingName}</td>
+
                                 <td class="align-middle text-center">${Name}</td>
                                 <td class="align-middle text-center">
-                                    <button class="btn btn-primary" onclick="editModal('${ID}','${GoalPropertyID}','${GoalId}','${Name}')">Edit</button>
+                                    <button class="btn btn-primary" onclick="editModal('${ID}','${GoalPropertyID}','${GoalId}','${Name}','${HeadingId}')">Edit</button>
                                     <button class="btn btn-danger" onclick="deleteModal('${ID}','${Name}')">Delete</button>
-                                </td>
+                                
+</td>
                             </tr>`;
     $('#tBody').append(str);
 
@@ -83,16 +106,25 @@ let renderRow = (row, index) => {
 }
 
 var openModal = () => {
+    $("#HeadingDDL").attr("hidden", true);
     $('#myModal').modal('show');
 }
 
-var editModal = (id, GoalPropertyID, GoalDetailID, Name) => {
+var editModal = (id, GoalPropertyID, GoalDetailID, Name,HeadingID) => {
     $('#myModal2').modal('show');
+    if (HeadingID != 1) {
+        loadHeadings(GoalPropertyID, "heading2", "HeadingDDL2", HeadingID)
+
+    }
     var str = `
                 <input id="propertyid" value="${id}" data-goaldetailid="${GoalDetailID}" data-GoalPropValueId="${id}" hidden/>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Property</label>
                         <select class="form-control" id="property2" name="property2"></select>
+                    </div>
+                        <div class="form-group" id="HeadingDDL2" hidden>
+                        <label for="exampleInputEmail1">Heading</label>
+                        <select class="form-control" id="heading2" name="heading2"></select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Value</label>
@@ -101,8 +133,10 @@ var editModal = (id, GoalPropertyID, GoalDetailID, Name) => {
                     <button type="submit" class="btn btn-primary">Save</button>
                 `;
     $('#editGoalForm').html(str);
+
     LoadProperty("property2", GoalPropertyID);
     $('#property2').prop('disabled', true);
+
 
 }
 
@@ -115,28 +149,15 @@ var deleteModal = (id, name) => {
 }
 
 var deleteUser = (id) => {
-    var settings = {
-        "url": "/api/GoalPropertyValue/" + id,
-        "method": "DELETE",
-        "timeout": 0,
-        error: function (jqXHR, textStatus, errorThrown) {  $.notify("Your Request Return " + xhr.status, "error"); },
-        "headers": {
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        }
-    };
+    let xhr = SendAjaxRequestForDelete("/api/GoalPropertyValue/" + id)
+    if (xhr.status === 200) {
+        LoadData();
+        $('#myModal3').modal('hide');
+        $.notify("Goal Property Value deleted Successfully", "success");
 
-    $.ajax(settings).done(function (data, statusText, xhr) {
-        if (xhr.status === 404) {
-//            window.location.replace('/Screen/Login');
-            $.notify("Your Request Return " + xhr.status, "Error");
-            // console.log(data);
-        } else {
-            LoadData();
-            $('#myModal3').modal('hide');
-            $.notify("Goal Property Value deleted Successfully", "success");
-
-        }
-    });
+    } else {
+        $.notify("Your Request Return " + xhr.status, "Error");
+    }
 }
 
 
@@ -145,33 +166,23 @@ $(() => {
     $('#myModal form').validate({
         rules: {
             property: "required",
+            heading:"required",
             value: "required"
         },
         messages: {
             property: "Choose Property",
+            heading:"Choose Heading",
             value: "Value is required"
         },
         submitHandler: function (form) {
             var form = new FormData();
+            let headingId = 1; if ($('#heading').val() > 1) { headingId = $('#heading').val() };
+            form.append("GoalHeadingID", headingId);
+
             form.append("GoalPropertyID", $('#property').val());
             form.append("GoalID", $('#goalid').data('goalid'));
             form.append("Name", $('#value').val());
-
-            var settings = {
-                "url": "/api/GoalPropertyValue",
-                "method": "POST",
-                "timeout": 0,
-                "processData": false,
-                "mimeType": "multipart/form-data",
-                "contentType": false,
-                "data": form,
-                "headers": {
-                    "Authorization": "Bearer " + localStorage.getItem("token")
-                }
-            };
-
-            $.ajax(settings).done(function (data, statusText, xhr) {
-                console.log(xhr.status)
+            let xhr = SendAjaxRequestWithFormData("/api/GoalPropertyValue","POST",form)
                 if (xhr.status === 200) {
                     $("#myModal form").trigger("reset");
                     LoadData();
@@ -186,10 +197,8 @@ $(() => {
 
                 }
                 else {
-                     $.notify("Your Request Return " + xhr.status, "error");
+                     $.notify("Your Request Return " + xhr, "error");
                 }
-            });
-
         }
     });
 
@@ -197,45 +206,34 @@ $(() => {
     $('#myModal2 form').validate({
         rules: {
             property2: "required",
+            heading2: "required",
             value2: "required"
         },
         messages: {
             property2: "Choose Property",
+            heading2: "Choose Heading",
+
             value2: "Value is required"
         },
         submitHandler: function (form) {
             var form = new FormData();
             form.append("GoalPropertyID", $('#property2').val());
             form.append("GoalID", $('#goalid').data('goalid'));
+            let headingId = 1; if ($('#heading2').val() > 1) { headingId = $('#heading2').val() };
+            form.append("GoalHeadingID", headingId);
             form.append("Name", $('#value2').val());
             form.append("ID", $('#propertyid').val());
             form.append("GoalDetailID", $('#propertyid').data('goaldetailid'));
             form.append("GoalPropValueId", $('#propertyid').data('GoalPropValueId'))
-
-            var settings = {
-                "url": "/api/GoalPropertyValue/" + $('#propertyid').val(),
-                "method": "PUT",
-                "timeout": 0,
-                "processData": false,
-                "mimeType": "multipart/form-data",
-                "contentType": false,
-                "data": form,
-                "headers": {
-                    "Authorization": "Bearer " + localStorage.getItem("token")
-                }
-            };
-
-            $.ajax(settings).done(function (data, statusText, xhr) {
+            let xhr = SendAjaxRequestWithFormData("/api/GoalPropertyValue/" + $('#propertyid').val(), "PUT", form)
                 if (xhr.status === 204) {
-                    LoadData(localStorage.getItem("token"));
+                    LoadData();
                     $('#myModal2').modal('hide');
                     $.notify("Goal Property Value Updated Successfully", "success");
 
                 } else {
-                     $.notify("Your Request Return " + xhr.status, "Error");
+                     $.notify("Your Request Return " + xhr, "Error");
                 }
-            });
-
         }
     });
    

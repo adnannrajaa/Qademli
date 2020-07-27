@@ -1,26 +1,20 @@
-﻿$(() => {
-
-    LoadData(localStorage.getItem("token"));
+﻿let userRole = null;
+$(() => {
+    userRole = GetUserRole();
+    if (userRole != "Admin") {
+        window.location.replace("/Account/Login/Unauthorize")
+    }
+    LoadData();
     $("#GoalPropLi").attr("class", "active");
 
 });
 
 
-var LoadData = (token) => {
-
-    var settings = {
-        "url": "/api/GoalProperty",
-        "method": "GET",
-        "timeout": 0,
-        "headers": {
-            "Authorization": "Bearer " + token
-        },
-        error: function (jqXHR, textStatus, errorThrown) {  $.notify("Your Request Return " + xhr.status, "Error"); }
-    };
-    $.ajax(settings).done(function (data, statusText, xhr) {
+var LoadData = () => {
+    let xhr = SendAjaxRequestForGet("/api/GoalProperty")
         if (xhr.status === 200) {
-            console.log(data);
             $('#tBody').empty();
+            let data = xhr.responseJSON;
             if (data.length > 0) {
                 $.each(data, function (index, item) {
                     var str = `<tr>
@@ -29,17 +23,17 @@ var LoadData = (token) => {
                                 <td class="align-middle text-center">
                                     <button class="btn btn-primary" onclick="editModal('${item.ID}','${item.Name}')">Edit</button>
                                     <button class="btn btn-danger" onclick="deleteModal('${item.ID}','${item.Name}')">Delete</button>
-                                </td>
+                                    <a class="btn btn-info" href="/Admin/Dashboard/GoalPropertyHeading?GoalPropertyId=${item.ID}&GoalPropName=${item.Name}">Heading</a>
+                             
+</td>
                             </tr>`;
                     $('#tBody').append(str);
                 });
 
             }
         } else {
-             $.notify("Your Request Return " + xhr.status, "Error");
+             $.notify("Your Request Return " + xhr, "Error");
         }
-    });
-   
 }
 
 var openModal = () => {
@@ -70,28 +64,14 @@ var deleteModal = (id, name) => {
 }
 
 var deleteUser = (id) => {
-    var settings = {
-        "url": "/api/GoalProperty/" + id,
-        "method": "DELETE",
-        "timeout": 0,
-        error: function (jqXHR, textStatus, errorThrown) {  $.notify("Your Request Return " + xhr.status, "Error"); },
-        "headers": {
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        }
-    };
-
-    $.ajax(settings).done(function (data, statusText, xhr) {
-        if (xhr.status === 404) {
-             $.notify("Your Request Return " + xhr.status, "Error");
-
-            // console.log(data);
-        } else {
-            LoadData(localStorage.getItem("token"));
-            $('#myModal3').modal('hide');
-            $.notify("Goal Property Deleted Successfully", "success")
-
-        }
-    });
+    let xhr = SendAjaxRequestForDelete("/api/GoalProperty/" + id)
+    if (xhr.status === 200) {
+        LoadData(localStorage.getItem("token"));
+        $('#myModal3').modal('hide');
+        $.notify("Goal Property Deleted Successfully", "success")
+    } else {
+        $.notify("Your Request Return " + xhr, "error");
+    }
 }
 
 
@@ -107,21 +87,8 @@ $(() => {
         submitHandler: function (form) {
             var form = new FormData();
             form.append("Name", $('#name1').val());
-
-            var settings = {
-                "url": "/api/GoalProperty",
-                "method": "POST",
-                "timeout": 0,
-                "processData": false,
-                "mimeType": "multipart/form-data",
-                "contentType": false,
-                "data": form,
-                "headers": {
-                    "Authorization": "Bearer " + localStorage.getItem("token")
-                }
-            };
-
-            $.ajax(settings).done(function (data, statusText, xhr) {
+            let xhr = SendAjaxRequestWithFormData("/api/GoalProperty","POST",form)
+          
                 if (xhr.status === 200) {
                     $('#myModal form').trigger("reset");
 
@@ -139,9 +106,8 @@ $(() => {
                 }else {
                     $('#myModal form').trigger("reset");
 
-                    $.notify("Your Request Return " + xhr.status, "Error")
+                    $.notify("Your Request Return " + xhr, "Error")
                 }
-            });
 
         }
     });
@@ -158,30 +124,15 @@ $(() => {
             var form = new FormData();
             form.append("Name", $('#name2').val());
             form.append("ID", $('#goalid').val());
-
-            var settings = {
-                "url": "/api/GoalProperty/" + $('#goalid').val(),
-                "method": "PUT",
-                "timeout": 0,
-                "processData": false,
-                "mimeType": "multipart/form-data",
-                "contentType": false,
-                "data": form,
-                "headers": {
-                    "Authorization": "Bearer " + localStorage.getItem("token")
-                }
-            };
-
-            $.ajax(settings).done(function (data, statusText, xhr) {
+            let xhr = SendAjaxRequestWithFormData("/api/GoalProperty/" + $('#goalid').val(), "PUT", form)
                 if (xhr.status === 204) {
                     LoadData(localStorage.getItem("token"));
                     $('#myModal2').modal('hide');
                     $.notify("Goal Property Updated Successfully", "success")
 
                 } else {
-                     $.notify("Your Request Return " + xhr.status, "Error");
+                     $.notify("Your Request Return " + xhr, "Error");
                 }
-            });
 
         }
     });
