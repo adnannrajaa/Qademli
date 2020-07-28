@@ -924,3 +924,6 @@ C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Release\netcoreapp3.0\stat
 C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Release\netcoreapp3.0\Qademli.dll
 C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Release\netcoreapp3.0\Qademli.pdb
 C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Release\netcoreapp3.0\Qademli.genruntimeconfig.cache
+C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Release\netcoreapp3.0\Razor\Areas\User\Views\Home\FAQS.cshtml.g.cs
+C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Release\netcoreapp3.0\Razor\Areas\User\Views\Home\Privacy.cshtml.g.cs
+C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Release\netcoreapp3.0\Razor\Areas\User\Views\Home\TermAndConditions.cshtml.g.cs

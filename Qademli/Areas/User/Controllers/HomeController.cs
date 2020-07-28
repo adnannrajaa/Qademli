@@ -61,5 +61,19 @@ namespace Qademli.Areas.User.Controllers
         {
             return View();
         }
+
+        public IActionResult FAQS()
+        {
+            return View();
+        }
+
+        public IActionResult TermAndConditions()
+        {
+            return View();
+        }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
     }
 }
