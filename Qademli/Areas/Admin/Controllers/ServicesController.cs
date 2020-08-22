@@ -26,5 +26,9 @@ namespace Qademli.Areas.Admin.Controllers
         {
             return View();
         }
+        public IActionResult Housing()
+        {
+            return View();
+        }
     }
 }

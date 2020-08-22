@@ -8987,23 +8987,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Faheem Akbar\\.nuget\\packages\\": {},
+    "C:\\Users\\Adnan Raja\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Faheem Akbar\\Desktop\\qademli-git\\Qademli\\Qademli.csproj",
+      "projectUniqueName": "C:\\Users\\Adnan Raja\\Documents\\GitHub\\Qademli\\Qademli\\Qademli.csproj",
       "projectName": "Qademli",
-      "projectPath": "C:\\Users\\Faheem Akbar\\Desktop\\qademli-git\\Qademli\\Qademli.csproj",
-      "packagesPath": "C:\\Users\\Faheem Akbar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Faheem Akbar\\Desktop\\qademli-git\\Qademli\\obj\\",
+      "projectPath": "C:\\Users\\Adnan Raja\\Documents\\GitHub\\Qademli\\Qademli\\Qademli.csproj",
+      "packagesPath": "C:\\Users\\Adnan Raja\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Adnan Raja\\Documents\\GitHub\\Qademli\\Qademli\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\Faheem Akbar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Adnan Raja\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -9103,7 +9103,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
       }
     }
   }
