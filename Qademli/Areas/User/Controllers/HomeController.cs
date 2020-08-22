@@ -75,5 +75,9 @@ namespace Qademli.Areas.User.Controllers
         {
             return View();
         }
+        public IActionResult PaymentTerms()
+        {
+            return View();
+        }
     }
 }

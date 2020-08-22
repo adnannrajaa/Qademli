@@ -7,7 +7,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="~/assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>@ViewData["Title"] | Qademli</title>
+    <title>@ViewData["Title"] | Qademly</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--       <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
@@ -25,6 +25,25 @@
         }
         #mobile-error, #callDate-error {
             color: red;
+        }
+        .fsocial img {
+        width: 24px;
+        height: 24px;
+      }
+
+        .fsocial img:hover {
+           animation: bounce 1s infinite;
+
+        }
+
+        @@keyframes bounce {
+            0%,  
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-7px);
+            }
         }
     </style>
 
@@ -112,9 +131,17 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
-                    <h4>Qademli</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, dolore omnis quaerat pariatur est dolor neque voluptas beatae ipsum consectetur porro ipsa.</p>
+                    <h4>Qademly</h4>
+                    <p class="fsocial">
+                      <!-- Instagram Icon -->
+                        <a href="https://www.instagram.com/qademly"><img src="https://img.icons8.com/fluent/48/000000/instagram-new.png"/></a>
 
+                      <!-- Twitter Icon -->
+                        <a href="https://www.twitter.com/qademly"><img src="https://img.icons8.com/color/48/000000/twitter-circled.png"/></a>
+
+                        <!-- Snapchat Icon -->
+                        <a href="https://www.snapchat.com/qademly"><img src="https://img.icons8.com/color/48/000000/snapchat-circled-logo.png"/></a>
+                    </p>
                 </div>
                 <div class="col-md-9 col-sm-9 col-12 ml-auto mr-auto">
                     <div class="row">
@@ -144,9 +171,9 @@
                             <div class="links">
                                 <h4>Legal</h4>
                                 <ul class="stacked-links">
-                                    <li><a asp-area="User" asp-controller="Home" asp-action="FAQS">FAQS</a></li>
                                     <li><a asp-area="User" asp-controller="Home" asp-action="TermAndConditions">Terms & Conditions</a></li>
                                     <li><a asp-area="User" asp-controller="Home" asp-action="Privacy">Privacy Policy</a></li>
+                                    <li><a asp-area="User" asp-controller="Home" asp-action="PaymentTerms">Payment Terms</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -160,7 +187,7 @@
                         Copyright ©
                         <script>
                             document.write(new Date().getFullYear())
-                        </script>, Qademli. Powered By IDigital Kuwait Company
+                        </script>, Qademly. Powered By IDigital Kuwait Company
                     </p>
                 </div>
             </div>

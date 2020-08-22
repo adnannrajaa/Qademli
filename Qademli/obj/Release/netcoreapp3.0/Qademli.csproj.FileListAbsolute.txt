@@ -927,3 +927,4 @@ C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Release\netcoreapp3.0\Qade
 C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Release\netcoreapp3.0\Razor\Areas\User\Views\Home\FAQS.cshtml.g.cs
 C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Release\netcoreapp3.0\Razor\Areas\User\Views\Home\Privacy.cshtml.g.cs
 C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Release\netcoreapp3.0\Razor\Areas\User\Views\Home\TermAndConditions.cshtml.g.cs
+C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Release\netcoreapp3.0\Razor\Areas\User\Views\Home\PaymentTerms.cshtml.g.cs

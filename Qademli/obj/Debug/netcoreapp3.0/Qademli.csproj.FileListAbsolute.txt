@@ -951,3 +951,4 @@ C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Debug\netcoreapp3.0\Qademl
 C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Debug\netcoreapp3.0\Qademli.pdb
 C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Debug\netcoreapp3.0\Qademli.genruntimeconfig.cache
 C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Debug\netcoreapp3.0\Qademli.csprojAssemblyReference.cache
+C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Debug\netcoreapp3.0\Razor\Areas\User\Views\Home\PaymentTerms.cshtml.g.cs
