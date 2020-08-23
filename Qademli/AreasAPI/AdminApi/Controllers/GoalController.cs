@@ -54,6 +54,7 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
         [HttpGet("GetGoalListByTopicID")]
         public async Task<ActionResult<IEnumerable<dynamic>>> GetGoalListByTopicID(int id)
         {
+            
             var goals = await _context.Goal.OrderByDescending(s=>s.ID).Where(x => x.TopicID == id).ToListAsync();
             var goalList = new List<dynamic>();
             foreach (var g in goals)

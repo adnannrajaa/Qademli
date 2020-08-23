@@ -953,4 +953,7 @@ C:\Users\Faheem Akbar\Desktop\qademli-git\Qademli\obj\Debug\netcoreapp3.0\Qademl
 C:\Users\Adnan Raja\Documents\GitHub\Qademli\Qademli\obj\Debug\netcoreapp3.0\Razor\Areas\User\Views\Home\FAQS.cshtml.g.cs
 C:\Users\Adnan Raja\Documents\GitHub\Qademli\Qademli\obj\Debug\netcoreapp3.0\Razor\Areas\User\Views\Home\Privacy.cshtml.g.cs
 C:\Users\Adnan Raja\Documents\GitHub\Qademli\Qademli\obj\Debug\netcoreapp3.0\Razor\Areas\User\Views\Home\TermAndConditions.cshtml.g.cs
+C:\Users\Adnan Raja\Documents\GitHub\Qademli\Qademli\obj\Debug\netcoreapp3.0\Razor\Areas\Admin\Views\Services\Housing.cshtml.g.cs
+C:\Users\Adnan Raja\Documents\GitHub\Qademli\Qademli\obj\Debug\netcoreapp3.0\Razor\Areas\User\Views\Home\PaymentTerms.cshtml.g.cs
+C:\Users\Adnan Raja\Documents\GitHub\Qademli\Qademli\obj\Debug\netcoreapp3.0\Razor\Areas\User\Views\Home\Housing.cshtml.g.cs
 C:\Users\Adnan Raja\Documents\GitHub\Qademli\Qademli\obj\Debug\netcoreapp3.0\Qademli.csprojAssemblyReference.cache

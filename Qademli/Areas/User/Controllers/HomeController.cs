@@ -44,6 +44,10 @@ namespace Qademli.Areas.User.Controllers
         public IActionResult Visa()
         {
             return View();
+        } 
+        public IActionResult Housing()
+        {
+            return View();
         }
 
         public IActionResult AllGoal(string topic, int topicId)

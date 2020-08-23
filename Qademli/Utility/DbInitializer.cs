@@ -35,6 +35,8 @@ namespace Qademli.Utility
                 new Topic{Name="Language Center"},
                 new Topic{Name="IELTS"},
                 new Topic{Name="Visa Permit"},
+                new Topic{Name="Housing"},
+
             };
             foreach (Topic t in topics)
             {

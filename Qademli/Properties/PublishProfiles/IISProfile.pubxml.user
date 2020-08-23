@@ -6,6 +6,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAqrkgvXBhhUyQNLP5i9bVeAAAAAACAAAAAAAQZgAAAAEAACAAAABQlE/5iRNZO6k09rc69ZC40VMj/cFGQlJ4OK7PQ7q3wQAAAAAOgAAAAAIAACAAAAAvvT8tM0BYnDhgqFvvtnnIJOatXCIqF1cdEKvIb8QYSSAAAACl7QPYDIBDglgnTB1DeJjKlZGitEZLrk9ptEpjn+BDUkAAAAD+wHfvHSvTbdxYX+Yw5EmoLdBEdWFRk//jydpDzQMXzln+Gk/aPxtUwDiTECQrVQqgCteh1l8EzmHr3nd0k8Rm</EncryptedPassword>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAghsAgaw5VUmCfkuBpfrQ6AAAAAACAAAAAAAQZgAAAAEAACAAAACCVf6kfwpyBRikoOPbRMXod/AO8WH2sY2SlsSK0U+evwAAAAAOgAAAAAIAACAAAACtL6nl1McvRWBbYm1W7LqX+AkDmhLQHhyqfjmplQX3DSAAAADMfObK1en+oW8U4ZOUhzrrT5i4uXaETLg9Gy5Zaj2HukAAAACdU6Ot66mg84aGBLCV2rkeT8oYwBi/P0mHvu3GJCPmgpXuxyjJJmEY6rR26RYdKC523rvEm/fitNVSXUdl1wIq</EncryptedPassword>
   </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Server=174.138.185.50%3bDatabase=QademliDB%3buser id=Qademlyc%3bpassword=Admin123%2a</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
 </Project>

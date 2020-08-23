@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 
 namespace Qademli.AreasAPI.AdminApi.Controllers
@@ -33,6 +34,31 @@ namespace Qademli.AreasAPI.AdminApi.Controllers
                 HeadingName = f.h.Name,
                 HeadingId=f.h.HeadingId,
                 });
+            result.Value = new { Data = data };
+            return result;
+        }       
+        // GET: api/ViewGoalProperty
+        [HttpGet("GoalDetails")]
+        public JsonResult GetGoalDetails(int goalId)
+        {
+            JsonResult result = new JsonResult(new { });
+            var data = _context.GoalPropertyValue.Include("GoalProperty").Join(_context.GoalPropertyHeading , g=>g.GoalHeadingID,h=>h.HeadingId,(g,h)=>new {g,h })
+                .Where(s => s.g.GoalId == goalId).Select(f=> new { 
+                f.g.ID,
+                f.g.Name,
+                f.g.GoalId,
+                f.g.GoalProperty,
+                f.g.GoalPropertyID,
+                HeadingName = f.h.Name,
+                HeadingId=f.h.HeadingId,
+                });
+            var goalPropValue = _context.GoalPropertyValue.Where(s => s.GoalId == goalId)
+                .Select(s => new {
+                    GoalProp = _context.GoalProperty.Where(gp => gp.ID == s.GoalPropertyID).Select(gp => gp.Name).FirstOrDefault(),
+                    GoalPropHeading = _context.GoalPropertyHeading.Where(gph => gph.HeadingId == s.GoalHeadingID).ToList(),
+
+                }).ToList();
+               ;
             result.Value = new { Data = data };
             return result;
         }
